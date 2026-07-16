@@ -1,0 +1,535 @@
+
+/*=============================================================
+    Authour URI: www.binarytheme.com
+    License: Commons Attribution 3.0
+
+    http://creativecommons.org/licenses/by/3.0/
+
+    100% To use For Personal And Commercial Use.
+    IN EXCHANGE JUST GIVE US CREDITS AND TELL YOUR FRIENDS ABOUT US
+   
+    ========================================================  */
+
+.LinkColor
+{
+	color: #0C4AA1;
+}
+::-webkit-scrollbar
+{
+	width: 10px; /* for vertical scrollbars */
+	height: 10px; /* for horizontal scrollbars */
+}
+::-webkit-scrollbar-track
+{
+	background: #FFFFFF;
+}
+::-webkit-scrollbar-thumb
+{
+	background: #3071AE;
+}
+.modalBackground
+{
+	background-color: Black;
+	filter: alpha(opacity=60);
+	opacity: 0.6;
+}
+.modalPopup
+{
+	background-color: #FFFFFF;
+	width: 400px;
+	height: 350px;
+	border: 1px solid #3071AE;
+	border-radius: 12px;
+	padding: 0;
+	margin-top: 30px;
+	position: absolute;
+}
+.modalPopup .header
+{
+	background-color: #3071AE;
+	height: 30px;
+	color: White;
+	line-height: 30px;
+	text-align: center;
+	font-weight: bold;
+	border-top-left-radius: 6px;
+	border-top-right-radius: 6px;
+}
+.modalPopup .body
+{
+	min-height: 50px;
+	line-height: 30px;
+	text-align: center;
+	font-weight: bold;
+}
+.modalPopup .footer
+{
+	padding: 0px;
+}
+.modalPopup .yes, .modalPopup .no
+{
+	height: 23px;
+	color: White;
+	line-height: 23px;
+	text-align: center;
+	font-weight: bold;
+	cursor: pointer;
+	border-radius: 4px;
+}
+.modalPopup .yes
+{
+	background-color: #3071AE;
+	border: 1px solid #3071AE;
+	text-align: center;
+	width:70px;
+	padding: 0;
+}
+.modalPopup .no
+{
+	background-color: #3071AE;
+	border: 1px solid #5C5C5C;
+}
+header
+{
+	min-height: 137px;
+}
+.header-right
+{
+	padding: 10px 0;
+}
+.profile-img
+{
+	margin-right: -290px;
+	margin-top: -10px;
+}
+.profile-img > span
+{
+	display: inline-block;
+	text-align: center;
+}
+.profile-img > span > span
+{
+	border-width: 1px;
+	border-style: solid;
+	border-color: #C9C9C9;
+	margin-right: 12px;
+	display: block;
+	padding: 5px;
+	border-style: solid;
+}
+.profile-img > span > cite
+{
+	font-size: 9px;
+	color: #0C4AA1;
+}
+.profile-img > span > cite > em
+{
+	display: block;
+	font-style: normal;
+}
+.center-block
+{
+	display: block;
+	margin-right: auto;
+	margin-left: auto;
+}
+.fltR
+{
+	float: right;
+}
+a.logo
+{
+	display: block;
+	float: left;
+	margin-left: -40px;
+	margin-top: 20px;
+	
+}
+.btn-primary > em, .profile-img, .account, #owl .item > .col-md-3 > .caption-inner > div, .news-events li > a > span, .download-list li > span {
+display:table-cell;
+vertical-align:middle;
+}
+.account {
+margin-right:15px;
+margin-top:60px;
+}
+
+.fltL
+{
+	float: left;
+	
+}
+.center-block
+{
+	display: block;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+
+/* ===========================================================
+   GENERAL STYLESHEET BY BYINARY THEME    
+   ============================================================*/
+
+
+body
+{
+	font-family: 'Verdana' , Verdana;
+	font-size: 14px;
+	color: #000;
+	line-height: 16px;
+	font-weight: 400;
+}
+
+h1, h2, h3, h4, h5, h6
+{
+	font-family: 'Verdana' , Verdana;
+	line-height: 40px;
+}
+
+h1
+{
+	padding-top: 30px;
+	color: #fff;
+	font-weight: 800;
+}
+h3
+{
+	font-family: sans-serif;
+	color: #0C4AA1;
+	font-weight: 800;
+}
+.Name
+{
+	color: #0C4AA1;
+	font-weight: 600;
+	text-align:center;
+	vertical-align:bottom;
+	
+}
+
+h5
+{
+	padding-bottom: 30px;
+}
+h4
+{
+	margin-top: 4px;
+}
+.text-center
+{
+	text-align: center;
+	font-weight: bold;
+	font-size: 14px;
+	color: #0C4AA1;
+	font-family: sans-serif;
+}
+
+.main-top-margin
+{
+	margin-top: 120px;
+}
+
+.main-low-margin
+{
+	margin-top: 0px;
+	margin-bottom: 80px;
+}
+
+a, a:hover
+{
+	text-decoration: none;
+}
+
+p
+{
+	line-height: 30px;
+	margin-bottom: 23px;
+}
+
+.img-margin-product
+{
+	margin-top: 30px;
+}
+
+.bottam-pad
+{
+	padding-bottom: 40px;
+}
+
+.space-bottom
+{
+	height: 80px;
+}
+
+.space-top
+{
+	height: 70px;
+}
+
+.main-icon
+{
+	font-size: 350px;
+	color: rgba(102, 110, 197, 1);
+}
+
+.head-line
+{
+	font-size: 70px;
+	padding-bottom: 50px;
+	line-height: 65px;
+	font-weight: 900;
+}
+
+/* ==========================================================================
+   COLOR CODES
+   ========================================================================== */
+
+.color-red
+{
+	color: #ff0000;
+}
+
+.color-green
+{
+	color: #07BB00;
+}
+
+.color-light-blue
+{
+	color: #BB00BB;
+}
+
+.color-blue
+{
+	color: #0052FF;
+}
+
+.color-brown
+{
+	color: #EB8F2D;
+}
+
+.color-black
+{
+	color: #000000;
+}
+
+.section
+{
+	background-color: #4E63D1;
+	color: #fff;
+}
+.circle-body
+{
+	width: 100px;
+	height: 100px;
+	margin: 0 auto 14px auto;
+	border: 2px solid #2E64FE;
+	border-radius: 100%;
+	background-color: #FFFFFF;
+}
+.icon-set
+{
+	position: relative;
+	padding: 30px;
+}
+/* ==========================================================================
+   PRICE SECTION
+   ========================================================================== */
+
+
+
+.active-div
+{
+	background: #83BEFF !important;
+}
+.BannerClass
+{
+	width: 100%;
+	float: left;
+	margin-left: -27px;
+	height: 100px;
+}
+.slidesSpace
+{
+	margin-top: 150px;
+    
+}
+.Iconstyle
+{
+	height: 40px;
+}
+.textstyle
+{
+	font-size: 13.5px;
+	line-height: 1.628571429;
+	color: #848484;
+	font-family: sans-serif;
+	text-align: justify;
+	-webkit-text-size-adjust: 100%;
+	-ms-text-size-adjust: 100%;
+}
+
+#pricing-section .plan-main
+{
+	background: #FFFFFF;
+	list-style: none;
+	margin: 0 0 20px;
+	text-align: center;
+	padding: 0;
+	border-bottom: 1px solid #e1e1e1;
+	border: 1px solid #E9E9E9;
+}
+
+#pricing-section .plan-main li
+{
+	padding: 10px 0;
+	margin: 0 15px;
+	border-bottom: 1px dashed #eee;
+}
+
+#pricing-section .plan-main li.plan-name
+{
+	padding: 15px 0;
+	font-size: 18px;
+	font-weight: 700;
+}
+
+#pricing-section .plan-main li.plan-price
+{
+	color: #666;
+	padding: 15px 0;
+	font-size: 48px;
+}
+
+#pricing-section .plan-main li.plan-action
+{
+	margin-top: 20px;
+	margin-bottom: 20px;
+	border-bottom: 0;
+}
+
+
+#pricing-section .plan-main.featured .plan-price
+{
+	color: #fff;
+	background-color: #242424;
+	border-bottom-color: #52b6ec;
+	margin: 0;
+}
+
+
+
+/*==========================================
+   SOCIAL ICON STYLES
+    =====================================================*/
+
+
+.color-facebook
+{
+	color: #3B5998;
+}
+
+.color-twitter
+{
+	color: #00aced;
+}
+
+.color-google-plus
+{
+	color: #dd4b39;
+}
+
+.color-linkedin
+{
+	color: #007bb6;
+}
+
+.color-pinterest
+{
+	color: #cb2027;
+}
+/* ===========================================================
+   COMPONENT.CSS  CHANGES   
+   ============================================================*/
+.slideshow nav span.nav-prev, .slideshow nav span.nav-next
+{
+	left: 33% !important;
+}
+.slideshow
+{
+	z-index: 1500 !important;
+}
+.slideshow nav span.nav-close
+{
+	color: #FF0000;
+}
+.slideshow nav span
+{
+	color: #FF0000;
+}
+/* ===========================================================
+   SLIDER ADJUSTMENTS (slider.css)  
+   ============================================================*/
+
+.slidesjs-container
+{
+	height: 450px !important;
+}
+#slides
+{
+	border: 1px dashed #e1e1e1;
+	padding: 0px 0px 15px 0px;
+}
+/* ===========================================================
+   BOOTSTRAP ELEMENTS CHANGES   
+   ============================================================*/
+.navbar
+{
+	font-weight: 500;
+	font-size: 14px;
+}
+
+.navbar-inverse
+{
+	background: White;
+	border-color: Blue;
+}
+
+.navbar-inverse .navbar-nav > .active > a
+{
+	background: #ffffff;
+}
+
+.navbar-inverse .navbar-brand
+{
+	color: #fff;
+	font-weight: bolder;
+	font-size: 25px;
+	font-weight: 900;
+	letter-spacing: 2px;
+}
+
+.navbar-inverse :hover .navbar-brand:hover
+{
+	color: #fff;
+}
+
+.navbar-inverse .navbar-nav > li > a
+{
+	color: #FFFFFF;
+}
+
+
+/* ==========================================================================
+   FOOTER SECTION
+   ========================================================================== */
+
+
+#footer
+{
+	background-color: #000;
+	color: #fff;
+	padding: 30px;
+}

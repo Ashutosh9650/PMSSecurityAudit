@@ -1,0 +1,225 @@
+.p-0 {
+    padding: 0px;
+}
+
+.carousel-inner > .item img {
+    width: 100%;
+    height: 100vh;
+}
+
+.carousel-indicators {
+    left: 25%;
+}
+
+.div-pos {
+    position: absolute;
+    top: 12%;
+    right: 50px;
+    z-index: 1040;
+}
+
+.login-box {
+    float: left;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(246,246,246,0.8);
+    border: 1px solid #fff;
+}
+
+.login-ear {
+    width: 80%;
+    height: 100%;
+    margin-left: 10%;
+    float: left;
+    padding-bottom: 30px;
+}
+
+.text-light {
+    color: #9c9a9a;
+}
+
+.login-ear label {
+    color: #ED3237;
+}
+
+.btn-dark {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+    .btn-dark:hover {
+        background-color: #383737;
+        color: #fbfbfb;
+    }
+
+.login-ear .form-control {
+    height: 46px;
+}
+
+.bg-dark {
+    background-color: #1E1E1E;
+}
+
+    .bg-dark li.dropdown a {
+        color: #ED3237 !important;
+        font-weight: bold;
+    }
+
+    .bg-dark .navbar-default {
+        background-color: transparent;
+        border-color: transparent;
+        margin-bottom: 0px;
+        min-height: 20px;
+    }
+
+    .bg-dark .navbar-nav > li > a {
+        padding-top: 10px;
+        padding-bottom: 10px;
+        color: #ffffff;
+    }
+
+        .bg-dark .navbar-nav > li > a:hover {
+            color: #fbfbfb;
+            text-decoration: underline;
+            background-color: transparent !important;
+        }
+
+@media (max-width:767px) {
+    .div-pos {
+        position: absolute;
+        top: 5%;
+        right: 0px;
+    }
+
+    .login-box {
+        float: left;
+        width: 90%;
+        height: 100%;
+        background-color: rgba(246,246,246,0.8);
+        border: 1px solid #fff;
+        margin-left: 5%;
+    }
+
+    .fl-r {
+        float: right !important;
+    }
+
+    .bg-dark .nav > li {
+        position: relative;
+        display: inline-block;
+    }
+
+    .sm-h {
+        display: none !important;
+    }
+}
+
+/* Main MENU CSS */
+.dropdown-menu > li {
+    position: relative;
+    -webkit-user-select: none; /* Chrome/Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+ */
+    /* Rules below not implemented in browsers yet */
+    -o-user-select: none;
+    user-select: none;
+    cursor: pointer;
+}
+
+.dropdown-menu .sub-menu {
+    left: 100%;
+    position: absolute;
+    top: 0;
+    display: none;
+    margin-top: -1px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-left-color: #fff;
+    box-shadow: none;
+}
+
+.right-caret:after, .left-caret:after {
+    content: "";
+    border-bottom: 5px solid transparent;
+    border-top: 5px solid transparent;
+    display: inline-block;
+    height: 0;
+    vertical-align: middle;
+    width: 0;
+    margin-left: 5px;
+}
+
+.right-caret:after {
+    border-left: 5px solid #ffaf46;
+}
+
+.left-caret:after {
+    border-right: 5px solid #ffaf46;
+}
+
+.navbar-brand img {
+    height: 65px;
+    background-color: #F8F8F8;
+    position: relative;
+    top: 0;
+    margin-right: 0px;
+    padding: 5px;
+}
+
+.main-m {
+    box-shadow: 10px 6px 9px rgba(186, 186, 186, 0.25)
+}
+
+    .main-m .navbar-default {
+        background-color: transparent;
+        border-color: transparent;
+    }
+
+    .main-m .nav > li > a {
+        position: relative;
+        display: block;
+        padding: 15px 10px;
+    }
+
+.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:focus, .navbar-default .navbar-nav > .open > a:hover {
+    color: #ffffff;
+    background-color: #ed322c;
+}
+
+.navbar-default .navbar-nav > li > a:focus, .navbar-default .navbar-nav > li > a:hover {
+    color: #ffffff;
+    background-color: #ed322c;
+    border-radius: 12px 4px 12px 4px;
+}
+
+.dropdown-menu > li > a:focus, .dropdown-menu > li > a:hover {
+    color: #ffffff;
+    text-decoration: none;
+    background-color: #969696;
+    border-radius: 0px 0px 0px 0px;
+}
+.dis-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 12px
+}
+.grid-2 {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 60% auto;
+    gap: 15px;
+    padding: 0px 0px;
+    margin-bottom: 12px;
+}
+.grid-2_zoom {
+    grid-template-columns: 100% !important;
+}
+.grid-2_hide{
+    display:none;
+}
+/*.grid-2 div {
+    float: left;
+    width: 100%;
+    height: auto;
+}*/

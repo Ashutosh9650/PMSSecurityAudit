@@ -1,0 +1,105 @@
+﻿body { font-family: Arial, Helvetica, sans-serif; font-size: 12px; margin: 0px; padding: 0px; }
+.unselectable{-moz-user-select:-moz-none;-khtml-user-select:none;-webkit-user-select:none;user-select:none;}
+.footer_bottom { background-color: #909090; color: #FFF; font-family: Georgia, "Times New Roman", Times, serif; font-size: 14px; height: 50px; text-decoration: none; width: 100%; }
+.footer_bottom-left { float: left; padding-top: 18px; width: 480px; }
+.footer_bottom-right { color: #FFF; float: left; padding-top: 18px; text-decoration: none; width: 500px; }
+ .footer_bottom-right a { color: #FFF; text-decoration: none; }
+.footer_holder { height: auto; margin-left: auto; margin-right: auto; width: 980px; }
+.logo { margin-left: 25px; }
+.buttonSet { margin-left: 25px; }
+.masteruserdetails
+{
+    position:absolute;
+    top:10px;
+    right:20px;
+}
+.employeeBtn.enable { background-image: url("style/images/EmployeeBtn_n.png"); }
+.employeeBtn.disable { background-image: url("style/images/EmployeeBtn_d.png"); }
+.reportBtn.enable { background-image: url("style/images/EmployeeBtn_d.png"); }
+.reportBtn.disable { background-image: url("style/images/EmployeeBtn_d.png"); }
+.employeeForm { background-color: #E5E5E5; padding: 2%; width: 100%; }
+.employeeForm.container { padding-left: 30px; }
+.employeeForm_title { font-weight: bold; }
+.employeeForm_content { border-bottom: 1px solid black; border-top: 1px solid black; margin: 0; padding: 0; }
+.employeeForm_contentLabel { color: Gray; font-weight: bold;width:130px; text-align:right; vertical-align:top; }
+.employeeForm_selBtn { vertical-align: top; }
+.menutopbutton { background-color: #CC0000; padding-left: 15px; padding-right: 15px; padding-top: 8px; padding-bottom: 8px; color: #FFFFFF; font-weight: normal; font-size: 14px; cursor: pointer; border-radius: 8px; text-decoration: none; height: 40px; }
+.pinkbutton
+{
+    background-color: #FF00FF;
+ padding-left: 15px; padding-right: 15px; padding-top: 8px; padding-bottom: 8px; color: #FFFFFF; font-weight: normal; font-size: 14px; cursor: pointer; border-radius: 8px; text-decoration: none; height: 40px; 
+}
+.topbuttonholder
+{
+    height: 30px;
+    margin-top: 10px;
+}
+.menutopbuttondisabled { background-color: #999999; }
+#mapviewer { display: none; }
+
+.dibwrapper{
+      width: 1290px;
+      height: 460px;
+      margin: 4px 31px;
+      border: 5px solid #CC0000;
+      border-radius:10px;
+   
+}
+.dibleftMenu{
+    width:150px;
+    height:451px;
+    border: 5px solid #CC0000;
+    float:left;
+}
+.dibleftMenu2{
+    width:213px;
+    height:451px;
+    border: 5px solid #CC0000;
+    float:left;
+}
+.dibBody{
+    width:897px;
+    height:451px;
+    border: 5px solid #CC0000;
+    float:left;
+}
+.titleButton{
+    width:120px;
+    height:30px;
+}
+
+.dibView{
+    width:1120px;
+    height:450px;
+    border: 5px solid #CC0000;
+    float:left;
+   
+}
+
+.dibGrid{
+    position:relative;
+    width:1124px;
+    overflow-x:scroll;
+    overflow-y:scroll;
+    height:450px;
+}
+.btnActive:active
+{
+    font-weight:bolder;
+}
+
+
+.pnlBodyMobData{
+    position:relative;
+    width: 1120px;
+    height: 451px;
+    border: 5px solid #CC0000;
+    float: left;
+}
+
+.iframeMobData {
+    position:relative;
+    width: 1116px;
+    height: 447px;
+    
+}

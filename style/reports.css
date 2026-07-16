@@ -1,0 +1,15 @@
+﻿/* File Created: September 24, 2012 */
+.searchband {
+     background-color: #CCCCCC;
+     border: 1px solid #999999;
+     padding:5px;
+}
+.reslist {     
+     overflow: auto;
+     min-height:313px;
+     
+}
+.tableheader {
+	
+}
+.mapaddress { padding: 5px; border-style: solid; border-width: thin; }

@@ -1,0 +1,715 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0058)http://localhost:22172/EducatedGirl_Web/frmPmsTracker.aspx -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head id="ctl00_Head1"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>
+	Educate_Girls-New
+</title><link rel="stylesheet" type="text/css" href="./Educate_Girls-New_files/bootstrap.css"><link rel="stylesheet" type="text/css" href="./Educate_Girls-New_files/font-awesome.css"><link rel="stylesheet" type="text/css" href="./Educate_Girls-New_files/bootstrap-multiselect.css">
+    <script type="text/javascript" src="./Educate_Girls-New_files/jquery-2.1.0.js.download"></script>
+    <script type="text/javascript" src="./Educate_Girls-New_files/jquery.min.js.download"></script>
+    <script type="text/javascript" src="./Educate_Girls-New_files/bootstrap.js.download"></script>
+    <script type="text/javascript" src="./Educate_Girls-New_files/bootstrap-multiselect.js.download"></script>
+    <link href="./Educate_Girls-New_files/9fad9fb4f8926dd5f3e0156e4d8ba11d" rel="stylesheet" type="text/cs">
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(document).data('is_show', true);
+
+            $("#ton-new").click(function (e) {
+                e.preventDefault();
+                if ($(document).data('is_show') == true) {
+                    $('#div-show-new').hide(1000);
+                    $(document).data('is_show', false);
+                    $('.butt').attr("src", "Images/search-29.png");
+                } else {
+                    $('#div-show-new').show(1000);
+                    $(document).data('is_show', true);
+                    $('.butt').attr("src", "Images/search-not-29.png");
+                }
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        function DisableBackButton() {
+            window.history.forward()
+        }
+        DisableBackButton();
+        window.onload = DisableBackButton;
+        window.onpageshow = function (evt) { if (evt.persisted) DisableBackButton() }
+        window.onunload = function () { void (0) }
+
+    
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(document).data('is_show', true);
+            $('#x').removeClass("wapp");
+            $('#x').addClass("wapp1").css("margin-left", "20.5%");
+            $("#left-pln").click(function (e) {
+                e.preventDefault();
+                if ($(document).data('is_show') == true) {
+                    $('#div-show-left').hide(1000);
+                    $(document).data('is_show', false);
+                    $('.left-butt').attr("src", "Images/add-29.png");
+                    $('#x').removeClass("wapp1");
+                    $('#x').addClass("wapp").css("margin-left", "1%"); ;
+
+                } else {
+                    $('#div-show-left').show(1000);
+                    $(document).data('is_show', true);
+                    $('.left-butt').attr("src", "Images/close-29.png");
+                    $('#x').removeClass("wapp");
+                    $('#x').addClass("wapp1").css("margin-left", "20.5%");
+                }
+            });
+        });
+    </script>
+    
+    <style type="text/css">
+        .ajax__calendar_container
+        {
+            z-index: 100004;
+        }
+    </style>
+    <script type="text/javascript" language="javascript">
+      function AddCollapsClass() {
+            $("#collapseTwo").addClass("in");
+        }
+        function AddCollapsClassJ() {
+            $("#collapseThree").addClass("in");
+        }
+
+     </script>
+         <style>
+        .modalBackground
+        {
+            background-color: Gray !important;
+            filter: alpha(opacity=50) !important;
+            opacity: 0.7 !important;
+        }
+        .block {
+  display: block;
+  width: 50%;
+  border: none;
+  background-color: #4CAF50;
+  padding: 14px 28px;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+}
+    </style>
+    <style>
+        .pagination-ys
+        {
+            /*display: inline-block;*/
+            padding-left: 0;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        
+        .pagination-ys table > tbody > tr > td
+        {
+            display: inline;
+        }
+        
+        .pagination-ys table > tbody > tr > td > a, .pagination-ys table > tbody > tr > td > span
+        {
+            position: relative;
+            float: left;
+            padding: 8px 12px;
+            line-height: 1.42857143;
+            text-decoration: none;
+            color: #3ac0f2;
+            background-color: #ffffff;
+            border: 1px solid #dddddd;
+            margin-left: -1px;
+        }
+        
+        .pagination-ys table > tbody > tr > td > span
+        {
+            position: relative;
+            float: left;
+            padding: 8px 12px;
+            line-height: 1.42857143;
+            text-decoration: none;
+            margin-left: -1px;
+            z-index: 2;
+            color: #3ac0f2;
+            background-color: #f5f5f5;
+            border-color: #dddddd;
+            cursor: default;
+        }
+        
+        .pagination-ys table > tbody > tr > td:first-child > a, .pagination-ys table > tbody > tr > td:first-child > span
+        {
+            margin-left: 0;
+            border-bottom-left-radius: 4px;
+            border-top-left-radius: 4px;
+        }
+        
+        .pagination-ys table > tbody > tr > td:last-child > a, .pagination-ys table > tbody > tr > td:last-child > span
+        {
+            border-bottom-right-radius: 4px;
+            border-top-right-radius: 4px;
+        }
+        
+        .pagination-ys table > tbody > tr > td > a:hover, .pagination-ys table > tbody > tr > td > span:hover, .pagination-ys table > tbody > tr > td > a:focus, .pagination-ys table > tbody > tr > td > span:focus
+        {
+            color: Black;
+            background-color: #eeeeee;
+            border-color: #dddddd;
+        }
+    </style>
+    <style type="text/css">
+        .multiselect.dropdown-toggle.btn.btn-default > div.restricted
+        {
+            margin-right: 5px;
+            max-width: 100px;
+            overflow: hidden;
+        }
+    </style>
+    <style type="text/css">
+        .radio .cr
+        {
+            border-radius: 75%;
+            border-color: #333;
+        }
+        
+        .checkbox .cr .cr-icon, .radio .cr .cr-icon
+        {
+            position: absolute;
+            font-size: .8em;
+            line-height: 0;
+            top: 50%;
+            left: 15%;
+        }
+        
+        .radio .cr .cr-icon
+        {
+            margin-left: 0.04em;
+        }
+        
+        .checkbox label input[type="checkbox"], .radio label input[type="radio"]
+        {
+            display: none;
+        }
+        
+        .checkbox label input[type="checkbox"] + .cr > .cr-icon, .radio label input[type="radio"] + .cr > .cr-icon
+        {
+            transform: scale(3) rotateZ(-220deg);
+            opacity: 0;
+            transition: all .7s ease-in;
+        }
+        
+        .checkbox label input[type="checkbox"]:checked + .cr > .cr-icon, .radio label input[type="radio"]:checked + .cr > .cr-icon
+        {
+            transform: scale(1) rotateZ(0deg);
+            opacity: 1;
+        }
+        
+        .checkbox label input[type="checkbox"]:disabled + .cr, .radio label input[type="radio"]:disabled + .cr
+        {
+            opacity: .5;
+        }
+        
+        .new-navbutt
+        {
+            float: left !important;
+            margin-top: 0px !important;
+        }
+        
+        .row-border
+        {
+            border-bottom: 1px dotted rgb(221, 221, 221);
+            margin-bottom: 15px;
+        }
+        
+        .checkbox
+        {
+            position: relative;
+            display: block;
+            margin-top: 2px !important;
+            margin-bottom: 5px !important;
+        }
+        
+        
+        .new-navbutt
+        {
+            float: left !important;
+            margin-top: 0px !important;
+        }
+        
+        .row-border
+        {
+            border-bottom: 1px dotted rgb(221, 221, 221);
+            margin-bottom: 15px;
+        }
+        .checkbox .cr .cr-icon, .radio .cr .cr-icon
+        {
+            position: absolute;
+            font-size: .8em;
+            line-height: 0;
+            top: 50%;
+            left: 15%;
+        }
+        
+        .radio .cr .cr-icon
+        {
+            margin-left: 0.04em;
+        }
+        
+        .checkbox label input[type="checkbox"], .radio label input[type="radio"]
+        {
+            display: none;
+        }
+        
+        .checkbox label input[type="checkbox"] + .cr > .cr-icon, .radio label input[type="radio"] + .cr > .cr-icon
+        {
+            transform: scale(3) rotateZ(-220deg);
+            opacity: 0;
+            transition: all .7s ease-in;
+        }
+        
+        .checkbox label input[type="checkbox"]:checked + .cr > .cr-icon, .radio label input[type="radio"]:checked + .cr > .cr-icon
+        {
+            transform: scale(1) rotateZ(0deg);
+            opacity: 1;
+        }
+        
+        .checkbox label input[type="checkbox"]:disabled + .cr, .radio label input[type="radio"]:disabled + .cr
+        {
+            opacity: .5;
+        }
+        
+        .new-navbutt
+        {
+            float: left !important;
+            margin-top: 0px !important;
+        }
+        
+        .row-border
+        {
+            border-bottom: 1px dotted rgb(221, 221, 221);
+            margin-bottom: 15px;
+        }
+        
+        .checkbox
+        {
+            position: relative;
+            display: block;
+            margin-top: 2px !important;
+            margin-bottom: 5px !important;
+        }
+        
+        .CheckBoxListCssClass
+        {
+            font-family: calibri;
+            margin-left: 5px;
+            font-weight: bold;
+            font-size: small;
+            top: 53%;
+            left: 3%;
+            text-align: left !important;
+            color: Black;
+            background: white !important;
+        }
+        .CheckBoxListCssClassNew
+        {
+            font-family: calibri;
+            margin-left: 5px;
+            font-weight: bold;
+            font-size: 11.2px !important;
+            top: 53%;
+            left: 3%;
+            text-align: left !important;
+            color: Black;
+            background: white !important;
+        }
+        .checkboxlist
+        {
+            position: absolute;
+            font-size: .8em;
+            margin-left: 10px;
+            line-height: 0;
+            top: 50%;
+            left: 15%;
+        }
+        .td-widt
+        {
+            width: auto !important;
+        }
+        
+        .td-width1
+        {
+            width: 100px !important;
+        }
+        
+        @media (min-width:10px) and (max-width:640px)
+        {
+            .td-widt
+            {
+                width: 90px !important;
+            }
+        
+        
+            .td-width1
+            {
+                width: 90px !important;
+            }
+        }
+        
+        .table-mb
+        {
+            margin-bottom: 2px !important;
+        }
+        
+        .thnail
+        {
+            padding: 0px !important;
+            border-radius: 0px !important;
+            margin-bottom: 0px !important;
+            min-height: 60px;
+        }
+    </style>
+    <style type="text/css">
+        .ajax__calendar_container
+        {
+            z-index: 1000;
+        }
+        .modalpopupcss
+        {
+            background-color: #666699;
+            filter: alpha(opacity=50);
+            opacity: 0.7;
+        }
+        .modalPopup
+        {
+            background-color: #666699;
+            filter: alpha(opacity=50);
+            opacity: 0.7;
+            z-index: 999999;
+        }
+        
+        
+        input[type="radio"], input[type="checkbox"]
+        {
+            margin: 4px 7px 0px !important;
+            margin-top: 1px !important;
+            line-height: normal !important;
+        }
+        .gridnewheadercss
+        {
+            color: #ffffff;
+            vertical-align: middle;
+            background-color: #81AB81;
+        }
+    </style>
+</head>
+<body>
+    <form name="aspnetForm" method="post" action="http://localhost:22172/EducatedGirl_Web/frmPmsTracker.aspx" id="aspnetForm" önunload="disableBackButton()" onkeydown="return (event.keyCode!=13); ">
+<div>
+<input type="hidden" name="ctl00_ToolkitScriptManager1_HiddenField" id="ctl00_ToolkitScriptManager1_HiddenField" value=";;AjaxControlToolkit, Version=3.5.7.123, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e:en-US:5a4df314-b4a2-4da2-a207-9284f1b1e96c:de1feab2:f2c8e708:720a52bf:f9cec9bc:589eaa30:a67c2700:ab09e3fe:87104b7c:8613aea7:3202a5a2:be6fb298">
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="">
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="">
+<input type="hidden" name="__LASTFOCUS" id="__LASTFOCUS" value="">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUKLTQ0NzIwNDUxNg8WBh4BMQUCc3MeBkFubnVhbGUeB0QyZFVzZXJlFgJmD2QWAgIDD2QWCgIBDxYCHglpbm5lcmh0bWwFtTIgPHVsIGNsYXNzPSduYXYgbmF2YmFyLW5hdic+ICAgPGxpID4gIDxhIGhyZWY9ZGFzaGJvYXJkLmFzcHg+SG9tZSA8L2E+IDwvbGk+ICA8bGkgY2xhc3M9J2Ryb3Bkb3duJz4gIDxhIGNsYXNzPSdkcm9wZG93bi10b2dnbGUnIGRhdGEtdG9nZ2xlPSdkcm9wZG93bicgaHJlZj0nIyc+UmVwb3J0IDxzcGFuIGNsYXNzPSdjYXJldCc+ICA8L3NwYW4+PC9hPiA8dWwgY2xhc3M9J2Ryb3Bkb3duLW1lbnUnPiAgPGxpID4gIDxhIGhyZWY9ZnJtTmV3VXNlckVudHJ5UmVwb3J0cy5hc3B4PiBEYXRhIEVudHJ5IFN0YXR1czwvYT4gPC9saT4gIDxsaSA+ICA8YSBocmVmPWZybVJlcG9ydERldGFpbHMuYXNweD4gRGV0YWlsZWQgUmVwb3J0czwvYT4gPC9saT4gIDxsaSA+ICA8YSBocmVmPWZybWFuYWx5c2lzTmV3UmVwb3J0LmFzcHg+IERvb3IgdG8gRG9vciBBbmFseXNpczwvYT4gPC9saT4gIDxsaSA+ICA8YSBocmVmPWZybURvbm9yUmVwb3J0LmFzcHg+IEVucm9sbG1lbnQ8L2E+IDwvbGk+ICA8bGkgPiAgPGEgaHJlZj1mcm1EYXRhSW1wb3J0U3RhdHVzX1JlcG9ydC5hc3B4PiBEYXRhIEltcG9ydCBTdGF0dXM8L2E+IDwvbGk+ICA8bGkgPiAgPGEgaHJlZj1Gcm1OZXdfQ0xUX1JlcG9ydC5hc3B4PiBMZWFybmluZyBMZXZlbDwvYT4gPC9saT4gIDxsaSA+ICA8YSBocmVmPUZybURpc3RpY3RQcm9maWxlLmFzcHg+IERpc3RyaWN0IFByb2ZpbGU8L2E+IDwvbGk+ICA8bGkgPiAgPGEgaHJlZj1mcm1SZXBvcnRNb2R1bGVXaXNlLmFzcHg+IE1vZHVsZSBXaXNlIFJlcG9ydDwvYT4gPC9saT4gIDxsaSA+ICA8YSBocmVmPWZybU1vYmlsZVRhcmdldFJlcG9ydC5hc3B4PiBBY3Rpdml0eSBSZXBvcnQ8L2E+IDwvbGk+ICA8bGkgPiAgPGEgaHJlZj1mcm1Nb2JpbGVUYXJnZXRSZXBvcnRCTy5hc3B4PiBBY3Rpdml0eSBSZXBvcnQgQk88L2E+IDwvbGk+ICA8bGkgPiAgPGEgaHJlZj1mcm1TdGFmZnRyYWluaW5nUmVwb3J0LmFzcHg+IFN0YWZmIFRyYWluaW5nIFJlcG9ydDwvYT4gPC9saT4gIDxsaSA+ICA8YSBocmVmPWZybVVzZXJEZXRhaWxzLmFzcHg+IElUIFN1cHBvcnQ8L2E+IDwvbGk+ICA8bGkgPiAgPGEgaHJlZj1mcm1SZXBvcnRUcmFja2VybmV3LmFzcHg+IFRyYWNrZXIgUmVwb3J0PC9hPiA8L2xpPiAgPGxpID4gIDxhIGhyZWY9ZnJtVGFEYVJlcG9ydC5hc3B4PiBURC9EQSBSZXBvcnQ8L2E+IDwvbGk+ICA8bGkgPiAgPGEgaHJlZj1mcm1BY3Rpdml0eVN1bW1hcnlSZXBvcnQuYXNweD4gQWN0aXZpdHkgU3VtbWFyeSBSZXBvcnQ8L2E+IDwvbGk+ICA8bGkgPiAgPGEgaHJlZj1Gcm1NSVNSZXBvcnQuYXNweD4gTUlTIFJlcG9ydDwvYT4gPC9saT4gIDxsaSA+ICA8YSBocmVmPWZybUdvdnRSZXBvcnQuYXNweD4gR292ZXJubWVudCBSZXBvcnQ8L2E+IDwvbGk+ICA8bGkgPiAgPGEgaHJlZj1mcm1QbXNUcmFja2VyLmFzcHg+IEVucm9sbWVudCB0cmFja2VyczwvYT4gPC9saT4gPC91bD4gPC9saT4gIDxsaSBjbGFzcz0nZHJvcGRvd24nPiAgPGEgY2xhc3M9J2Ryb3Bkb3duLXRvZ2dsZScgZGF0YS10b2dnbGU9J2Ryb3Bkb3duJyBocmVmPScjJz5CYXNlbGluZSA8c3BhbiBjbGFzcz0nY2FyZXQnPiAgPC9zcGFuPjwvYT4gPHVsIGNsYXNzPSdkcm9wZG93bi1tZW51Jz4gIDxsaSA+ICA8YSBocmVmPWZybUQyZFN1cnZleS5hc3B4PiBEb29yIHRvIERvb3IgU3VydmV5PC9hPiA8L2xpPiAgPGxpID4gIDxhIGhyZWY9ZnJtc2Nob29sLmFzcHg+IFNjaG9vbCBCYXNlbGluZTwvYT4gPC9saT4gIDxsaSA+ICA8YSBocmVmPWZybVZpbGxhZ2Vwcm9maWxlLmFzcHg+IFZpbGxhZ2UgUHJvZmlsZTwvYT4gPC9saT4gIDxsaSA+ICA8YSBocmVmPWZybUNMVC5hc3B4PiBMZWFybmluZyBMZXZlbDwvYT4gPC9saT4gIDxsaSA+ICA8YSBocmVmPWZybUNMVElPLmFzcHg+IExlYXJuaW5nIExldmVsIChJMCk8L2E+IDwvbGk+IDwvdWw+IDwvbGk+ICA8bGkgY2xhc3M9J2Ryb3Bkb3duJz4gIDxhIGNsYXNzPSdkcm9wZG93bi10b2dnbGUnIGRhdGEtdG9nZ2xlPSdkcm9wZG93bicgaHJlZj0nIyc+U3R1ZGVudCA8c3BhbiBjbGFzcz0nY2FyZXQnPiAgPC9zcGFuPjwvYT4gPHVsIGNsYXNzPSdkcm9wZG93bi1tZW51Jz4gIDxsaSA+ICA8YSBocmVmPWZybUVucm9sbG1lbnQuYXNweD4gRW5yb2xsbWVudDwvYT4gPC9saT4gIDxsaSA+ICA8YSBocmVmPWZybUluZWxpZ2libGUuYXNweD4gSW5lbGlnaWJsZTwvYT4gPC9saT4gIDxsaSA+ICA8YSBocmVmPWZybVJldGVudGlvbkluZGl2aWR1YWwuYXNweD4gUmV0ZW50aW9uPC9hPiA8L2xpPiAgPGxpID4gIDxhIGhyZWY9ZnJtUmV0ZW50aW9uLmFzcHg+IFJldGVudGlvbiBBZ2dyZWdhdGU8L2E+IDwvbGk+ICA8bGkgPiAgPGEgaHJlZj1mcm1SZUVucm9sbG1lbnQuYXNweD4gUmUtRW5yb2xsbWVudDwvYT4gPC9saT4gIDxsaSA+ICA8YSBocmVmPWZybVRyYWNrZXJOZXcuYXNweD4gRm9ybSBBc3Nlc3NtZW50IFRyYWNrZXI8L2E+IDwvbGk+IDwvdWw+IDwvbGk+ICA8bGkgY2xhc3M9J2Ryb3Bkb3duJz4gIDxhIGNsYXNzPSdkcm9wZG93bi10b2dnbGUnIGRhdGEtdG9nZ2xlPSdkcm9wZG93bicgaHJlZj0nIyc+VHJhaW5pbmcgPHNwYW4gY2xhc3M9J2NhcmV0Jz4gIDwvc3Bhbj48L2E+IDx1bCBjbGFzcz0nZHJvcGRvd24tbWVudSc+ICA8bGkgPiAgPGEgaHJlZj1mcm1UYnRyYWluaW5nLmFzcHg+IFRlYW0gQmFsaWthIFRyYWluaW5nPC9hPiA8L2xpPiAgPGxpID4gIDxhIGhyZWY9ZnJtU3RhZmZ0cmFpbmluZy5hc3B4PiBTdGFmZiBUcmFpbmluZzwvYT4gPC9saT4gIDxsaSA+ICA8YSBocmVmPWZybVN0YWZmc2NoZWR1bGluZy5hc3B4PiBTdGFmZiBUcmFpbmluZyBTY2hlZHVsZXI8L2E+IDwvbGk+IDwvdWw+IDwvbGk+ICA8bGkgY2xhc3M9J2Ryb3Bkb3duJz4gIDxhIGNsYXNzPSdkcm9wZG93bi10b2dnbGUnIGRhdGEtdG9nZ2xlPSdkcm9wZG93bicgaHJlZj0nIyc+RGF0YSBFeGNoYW5nZSA8c3BhbiBjbGFzcz0nY2FyZXQnPiAgPC9zcGFuPjwvYT4gPHVsIGNsYXNzPSdkcm9wZG93bi1tZW51Jz4gIDxsaSA+ICA8YSBocmVmPWZybVR3b1Bhc3NUZXN0LmFzcHg+IEltcG9ydCBWYWxpZGF0ZWQgRGF0YTwvYT4gPC9saT4gPC91bD4gPC9saT4gIDxsaSBjbGFzcz0nZHJvcGRvd24nPiAgPGEgY2xhc3M9J2Ryb3Bkb3duLXRvZ2dsZScgZGF0YS10b2dnbGU9J2Ryb3Bkb3duJyBocmVmPScjJz5NYXN0ZXIgPHNwYW4gY2xhc3M9J2NhcmV0Jz4gIDwvc3Bhbj48L2E+IDx1bCBjbGFzcz0nZHJvcGRvd24tbWVudSc+ICA8bGkgPiAgPGEgaHJlZj1mcm1Mb2NhdGlvbi5hc3B4PiBMb2NhdGlvbjwvYT4gPC9saT4gIDxsaSA+ICA8YSBocmVmPWZybUVtcGxveWVlUmVnaXN0cmF0aW9uLmFzcHg+IEVtcGxveWVlPC9hPiA8L2xpPiAgPGxpID4gIDxhIGhyZWY9ZnJtVGVhbUJhbGlrYS5hc3B4PiBUZWFtIEJhbGlrYTwvYT4gPC9saT4gIDxsaSA+ICA8YSBocmVmPWZybUNoYW5nZUNsdXN0ZXIuYXNweD4gQ2x1c3RlciBhbmQgwqBTY2hvb2wgQ2hhbmdlIFRvb2w8L2E+IDwvbGk+ICA8bGkgPiAgPGEgaHJlZj1mcm1TY2hvb2xzZWxlY3Rpb24uYXNweD4gU2Nob29sIFNlbGVjdGlvbjwvYT4gPC9saT4gIDxsaSA+ICA8YSBocmVmPWZybUdLUC5hc3B4PiBHS1AgU2Vzc2lvbiBwbGFuPC9hPiA8L2xpPiAgPGxpID4gIDxhIGhyZWY9RnJtTGF0TG9uZy5hc3B4PiBWaWxsYWdlIE1hcHBpbmc8L2E+IDwvbGk+ICA8bGkgPiAgPGEgaHJlZj1mcm1HS1BSZXBvcnQuYXNweD4gR0tQIFJlcG9ydDwvYT4gPC9saT4gIDxsaSA+ICA8YSBocmVmPUZybVBoYXNlTWFwcGluZy5hc3B4PiBQaGFzZSBNYXBwaW5nPC9hPiA8L2xpPiAgPGxpID4gIDxhIGhyZWY9RnJtVEJfVHJhaW5pbmdNYXBwaW5nLmFzcHg+IFRyYWluaW5nIFVwZGF0ZSBNb2R1bGU8L2E+IDwvbGk+ICA8bGkgPiAgPGEgaHJlZj1mcm1JbmZsdWVuY2VyUHJvZmlsZS5hc3B4PiBJbmZsdWVuY2VyIFByb2ZpbGU8L2E+IDwvbGk+IDwvdWw+IDwvbGk+ICA8bGkgY2xhc3M9J2Ryb3Bkb3duJz4gIDxhIGNsYXNzPSdkcm9wZG93bi10b2dnbGUnIGRhdGEtdG9nZ2xlPSdkcm9wZG93bicgaHJlZj0nIyc+VXRpbGl0aWVzIDxzcGFuIGNsYXNzPSdjYXJldCc+ICA8L3NwYW4+PC9hPiA8dWwgY2xhc3M9J2Ryb3Bkb3duLW1lbnUnPiAgPGxpID4gIDxhIGhyZWY9RnJtX1VzZXJSZWdpc3RyYXRpb24uYXNweD4gVXNlciBSZWdpc3RyYXRpb248L2E+IDwvbGk+ICA8bGkgPiAgPGEgaHJlZj1mcm1Eb3duTG9hZC5hc3B4PiBEb3dubG9hZCBTZXR1cDwvYT4gPC9saT4gIDxsaSA+ICA8YSBocmVmPUZybV9DaGFuZ2VfUGFzc3dvcmQuYXNweD4gQ2hhbmdlIFBhc3N3b3JkPC9hPiA8L2xpPiAgPGxpID4gIDxhIGhyZWY9ZnJtVGFsbHlEYXRhLmFzcHg+IEVucm9sbG1lbnQgTWFudWFsIE1hdGNoaW5nPC9hPiA8L2xpPiAgPGxpID4gIDxhIGhyZWY9ZnJtVXNlclJpZ2h0cy5hc3B4PiBNYW5hZ2UgVXNlciBSaWdodHM8L2E+IDwvbGk+ICA8bGkgPiAgPGEgaHJlZj1mcm1NYXN0ZXJJbXBvcnQuYXNweD4gSW1wb3J0IERpc3RyaWN0IEV4Y2VsPC9hPiA8L2xpPiAgPGxpID4gIDxhIGhyZWY9ZnJtTW9kZWxvY2tpbmcuYXNweD4gTWFuYWdlIE1vZHVsZSBMb2NraW5nPC9hPiA8L2xpPiAgPGxpID4gIDxhIGhyZWY9ZnJtQ2hhbmdlTWFzdGVyLmFzcHg+IE1hc3RlciBDaGFuZ2U8L2E+IDwvbGk+ICA8bGkgPiAgPGEgaHJlZj1Gcm1fQ2hhbmdlX1Bhc3N3b3JkQWRtaW4uYXNweD4gQWRtaW4gQ2hhbmdlIFBhc3N3b3JkPC9hPiA8L2xpPiAgPGxpID4gIDxhIGhyZWY9ZnJtQnVsa0luc2VydFVzZXIuYXNweD4gVXNlciBJbnRlcmZhY2U8L2E+IDwvbGk+ICA8bGkgPiAgPGEgaHJlZj1Gcm1Hb3Z0VGFyZ2V0LmFzcHg+IEdvdmVybWVudCBUYXJnZXQgSW1wb3J0PC9hPiA8L2xpPiA8L3VsPiA8L2xpPiAgPGxpIGNsYXNzPSdkcm9wZG93bic+ICA8YSBjbGFzcz0nZHJvcGRvd24tdG9nZ2xlJyBkYXRhLXRvZ2dsZT0nZHJvcGRvd24nIGhyZWY9JyMnPkFjdGl2aXR5IDxzcGFuIGNsYXNzPSdjYXJldCc+ICA8L3NwYW4+PC9hPiA8dWwgY2xhc3M9J2Ryb3Bkb3duLW1lbnUnPiAgPGxpID4gIDxhIGhyZWY9RnJtQWN0aXZpdHlDbHVzdGVyU2VhcmNoTmV3LmFzcHg+IFNjaG9vbCDCoGFuZCBWaWxsYWdlIEFjdGl2aXR5PC9hPiA8L2xpPiAgPGxpID4gIDxhIGhyZWY9ZnJtdGJsTmV3UmVwb3J0cy5hc3B4PiBFbXBsb3llZSBUcmFja2luZzwvYT4gPC9saT4gIDxsaSA+ICA8YSBocmVmPWZybXRibFJlcG9ydHNWZXJzaW9uLmFzcHg+IEVtcGxveWVlIFZlcnNpb24gQ2hlY2s8L2E+IDwvbGk+ICA8bGkgPiAgPGEgaHJlZj1mcm10YmxCT1JlcG9ydHMuYXNweD4gRW1wbG95ZWUgVHJhY2tpbmcgQk88L2E+IDwvbGk+ICA8bGkgPiAgPGEgaHJlZj1mcm1UcmF2ZWxNYXRyaXguYXNweD4gVHJhdmVsIE1hdHJpeDwvYT4gPC9saT4gPC91bD4gPC9saT4gIDxsaSBjbGFzcz0nZHJvcGRvd24nPiAgPGEgY2xhc3M9J2Ryb3Bkb3duLXRvZ2dsZScgZGF0YS10b2dnbGU9J2Ryb3Bkb3duJyBocmVmPScjJz5MaWFpc29uIDxzcGFuIGNsYXNzPSdjYXJldCc+ICA8L3NwYW4+PC9hPiA8dWwgY2xhc3M9J2Ryb3Bkb3duLW1lbnUnPiAgPGxpID4gIDxhIGhyZWY9ZnJtTW9VLmFzcHg+IEdvdmVybm1lbnQ8L2E+IDwvbGk+IDwvdWw+IDwvbGk+ICA8bGkgY2xhc3M9J2Ryb3Bkb3duJz4gIDxhIGNsYXNzPSdkcm9wZG93bi10b2dnbGUnIGRhdGEtdG9nZ2xlPSdkcm9wZG93bicgaHJlZj0nIyc+UGxhbm5pbmcgPHNwYW4gY2xhc3M9J2NhcmV0Jz4gIDwvc3Bhbj48L2E+IDx1bCBjbGFzcz0nZHJvcGRvd24tbWVudSc+ICA8bGkgPiAgPGEgaHJlZj1mcm1OZXdTaXBBbm51YWwuYXNweD4gQW5udWFsIERhdGE8L2E+IDwvbGk+ICA8bGkgPiAgPGEgaHJlZj1mcm1Bbm51YWxSZXBvcnQuYXNweD4gQW5udWFsIFBsYW48L2E+IDwvbGk+ICA8bGkgPiAgPGEgaHJlZj1Gcm1Bbm51YWxQbGFuX05ldy5hc3B4PiBBbm51YWwgUGxhbiBFbnRyeTwvYT4gPC9saT4gPC91bD4gPC9saT4gIDxsaSBjbGFzcz0nZHJvcGRvd24nPiAgPGEgY2xhc3M9J2Ryb3Bkb3duLXRvZ2dsZScgZGF0YS10b2dnbGU9J2Ryb3Bkb3duJyBocmVmPScjJz5FbnJvbGxtZW50IDxzcGFuIGNsYXNzPSdjYXJldCc+ICA8L3NwYW4+PC9hPiA8dWwgY2xhc3M9J2Ryb3Bkb3duLW1lbnUnPiAgPGxpID4gIDxhIGhyZWY9RnJtU2VhbFNpZ24uYXNweD4gU2VhbC1zaWduIGdlbmVyYXRpb248L2E+IDwvbGk+ICA8bGkgPiAgPGEgaHJlZj1Gcm1TZWFsU2lnbkFwcHJvdmFsLmFzcHg+IFNlYWwtc2lnbiB2YWxpZGF0aW9uPC9hPiA8L2xpPiAgPGxpID4gIDxhIGhyZWY9RnJtU2VhbFNpZ25TcGVjaWZpY2F0aW9uLmFzcHg+IEVucm9sbG1lbnQgTWFudWFsIE1hdGNoaW5nPC9hPiA8L2xpPiAgPGxpID4gIDxhIGhyZWY9RnJtU2VhbFNpZ25SZW1vdmVEdXBsaWNhdGUuYXNweD4gRW5yb2xsbWVudCBEdXBsaWNhdGUgTWF0Y2hpbmc8L2E+IDwvbGk+IDwvdWw+IDwvbGk+ICA8L3VsPiBkAgMPDxYCHgRUZXh0BQpTdXBlckFkbWluZGQCBQ8PFgIfBGVkZAIHDw8WAh8EBQhSZWdpb25hbGRkAgsPZBYGAgsPZBYCZg9kFg4CAQ8QDxYGHg1EYXRhVGV4dEZpZWxkBQRUeXBlHg5EYXRhVmFsdWVGaWVsZAUCSUQeC18hRGF0YUJvdW5kZ2QQFQYKLS1TZWxlY3QtLQkyMDIwLTIwMjEJMjAxOS0yMDIwCTIwMTgtMjAxOQkyMDE3LTIwMTgJMjAxNi0yMDE3FQYBMAQyMDIwBDIwMTkEMjAxOAQyMDE3BDIwMTYUKwMGZ2dnZ2dnFgECAWQCAw8QZGQWAWZkAgcPEA8WBh8FBQlTdGF0ZU5hbWUfBgUJU3RhdGVDb2RlHwdnZBAVAw5NYWRoeWEgUHJhZGVzaAlSYWphc3RoYW4NVXR0YXIgUHJhZGVzaBUDAjIzATgBORQrAwNnZ2cWAGQCCQ8QZGQWAGQCCw8QZGQWAGQCDQ8QZGQWAGQCDw9kFgICAQ8QZGQWAGQCDQ9kFgYCBQ88KwARAgEQFgAWABYADBQrAABkAgcPPCsAEQIBEBYAFgAWAAwUKwAAZAIJDzwrABECARAWABYAFgAMFCsAAGQCEw9kFgICBw88KwARAQwUKwAAZBgFBR5fX0NvbnRyb2xzUmVxdWlyZVBvc3RCYWNrS2V5X18WCAUcY3RsMDAkTWFpbkNvbnRlbnQkQ2hrU3RhdGUkMAUcY3RsMDAkTWFpbkNvbnRlbnQkQ2hrU3RhdGUkMQUcY3RsMDAkTWFpbkNvbnRlbnQkQ2hrU3RhdGUkMgUcY3RsMDAkTWFpbkNvbnRlbnQkQ2hrU3RhdGUkMgUfY3RsMDAkTWFpbkNvbnRlbnQkY2hrRGlzdHJpY3QkMAUcY3RsMDAkTWFpbkNvbnRlbnQkY2hrQmxvY2skMAUgY3RsMDAkTWFpbkNvbnRlbnQkZGRsUGFuY2hheWF0JDAFHmN0bDAwJE1haW5Db250ZW50JENhbmNlbEJ1dHRvbgUbY3RsMDAkTWFpbkNvbnRlbnQkUG9wVXBHcmlkD2dkBR9jdGwwMCRNYWluQ29udGVudCRHVkNoaWxkVGFyZ2V0D2dkBRljdGwwMCRNYWluQ29udGVudCRHVkNoaWxkD2dkBSBjdGwwMCRNYWluQ29udGVudCRHVl9EeW5hbWljR3JpZA9nZCBRUQiDy2B+mLnd+6dxloDAiq9DGuRcVlo7TWyKAoQo">
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['aspnetForm'];
+if (!theForm) {
+    theForm = document.aspnetForm;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<script src="./Educate_Girls-New_files/WebResource.axd" type="text/javascript"></script>
+
+
+<script src="./Educate_Girls-New_files/ScriptResource.axd" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+if (typeof(Sys) === 'undefined') throw new Error('ASP.NET Ajax client-side framework failed to load.');
+//]]>
+</script>
+
+<script src="./Educate_Girls-New_files/ScriptResource(1).axd" type="text/javascript"></script>
+<script src="./Educate_Girls-New_files/frmPmsTracker.aspx" type="text/javascript"></script>
+<div>
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="82D191D8">
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="/wEdABY3LeHJkeuHdu27o/oqWtEjhKHg0r6mIC6yNbfORIRL64nkPwqxcCtexJ14yo63qmQY3udnZT8tTvE4DqcZuKSTbtA4ghCng059gWptJKm4rZr4VE1wjIP2s8dXt/4qRh2ahoaU/1g0I+nQ3j2ZXCtwuaI6T1rno5bK+RJTO+l8eClNGjmmXBaKejblEn3D2XrLL2+c8vaoeS93t/vHyoFzbLAIFTnSXoAg1WBL7jW0o50AMJJ7SyzPyGebXDHXiQHHksaOoCQwPYopOVG8oal/XTq4Kh1utaKyh5UBcch1UoJC5evxvpB1+MpLJSRuoxoUlM37NlWcRle3W7h47nR+e+IOCfHukztoo6W69sg9PCl+Py8P+4RFHHlae3us399p+vRPtCTm5eb/agiGqmWEc4z8AyDkjV/XgXnrNWdzClVvOok0PeFVmgbHRiG0hkb/2Rj2L4k8NHOPd3S7qIenBlpLa9V7v+sJ69HtcWoSZ61i1kHZA0eaKkX5ucahVp0=">
+</div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="navbar-fixed-top navbar navbar-default " role="navigation" style="position: fixed;
+                box-shadow: 10px 5px 10px #545454;">
+                <div class="container-fluid" style="height: 30px;">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="http://localhost:22172/EducatedGirl_Web/frmPmsTracker.aspx#">
+                            <img src="./Educate_Girls-New_files/logo-new.png" class="img-responsive logo-img"></a>
+                    </div>
+                    <div class="collapse navbar-collapse">
+                        <div id="ctl00_myNavbar"> <ul class="nav navbar-nav">   <li>  <a href="http://localhost:22172/EducatedGirl_Web/dashboard.aspx">Home </a> </li>  <li class="dropdown">  <a class="dropdown-toggle" data-toggle="dropdown" href="http://localhost:22172/EducatedGirl_Web/frmPmsTracker.aspx#">Report <span class="caret">  </span></a> <ul class="dropdown-menu">  <li>  <a href="http://localhost:22172/EducatedGirl_Web/frmNewUserEntryReports.aspx"> Data Entry Status</a> </li>  <li>  <a href="http://localhost:22172/EducatedGirl_Web/frmReportDetails.aspx"> Detailed Reports</a> </li>  <li>  <a href="http://localhost:22172/EducatedGirl_Web/frmanalysisNewReport.aspx"> Door to Door Analysis</a> </li>  <li>  <a href="http://localhost:22172/EducatedGirl_Web/frmDonorReport.aspx"> Enrollment</a> </li>  <li>  <a href="http://localhost:22172/EducatedGirl_Web/frmDataImportStatus_Report.aspx"> Data Import Status</a> </li>  <li>  <a href="http://localhost:22172/EducatedGirl_Web/FrmNew_CLT_Report.aspx"> Learning Level</a> </li>  <li>  <a href="http://localhost:22172/EducatedGirl_Web/FrmDistictProfile.aspx"> District Profile</a> </li>  <li>  <a href="http://localhost:22172/EducatedGirl_Web/frmReportModuleWise.aspx"> Module Wise Report</a> </li>  <li>  <a href="http://localhost:22172/EducatedGirl_Web/frmMobileTargetReport.aspx"> Activity Report</a> </li>  <li>  <a href="http://localhost:22172/EducatedGirl_Web/frmMobileTargetReportBO.aspx"> Activity Report BO</a> </li>  <li>  <a href="http://localhost:22172/EducatedGirl_Web/frmStafftrainingReport.aspx"> Staff Training Report</a> </li>  <li>  <a href="http://localhost:22172/EducatedGirl_Web/frmUserDetails.aspx"> IT Support</a> </li>  <li>  <a href="http://localhost:22172/EducatedGirl_Web/frmReportTrackernew.aspx"> Tracker Report</a> </li>  <li>  <a href="http://localhost:22172/EducatedGirl_Web/frmTaDaReport.aspx"> TD/DA Report</a> </li>  <li>  <a href="http://localhost:22172/EducatedGirl_Web/frmActivitySummaryReport.aspx"> Activity Summary Report</a> </li>  <li>  <a href="http://localhost:22172/EducatedGirl_Web/FrmMISReport.aspx"> MIS Report</a> </li>  <li>  <a href="http://localhost:22172/EducatedGirl_Web/frmGovtReport.aspx"> Government Report</a> </li>  <li>  <a href="http://localhost:22172/EducatedGirl_Web/frmPmsTracker.aspx"> Enrolment trackers</a> </li> </ul> </li>  <li class="dropdown">  <a class="dropdown-toggle" data-toggle="dropdown" href="http://localhost:22172/EducatedGirl_Web/frmPmsTracker.aspx#">Baseline <span class="caret">  </span></a> <ul class="dropdown-menu">  <li>  <a href="http://localhost:22172/EducatedGirl_Web/frmD2dSurvey.aspx"> Door to Door Survey</a> </li>  <li>  <a href="http://localhost:22172/EducatedGirl_Web/frmschool.aspx"> School Baseline</a> </li>  <li>  <a href="http://localhost:22172/EducatedGirl_Web/frmVillageprofile.aspx"> Village Profile</a> </li>  <li>  <a href="http://localhost:22172/EducatedGirl_Web/frmCLT.aspx"> Learning Level</a> </li>  <li>  <a href="http://localhost:22172/EducatedGirl_Web/frmCLTIO.aspx"> Learning Level (I0)</a> </li> </ul> </li>  <li class="dropdown">  <a class="dropdown-toggle" data-toggle="dropdown" href="http://localhost:22172/EducatedGirl_Web/frmPmsTracker.aspx#">Student <span class="caret">  </span></a> <ul class="dropdown-menu">  <li>  <a href="http://localhost:22172/EducatedGirl_Web/frmEnrollment.aspx"> Enrollment</a> </li>  <li>  <a href="http://localhost:22172/EducatedGirl_Web/frmIneligible.aspx"> Ineligible</a> </li>  <li>  <a href="http://localhost:22172/EducatedGirl_Web/frmRetentionIndividual.aspx"> Retention</a> </li>  <li>  <a href="http://localhost:22172/EducatedGirl_Web/frmRetention.aspx"> Retention Aggregate</a> </li>  <li>  <a href="http://localhost:22172/EducatedGirl_Web/frmReEnrollment.aspx"> Re-Enrollment</a> </li>  <li>  <a href="http://localhost:22172/EducatedGirl_Web/frmTrackerNew.aspx"> Form Assessment Tracker</a> </li> </ul> </li>  <li class="dropdown">  <a class="dropdown-toggle" data-toggle="dropdown" href="http://localhost:22172/EducatedGirl_Web/frmPmsTracker.aspx#">Training <span class="caret">  </span></a> <ul class="dropdown-menu">  <li>  <a href="http://localhost:22172/EducatedGirl_Web/frmTbtraining.aspx"> Team Balika Training</a> </li>  <li>  <a href="http://localhost:22172/EducatedGirl_Web/frmStafftraining.aspx"> Staff Training</a> </li>  <li>  <a href="http://localhost:22172/EducatedGirl_Web/frmStaffscheduling.aspx"> Staff Training Scheduler</a> </li> </ul> </li>  <li class="dropdown">  <a class="dropdown-toggle" data-toggle="dropdown" href="http://localhost:22172/EducatedGirl_Web/frmPmsTracker.aspx#">Data Exchange <span class="caret">  </span></a> <ul class="dropdown-menu">  <li>  <a href="http://localhost:22172/EducatedGirl_Web/frmTwoPassTest.aspx"> Import Validated Data</a> </li> </ul> </li>  <li class="dropdown">  <a class="dropdown-toggle" data-toggle="dropdown" href="http://localhost:22172/EducatedGirl_Web/frmPmsTracker.aspx#">Master <span class="caret">  </span></a> <ul class="dropdown-menu">  <li>  <a href="http://localhost:22172/EducatedGirl_Web/frmLocation.aspx"> Location</a> </li>  <li>  <a href="http://localhost:22172/EducatedGirl_Web/frmEmployeeRegistration.aspx"> Employee</a> </li>  <li>  <a href="http://localhost:22172/EducatedGirl_Web/frmTeamBalika.aspx"> Team Balika</a> </li>  <li>  <a href="http://localhost:22172/EducatedGirl_Web/frmChangeCluster.aspx"> Cluster and &nbsp;School Change Tool</a> </li>  <li>  <a href="http://localhost:22172/EducatedGirl_Web/frmSchoolselection.aspx"> School Selection</a> </li>  <li>  <a href="http://localhost:22172/EducatedGirl_Web/frmGKP.aspx"> GKP Session plan</a> </li>  <li>  <a href="http://localhost:22172/EducatedGirl_Web/FrmLatLong.aspx"> Village Mapping</a> </li>  <li>  <a href="http://localhost:22172/EducatedGirl_Web/frmGKPReport.aspx"> GKP Report</a> </li>  <li>  <a href="http://localhost:22172/EducatedGirl_Web/FrmPhaseMapping.aspx"> Phase Mapping</a> </li>  <li>  <a href="http://localhost:22172/EducatedGirl_Web/FrmTB_TrainingMapping.aspx"> Training Update Module</a> </li>  <li>  <a href="http://localhost:22172/EducatedGirl_Web/frmInfluencerProfile.aspx"> Influencer Profile</a> </li> </ul> </li>  <li class="dropdown">  <a class="dropdown-toggle" data-toggle="dropdown" href="http://localhost:22172/EducatedGirl_Web/frmPmsTracker.aspx#">Utilities <span class="caret">  </span></a> <ul class="dropdown-menu">  <li>  <a href="http://localhost:22172/EducatedGirl_Web/Frm_UserRegistration.aspx"> User Registration</a> </li>  <li>  <a href="http://localhost:22172/EducatedGirl_Web/frmDownLoad.aspx"> Download Setup</a> </li>  <li>  <a href="http://localhost:22172/EducatedGirl_Web/Frm_Change_Password.aspx"> Change Password</a> </li>  <li>  <a href="http://localhost:22172/EducatedGirl_Web/frmTallyData.aspx"> Enrollment Manual Matching</a> </li>  <li>  <a href="http://localhost:22172/EducatedGirl_Web/frmUserRights.aspx"> Manage User Rights</a> </li>  <li>  <a href="http://localhost:22172/EducatedGirl_Web/frmMasterImport.aspx"> Import District Excel</a> </li>  <li>  <a href="http://localhost:22172/EducatedGirl_Web/frmModelocking.aspx"> Manage Module Locking</a> </li>  <li>  <a href="http://localhost:22172/EducatedGirl_Web/frmChangeMaster.aspx"> Master Change</a> </li>  <li>  <a href="http://localhost:22172/EducatedGirl_Web/Frm_Change_PasswordAdmin.aspx"> Admin Change Password</a> </li>  <li>  <a href="http://localhost:22172/EducatedGirl_Web/frmBulkInsertUser.aspx"> User Interface</a> </li>  <li>  <a href="http://localhost:22172/EducatedGirl_Web/FrmGovtTarget.aspx"> Goverment Target Import</a> </li> </ul> </li>  <li class="dropdown">  <a class="dropdown-toggle" data-toggle="dropdown" href="http://localhost:22172/EducatedGirl_Web/frmPmsTracker.aspx#">Activity <span class="caret">  </span></a> <ul class="dropdown-menu">  <li>  <a href="http://localhost:22172/EducatedGirl_Web/FrmActivityClusterSearchNew.aspx"> School &nbsp;and Village Activity</a> </li>  <li>  <a href="http://localhost:22172/EducatedGirl_Web/frmtblNewReports.aspx"> Employee Tracking</a> </li>  <li>  <a href="http://localhost:22172/EducatedGirl_Web/frmtblReportsVersion.aspx"> Employee Version Check</a> </li>  <li>  <a href="http://localhost:22172/EducatedGirl_Web/frmtblBOReports.aspx"> Employee Tracking BO</a> </li>  <li>  <a href="http://localhost:22172/EducatedGirl_Web/frmTravelMatrix.aspx"> Travel Matrix</a> </li> </ul> </li>  <li class="dropdown">  <a class="dropdown-toggle" data-toggle="dropdown" href="http://localhost:22172/EducatedGirl_Web/frmPmsTracker.aspx#">Liaison <span class="caret">  </span></a> <ul class="dropdown-menu">  <li>  <a href="http://localhost:22172/EducatedGirl_Web/frmMoU.aspx"> Government</a> </li> </ul> </li>  <li class="dropdown">  <a class="dropdown-toggle" data-toggle="dropdown" href="http://localhost:22172/EducatedGirl_Web/frmPmsTracker.aspx#">Planning <span class="caret">  </span></a> <ul class="dropdown-menu">  <li>  <a href="http://localhost:22172/EducatedGirl_Web/frmNewSipAnnual.aspx"> Annual Data</a> </li>  <li>  <a href="http://localhost:22172/EducatedGirl_Web/frmAnnualReport.aspx"> Annual Plan</a> </li>  <li>  <a href="http://localhost:22172/EducatedGirl_Web/FrmAnnualPlan_New.aspx"> Annual Plan Entry</a> </li> </ul> </li>  <li class="dropdown">  <a class="dropdown-toggle" data-toggle="dropdown" href="http://localhost:22172/EducatedGirl_Web/frmPmsTracker.aspx#">Enrollment <span class="caret">  </span></a> <ul class="dropdown-menu">  <li>  <a href="http://localhost:22172/EducatedGirl_Web/FrmSealSign.aspx"> Seal-sign generation</a> </li>  <li>  <a href="http://localhost:22172/EducatedGirl_Web/FrmSealSignApproval.aspx"> Seal-sign validation</a> </li>  <li>  <a href="http://localhost:22172/EducatedGirl_Web/FrmSealSignSpecification.aspx"> Enrollment Manual Matching</a> </li>  <li>  <a href="http://localhost:22172/EducatedGirl_Web/FrmSealSignRemoveDuplicate.aspx"> Enrollment Duplicate Matching</a> </li> </ul> </li>  </ul> </div>
+                        <ul class="nav navbar-nav navbar-right users">
+                            <li role="presentation"><a href="http://localhost:22172/EducatedGirl_Web/frmPmsTracker.aspx#"><i class="fa fa-bell-o"></i><span class="badge">
+                                1</span></a></li>
+                            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="http://localhost:22172/EducatedGirl_Web/frmPmsTracker.aspx#"><span class="fa fa-user"></span>
+                                <span id="ctl00_lblUser">SuperAdmin</span>
+                            </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="javascript:void(0)"><span class="text-danger">Employee name: </span><span class=" text-success">
+                                        <span id="ctl00_lblEmpName"></span></span></a></li>
+                                    <li><a href="javascript:void(0)"><span class="text-danger">Role: </span><span class=" text-success">
+                                        <span id="ctl00_lblRole">Regional</span></span></a></li>
+                                    <li><a href="http://localhost:22172/EducatedGirl_Web/login.aspx">Logout</a></li>
+                                </ul>
+                    </li></ul></div>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <script type="text/javascript">
+//<![CDATA[
+Sys.WebForms.PageRequestManager._initialize('ctl00$ToolkitScriptManager1', 'aspnetForm', ['tctl00$MainContent$Upnl',''], [], [], 90, 'ctl00');
+//]]>
+</script>
+
+    </div>
+    <div>
+        
+    
+    <div class="container-fluid" style="margin-top: 95px !important;">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="panel panel-default " style="background-color: #f5f5f5; margin-bottom: 0px !important;">
+                    <div class="panel-heading" style="padding: 5px 0px;">
+                        <div class="row">
+                            
+                            <a id="ctl00_MainContent_LinkButton1" class="pull-right" href="javascript:__doPostBack(&#39;ctl00$MainContent$LinkButton1&#39;,&#39;&#39;)">Export to Excel</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class=" col-lg-2 col-md-2 col-sm-2 col-xs-12 text-left" style="padding-right: 0px;">
+            <div style="overflow: auto; margin-top: 0px; height: 586px;">
+                <div class="thumbnail" style="height: 565PX;">
+                    <ul style="margin: 0px">
+                        <li class=" active li-width">
+                            <a id="ctl00_MainContent_Button3" href="javascript:__doPostBack(&#39;ctl00$MainContent$Button3&#39;,&#39;&#39;)" style="color: gren;
+                                color: blue;">School Summaries </a>
+                        </li>
+                         <li class=" active li-width">
+                            </li>
+                        <li>
+                            <a id="ctl00_MainContent_LinkButton2" href="javascript:__doPostBack(&#39;ctl00$MainContent$LinkButton2&#39;,&#39;&#39;)" style="color: gren; color: blue;">Child Summaries -(process monitoring) </a>
+                        </li>
+                        <li>
+                            <a id="ctl00_MainContent_LinkButton4" href="javascript:__doPostBack(&#39;ctl00$MainContent$LinkButton4&#39;,&#39;&#39;)" style="color: gren; color: blue;">Child summaries-(target monitoring)</a></li>
+                           
+                    </ul>
+                   
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12" style="padding-left: 1px;">
+            <div class="thumbnail" style="background-color: #f5f5f5; float: left; width: 100%;">
+                <div class="panel panel-default">
+                    <div class="form-horizontal">
+                        <div class="row">
+                       
+                        
+
+                          <div class="panel panel-default">
+                                                <div class="panel-heading" role="tab" id="headingTwo">
+                                                    <h4 class="panel-title">
+                                                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="http://localhost:22172/EducatedGirl_Web/frmPmsTracker.aspx#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">District Profile
+                                                        </a>
+                                                    </h4>
+                                                </div>
+                                                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                                   
+                                                     
+                                                           
+                                                            
+                                <div class="row marg search-bg">
+                                    <div class="form-horizontal">
+                                      <div id="ctl00_MainContent_Upnl">
+	
+                                        <div class="row">
+                                            <div class="col-sm-2 ">
+                                                <label for="email" class="padd linhei" style="padding-top: 2px;">
+                                                    Year</label>
+                                                <select name="ctl00$MainContent$ddlYear" onchange="javascript:setTimeout(&#39;__doPostBack(\&#39;ctl00$MainContent$ddlYear\&#39;,\&#39;\&#39;)&#39;, 0)" id="ctl00_MainContent_ddlYear" class="form-control ">
+		<option value="0">--Select--</option>
+		<option selected="selected" value="2020">2020-2021</option>
+		<option value="2019">2019-2020</option>
+		<option value="2018">2018-2019</option>
+		<option value="2017">2017-2018</option>
+		<option value="2016">2016-2017</option>
+
+	</select>
+                                                
+                                                <label for="email" class="padd linhei" style="padding-top: 5px;">
+                                                    Group</label>
+                                                <select name="ctl00$MainContent$ddlGroup" id="ctl00_MainContent_ddlGroup" class="form-control">
+		<option value="0">--Select--</option>
+		<option selected="selected" value="1">District Wise </option>
+		<option value="2">Block Wise </option>
+		<option value="3">Cluster Wise</option>
+
+	</select>
+                                            </div>
+                                            <div class="col-sm-2 ">
+                                                <label for="email" class="padd linhei" style="padding-top: 1px;">
+                                                    State</label>
+                                                <div class="padd CheckBoxListCssClass " style="border: 1px solid #c1c1c1">
+                                                    <div style="overflow: auto; margin-top: 1px; height: 150px;">
+                                                        <table id="ctl00_MainContent_ChkState" border="0">
+		<tbody><tr>
+			<td><input id="ctl00_MainContent_ChkState_0" type="checkbox" name="ctl00$MainContent$ChkState$0" onclick="javascript:setTimeout(&#39;__doPostBack(\&#39;ctl00$MainContent$ChkState$0\&#39;,\&#39;\&#39;)&#39;, 0)"><label for="ctl00_MainContent_ChkState_0">Madhya Pradesh</label></td>
+		</tr><tr>
+			<td><input id="ctl00_MainContent_ChkState_1" type="checkbox" name="ctl00$MainContent$ChkState$1" onclick="javascript:setTimeout(&#39;__doPostBack(\&#39;ctl00$MainContent$ChkState$1\&#39;,\&#39;\&#39;)&#39;, 0)"><label for="ctl00_MainContent_ChkState_1">Rajasthan</label></td>
+		</tr><tr>
+			<td><input id="ctl00_MainContent_ChkState_2" type="checkbox" name="ctl00$MainContent$ChkState$2" onclick="javascript:setTimeout(&#39;__doPostBack(\&#39;ctl00$MainContent$ChkState$2\&#39;,\&#39;\&#39;)&#39;, 0)"><label for="ctl00_MainContent_ChkState_2">Uttar Pradesh</label></td>
+		</tr>
+	</tbody></table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-2 ">
+                                                <label for="email" class="padd linhei" style="padding-top: 2px;">
+                                                    District</label>
+                                                <div class="CheckBoxListCssClass" style="border: 1px solid #c1c1c1">
+                                                    <div style="overflow: auto; margin-top: 1px; height: 150px;">
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-2 ">
+                                                <label for="email" class="padd linhei" style="padding-top: 2px;">
+                                                    Block</label>
+                                                <div class="CheckBoxListCssClass" style="border: 1px solid #c1c1c1">
+                                                    <div style="overflow: auto; margin-top: 2px; height: 150px;">
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-2 ">
+                                                <label for="email" class="padd linhei" style="padding-top: 2px;">
+                                                    Cluster</label>
+                                                <div class="padd CheckBoxListCssClass " style="border: 1px solid #c1c1c1">
+                                                    <div style="overflow: auto; margin-top: 1px; height: 150px;">
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                        
+</div>
+                                    </div>
+                                
+                         
+                                                     
+                                                    </div>
+                                                </div>
+                                            </div>
+                            
+                            <div class="col-lg-12 table table-hover " style="padding: 0px;">
+                                <div id="ctl00_MainContent_pnlMain">
+	
+                                    <div class="form-horizontal">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding: 0px;">
+                                            <div class="panel-default search-bg" style="height: 30px">
+                                                <span style="float: left; color: Black; margin-left: 12px;">
+                                                    <span id="ctl00_MainContent_lblTotal">Total:</span>
+                                                </span><span style="float: left; color: Black; margin-left: 12px;"></span>
+                                            </div>
+                                            
+                                            <div style="height: 450px; overflow: auto; width: 99%;" align="center">
+                                                <div>
+                                                    <div class="row" style="width: 100%">
+                                                        
+                                                        
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                
+</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <input type="hidden" name="ctl00$MainContent$HdnFild7" id="ctl00_MainContent_HdnFild7">
+        <div id="ctl00_MainContent_PnlDistrict" class="model-wid mod-posi" style="display: none; width: 76% !important; margin-top: 93px !important; position: fixed; z-index: 100001;">
+	
+            <div style="width: 100%; height: auto; background-color: #f1f1f1">
+                <div class="modal-header" style="background-color: #3ac0f2; color: White;">
+                    
+                    <input type="image" name="ctl00$MainContent$CancelButton" id="ctl00_MainContent_CancelButton" src="./Educate_Girls-New_files/close-29.png" style="height:3%;width:3%;border-width:0px;float: right;">
+                </div>
+                <div class="modal-body">
+                    <div class="form-horizontal">
+                    <a id="ctl00_MainContent_lnkDownload" title="Download" href="javascript:__doPostBack(&#39;ctl00$MainContent$lnkDownload&#39;,&#39;&#39;)" style="float:right;">Export to Excel</a>
+                        <div style="height: 350px; overflow: auto; width: 99%;" align="center">
+                            <div>
+                                <div class="Row" style="width: 100%">
+                                    <div>
+
+	</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        
+</div>
+    <div id="ctl00_MainContent_MpexdrPopUp_backgroundElement" class="modalBackground " style="display: none; position: fixed; left: 0px; top: 0px; z-index: 10000;"></div></div>
+
+    </div>
+    <div id="ctl00_UpdWt" style="display:none;" role="status" aria-hidden="true">
+	
+            <div id="ctl00_jjj" class="ModalPopupBGstar" style="vertical-align: middle;
+                z-index: 9999999999999; left: -1px; top: -1px; position: absolute; width: 100%;
+                height: 100%;" align="center">
+                <img id="ctl00_img" valign="middle" src="./Educate_Girls-New_files/progress2.gif" style="border-width:0px;position: absolute; top: 35%;">
+            </div>
+        
+</div>
+    
+
+<script type="text/javascript">
+//<![CDATA[
+(function() {var fn = function() {$get("ctl00_ToolkitScriptManager1_HiddenField").value = '';Sys.Application.remove_init(fn);};Sys.Application.add_init(fn);})();Sys.Application.add_init(function() {
+    $create(Sys.Extended.UI.ModalPopupBehavior, {"BackgroundCssClass":"modalBackground ","CancelControlID":"ctl00_MainContent_CancelButton","PopupControlID":"ctl00_MainContent_PnlDistrict","dynamicServicePath":"/EducatedGirl_Web/frmPmsTracker.aspx","id":"ctl00_MainContent_MpexdrPopUp"}, null, null, $get("ctl00_MainContent_HdnFild7"));
+});
+Sys.Application.add_init(function() {
+    $create(Sys.UI._UpdateProgress, {"associatedUpdatePanelId":null,"displayAfter":1,"dynamicLayout":true}, null, null, $get("ctl00_UpdWt"));
+});
+//]]>
+</script>
+</form>
+
+
+</body></html>

@@ -1,0 +1,291 @@
+/* .form__group {
+    position: relative;
+    padding: 15px 0 0;
+    margin-top: 0px;
+  }
+  
+  .form__field {
+    font-family: inherit;
+    width: 100%;
+    border: 0;
+    border-bottom: 1px solid #d2d2d2;
+    outline: 0;
+    font-size: 16px;
+    color: #212121;
+    padding: 7px 0;
+    background: transparent;
+    transition: border-color 0.2s;
+  }
+  
+  \form__field::placeholder {
+    color: transparent;
+  }
+  
+  .form__field:placeholder-shown ~ .form__label {
+    font-size: 16px;
+    cursor: text;
+    top: 20px;
+  }
+  
+  .labell,
+  .form__field:focus ~ .form__label {
+    position: absolute;
+    top: 0;
+    display: block;
+    transition: 0.2s;
+    font-size: 12px;
+    color: #9b9b9b;
+  }
+  
+  .form__field:focus ~ .form__label {
+    color: #009788;
+  }
+  
+  .form__field:focus {
+    padding-bottom: 6px;
+    border-bottom: 2px solid #009788 !important;
+  } */
+  hr {
+  
+    border: 0;
+    border-top: 1px solid #fff;
+}
+.text_color-white{
+  color: #ffffff;
+}
+.text_color-lightwhite {
+    color: #f3f3f3;
+}
+.text_color-lightblack {
+    color: #808183;
+}
+.text_color-blue {
+    color: #354ea0;
+}
+.bg-bluee {
+    background-color: #354ea0 !important;
+    margin: 0px;
+    margin-top: 15px !important;
+}
+
+.question-view {
+    margin: 0px;
+    BACKGROUND-COLOR: #e0e6fe;
+    min-height: 50px;
+    line-height:50px;
+}
+.form-control_new {
+    background-color: transparent;
+    border-color: #6d6d6e;
+    margin-top: 5px;
+}
+
+  .div50{
+      float: left;
+      width: 50px; 
+      height: auto;
+  }
+  .div100-50{
+    float: left;
+    width: calc(100% - 50px); 
+    height: auto;
+    /* border-left: 1px solid;
+    padding-left: 10px; */
+}
+.text-dark {
+  color: #9c9d9e!important;
+}
+
+/* This css is for normalizing styles. You can skip this. */
+*, *:before, *:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+input[type="radio"],
+input[type="checkbox"] {
+  height: 15px;
+  width: 15px;
+  vertical-align: middle;
+  margin: 0 0.4em 0.4em 0;
+  background: white;
+  border: 1px solid #AAAAAA;
+  -webkit-appearance: none;
+}
+
+/* border radius for radio*/
+input[type="radio"] {
+  border-radius: 100%;
+}
+
+/* border radius for checkbox */
+input[type="checkbox"] {
+  border-radius: 2px;
+}
+
+/* hover state */
+input[type="radio"]:not(:disabled):hover,
+input[type="checkbox"]:not(:disabled):hover {
+  border: 1px solid #3ac5c9;
+}
+
+/* active state */
+input[type="radio"]:active:not(:disabled),
+input[type="checkbox"]:active:not(:disabled) {
+  border: 1px solid #3ac5c9;
+}
+
+/* input checked border color */
+input[type="radio"]:checked,
+input[type="checkbox"]:checked {
+  border: 1px solid #f47aab;
+}
+
+/* radio checked */
+input[type="radio"]:checked:before {
+  display: block;
+  height:9px;
+  width: 9px;
+  position: relative;
+  left: 2px;
+  top: 2px;
+  background: #f47aab;
+  border-radius: 100%;
+  content: '';
+}
+
+/* checkbox checked */
+input[type="checkbox"]:checked:before {
+  font-weight: bold;
+  color: black;
+  content: '\2713';
+  margin-left: 2px;
+  font-size: 14px;
+}
+
+/* disabled input */
+input:disabled {
+  background: rgba(0, 0, 0, 0.3);
+}
+input:disabled:checked {
+  border: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+input[type="radio"]:disabled:checked:before {
+  display: block;
+  height: 9px;
+  width: 9px;
+  position: relative;
+  left: 2px;
+  top: 2px;
+  background: white;
+  border-radius: 100%;
+  content: '';
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.td {
+  display: block;
+}
+
+.td input {
+  padding: 0;
+  height: initial;
+  width: initial;
+  margin-bottom: 0;
+  display: none;
+  cursor: pointer;
+}
+
+.td label {
+  position: relative;
+  cursor: pointer;
+}
+
+.td label:before {
+  content:'';
+  -webkit-appearance: none;
+  background-color: transparent;
+  border: 2px solid #354ea0;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05);
+  padding: 8px;
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.td input:checked + label:after {
+ content: '';
+    display: block;
+    position: absolute;
+    top: 19px;
+    left: 7px;
+    width: 6px;
+    height: 14px;
+    border: solid #0079bf;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+.btn-danger {
+  color: #fff;
+  background-color: #f47aab;
+  border-color: #f47aab;
+}
+.btn-danger:hover {
+  color: #fff;
+  background-color: #e85f96;
+  border-color: #e85f96;
+}
+
+.divsm{
+  width: 100%;
+}
+@media (max-width:768px){
+  .divsm{
+    width: 50%;
+  }
+
+ 
+}
+label {
+    display: inline-block;
+    margin-bottom: .5rem;
+    font-size: 13px;
+}
+table{
+    width:100% !important;
+}

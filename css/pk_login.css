@@ -1,0 +1,215 @@
+﻿@font-face {
+    font-family: 'Poppins-Regular';
+    src: url('../fonts/Poppins-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Poppins-Medium';
+    src: url('../fonts/Poppins-Medium.ttf') format('truetype');
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins-Medium';
+}
+
+body {
+    font-family: 'Poppins-Regular';
+}
+
+.login-box {
+    width: 400px;
+    position: absolute;
+    backdrop-filter: blur(3px);
+    background: #ffffff38;
+    border: 5px solid #fff;
+    padding: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 50px;
+    box-shadow: 0 0 2px 3px #ffffff45;
+    border-radius: 15px;
+}
+
+.login-logo {
+    text-align: center;
+}
+
+    .login-logo img {
+        width: 150px;
+        margin-bottom: 0;
+    }
+
+section.login-section-wrp {
+    height: 100vh;
+    position: absolute;
+    width: 100%;
+    overflow: hidden;
+}
+
+.login-box:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    /* background: rgb(255 255 255 / 69%); */
+    /* mix-blend-mode: overlay; */
+    width: 100%;
+    height: 100%;
+    /* backdrop-filter: blur(10px); */
+    /* background: #fff; */
+}
+
+.login-box:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    /* background: rgb(255 255 255 / 35%); */
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(10px);
+    /* background: radial-gradient(white 15%, #ffffff00); */
+    bottom: 0;
+    /* background: #fff; */
+}
+
+.login-box-inner {
+    position: relative;
+    z-index: 1;
+}
+
+.login-box .form-control {
+    height: 44px;
+    border-radius: 0 5px 5px 0 !important;
+}
+
+section.login-section-wrp .carousel {
+    height: 100vh;
+}
+
+section.login-section-wrp .item img {
+    width: 100%;
+}
+
+.input-feild-wrp input {
+    width: 100%;
+    height: 45px;
+    padding: 0;
+    border: 0;
+    padding-left: 45px;
+    /* border-radius: 5px; */
+    border: 1px solid #d6d6d6;
+}
+
+.input-feild-wrp {
+    position: relative;
+}
+
+    .input-feild-wrp .icon-pic {
+        position: absolute;
+        top: 11px;
+        font-size: 18px;
+        left: 15px;
+        color: #ed3237;
+    }
+
+.show-password {
+    right: 15px;
+    position: absolute;
+    top: 14px;
+    font-size: 18px;
+    color: #595959;
+    cursor: pointer;
+}
+
+input#txtPassword {
+    padding-right: 45px;
+}
+
+.login-box-inner label {
+    font-size: 16px;
+    color: #313131;
+    font-family: "calibri";
+    font-weight: 600 !important;
+}
+
+.alert-border:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 100%;
+    border: 1px solid red;
+    top: 0;
+    height: 45px;
+    pointer-events: none;
+}
+
+.btn-black {
+    padding: 12px 15px;
+    background: #000000;
+    color: #fff;
+    width: 100%;
+    border-radius: 0;
+    height: 50px;
+}
+
+    .btn-black:hover {
+        color: #fff;
+        background: #d73135;
+    }
+
+.carousel-fade .carousel-inner .item {
+    transition-property: opacity;
+}
+
+.carousel-fade .carousel-inner .item, .carousel-fade .carousel-inner .active.left, .carousel-fade .carousel-inner .active.right {
+    opacity: 0;
+}
+
+.carousel-fade .carousel-inner .active, .carousel-fade .carousel-inner .next.left, .carousel-fade .carousel-inner .prev.right {
+    opacity: 1;
+}
+
+    .carousel-fade .carousel-inner .next, .carousel-fade .carousel-inner .prev, .carousel-fade .carousel-inner .active.left, .carousel-fade .carousel-inner .active.right {
+        left: 0;
+        transform: translate3d(0, 0, 0);
+    }
+
+
+.login-box-inner h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    margin-top: 0;
+}
+
+.login-section-wrp .carousel-indicators {
+}
+
+    .login-section-wrp .carousel-indicators li {
+        width: 15px;
+        height: 15px;
+        border-radius: 0;
+        border: 1px solid white;
+        margin: auto 4px;
+    }
+
+
+@media (max-width:767px) {
+    section.login-section-wrp {
+        display: none;
+    }
+
+    .login-box {
+        position: relative;
+        transform: unset;
+        width: 100%;
+        left: unset;
+        right: unset;
+        padding: 15px;
+    }
+
+    body {
+        background: #141111;
+        padding: 30px;
+    }
+}

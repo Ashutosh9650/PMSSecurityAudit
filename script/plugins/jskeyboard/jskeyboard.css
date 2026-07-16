@@ -1,0 +1,4 @@
+﻿.jskeyboardbase { border: thin solid #000000; position: absolute; width: 778px; height: 284px; background-color: #C0C0C0; box-shadow: rgba(0,0,0,4) 1px 1px inset; }
+.jskeyboardkey { cursor:pointer; padding-top:5px; position: absolute; background-color: #FFFFFF; border: thin solid #666666; text-align: center; vertical-align: middle; font-size: 18px; }
+.unselectable{-moz-user-select:-moz-none;-khtml-user-select:none;-webkit-user-select:none;user-select:none;}
+
