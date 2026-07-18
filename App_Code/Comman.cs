@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Data;
 using System.Data.OleDb;
 using System.Data.SqlClient;
@@ -418,7 +419,7 @@ public class Comman
             {
                 dbOleconnection.Close();
             }
-            throw ex1;
+            throw;
         }
         finally
         {
@@ -452,7 +453,7 @@ public class Comman
             }
             catch (Exception e)
             {
-                throw e;
+                throw;
             }
             finally
             {
@@ -494,7 +495,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
             //IUErrorDetail(e.ToString());
-            throw e;
+            throw;
         }
         finally
         {
@@ -538,7 +539,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
             //IUErrorDetail(e.ToString());
-            throw e;
+            throw;
         }
         finally
         {
@@ -581,7 +582,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
             //IUErrorDetail(e.ToString());
-            throw e;
+            throw;
         }
         finally
         {
@@ -635,7 +636,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
             //IUErrorDetail(e.ToString());
-            throw e;
+            throw;
         }
         finally
         {
@@ -685,7 +686,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -731,7 +732,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -775,7 +776,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -819,7 +820,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -863,7 +864,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -907,7 +908,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -950,7 +951,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -994,7 +995,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -1038,7 +1039,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -1082,7 +1083,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -1124,7 +1125,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -1167,7 +1168,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -1210,7 +1211,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -1254,7 +1255,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -1297,7 +1298,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -1340,7 +1341,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -1382,7 +1383,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -1423,7 +1424,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -1465,7 +1466,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -1507,7 +1508,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -1549,7 +1550,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -1590,7 +1591,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -1632,7 +1633,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -1673,7 +1674,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -1714,7 +1715,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -1755,7 +1756,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -1797,7 +1798,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -1840,7 +1841,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -1884,7 +1885,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -1927,7 +1928,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -1970,7 +1971,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -2013,7 +2014,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -2055,7 +2056,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -2098,7 +2099,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -2141,7 +2142,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -2184,7 +2185,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -2227,7 +2228,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -2269,7 +2270,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -2311,7 +2312,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -2640,7 +2641,7 @@ public class Comman
         }
         catch (SqlException exp)
         {
-            throw exp;
+            throw;
         }
         finally
         {
@@ -2668,7 +2669,7 @@ public class Comman
         }
         catch (SqlException exp)
         {
-            throw exp;
+            throw;
         }
         finally
         {
@@ -2703,7 +2704,7 @@ public class Comman
         }
         catch (SqlException exp)
         {
-            throw exp;
+            throw;
         }
         finally
         {
@@ -2740,7 +2741,7 @@ public class Comman
         }
         catch (SqlException exp)
         {
-            throw exp;
+            throw;
         }
         finally
         {
@@ -2771,7 +2772,7 @@ public class Comman
         }
         catch (SqlException exp)
         {
-            throw exp;
+            throw;
         }
         finally
         {
@@ -2804,7 +2805,7 @@ public class Comman
         }
         catch (SqlException exp)
         {
-            throw exp;
+            throw;
         }
         finally
         {
@@ -2838,7 +2839,7 @@ public class Comman
         }
         catch (SqlException exp)
         {
-            throw exp;
+            throw;
         }
         finally
         {
@@ -2870,7 +2871,7 @@ public class Comman
         }
         catch (SqlException exp)
         {
-            throw exp;
+            throw;
         }
         finally
         {
@@ -2903,7 +2904,7 @@ public class Comman
         }
         catch (SqlException exp)
         {
-            throw exp;
+            throw;
         }
         finally
         {
@@ -2938,7 +2939,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -2978,7 +2979,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -3017,7 +3018,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -3058,7 +3059,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -3100,7 +3101,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -3142,7 +3143,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -3186,7 +3187,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -3229,7 +3230,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -3271,7 +3272,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -3313,7 +3314,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -3358,7 +3359,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -3403,7 +3404,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -3445,7 +3446,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -3489,7 +3490,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -3532,7 +3533,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -3574,7 +3575,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -3617,7 +3618,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -3659,7 +3660,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -3702,7 +3703,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -3745,7 +3746,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -3789,7 +3790,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -3831,7 +3832,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -3873,7 +3874,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -3915,7 +3916,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -3957,7 +3958,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -4000,7 +4001,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -4042,7 +4043,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -4083,7 +4084,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -4125,7 +4126,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -4165,7 +4166,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -4206,7 +4207,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -4250,7 +4251,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -4292,7 +4293,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -4335,7 +4336,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -4509,7 +4510,7 @@ public class Comman
                 sqlConnection.Close();
                 sqlConnection.Dispose();
             }
-            throw ex;
+            throw;
         }
         finally
         {
@@ -4551,7 +4552,7 @@ public class Comman
                 sqlConnection.Close();
                 sqlConnection.Dispose();
             }
-            throw ex;
+            throw;
         }
         finally
         {
@@ -4720,7 +4721,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -4763,7 +4764,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -4807,7 +4808,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -4850,7 +4851,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -4893,7 +4894,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -4936,7 +4937,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -4979,7 +4980,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -5021,7 +5022,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -5063,7 +5064,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -5106,7 +5107,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -5149,7 +5150,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -5191,7 +5192,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -5235,7 +5236,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -5278,7 +5279,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -5320,7 +5321,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -5363,7 +5364,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -5405,7 +5406,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -5449,7 +5450,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -5493,7 +5494,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -5535,7 +5536,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -5577,7 +5578,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -5622,7 +5623,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -5665,7 +5666,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -5709,7 +5710,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -5752,7 +5753,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -5796,7 +5797,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -5839,7 +5840,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -5881,7 +5882,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -5923,7 +5924,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -5967,7 +5968,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -6012,7 +6013,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -6055,7 +6056,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -6098,7 +6099,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -6141,7 +6142,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -6184,7 +6185,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -6226,7 +6227,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -6269,7 +6270,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -6312,7 +6313,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -6355,7 +6356,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -6398,7 +6399,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -6441,7 +6442,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -6484,7 +6485,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -6526,7 +6527,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -6569,7 +6570,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -6612,7 +6613,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -6655,7 +6656,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -6698,7 +6699,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -6740,7 +6741,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -6783,7 +6784,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -6828,7 +6829,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -6870,7 +6871,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -6913,7 +6914,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -6955,7 +6956,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -6997,7 +6998,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -7039,7 +7040,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -7082,7 +7083,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -7124,7 +7125,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -7168,7 +7169,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -7211,7 +7212,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -7254,7 +7255,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -7296,7 +7297,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -7339,7 +7340,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -7383,7 +7384,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -7426,7 +7427,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -7468,7 +7469,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -7510,7 +7511,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -7553,7 +7554,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -7596,7 +7597,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -7639,7 +7640,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -7681,7 +7682,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -7724,7 +7725,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -7766,7 +7767,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -7808,7 +7809,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -7850,7 +7851,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -7893,7 +7894,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -7936,7 +7937,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -7978,7 +7979,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -8021,7 +8022,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -8064,7 +8065,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -8106,7 +8107,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -8149,7 +8150,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -8193,7 +8194,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -8236,7 +8237,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -8280,7 +8281,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -8323,7 +8324,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -8366,7 +8367,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -8409,7 +8410,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -8452,7 +8453,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -8495,7 +8496,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -8539,7 +8540,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -8583,7 +8584,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -8625,7 +8626,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -8668,7 +8669,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -8711,7 +8712,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -8770,7 +8771,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -8816,7 +8817,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -8858,7 +8859,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -8900,7 +8901,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -8942,7 +8943,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -8985,7 +8986,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -9026,7 +9027,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -9068,7 +9069,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -9111,7 +9112,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -9154,7 +9155,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -9196,7 +9197,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -9238,7 +9239,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -9281,7 +9282,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -9324,7 +9325,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -9366,7 +9367,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -9408,7 +9409,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -9472,7 +9473,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -9520,7 +9521,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -9568,7 +9569,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -9613,7 +9614,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -9658,7 +9659,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -9703,7 +9704,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -9747,7 +9748,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -9789,7 +9790,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -9831,7 +9832,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -9873,7 +9874,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -9915,7 +9916,7 @@ public class Comman
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -10009,7 +10010,13 @@ public class Comman
                 return string.Empty;
         }
     }
-   
+
+}
+
+public class GoogleCaptchaResponse
+{
+    [JsonProperty("success")]
+    public bool Success { get; set; }
 }
 
 

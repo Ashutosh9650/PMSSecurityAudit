@@ -247,7 +247,7 @@ public partial class FrmGKPsessionMaster : System.Web.UI.Page
         }
         catch (Exception ex)
         {
-            throw ex;
+            throw;
         }
     }
     public int InsertUpdateGKPMaster(int GKIPID, int GKPLevelID, string GKPLevel, int MainSession, int BaselineSession, int RevisionSession, int Remedial, int RecapSession, int Endline, string Flag, int RecapSession1, string GKPLevelEn)
@@ -354,7 +354,7 @@ public partial class FrmGKPsessionMaster : System.Web.UI.Page
         catch (Exception ex)
         {
             {
-                throw ex;
+                throw;
             }
 
         }
@@ -465,7 +465,7 @@ public partial class FrmGKPsessionMaster : System.Web.UI.Page
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw;
             }
         }
         if (e.CommandName.Equals("DelefffteData"))
@@ -493,7 +493,7 @@ public partial class FrmGKPsessionMaster : System.Web.UI.Page
             catch (Exception ex)
             {
 
-                throw ex;
+                throw;
             }
         }
     }
@@ -562,7 +562,7 @@ public partial class FrmGKPsessionMaster : System.Web.UI.Page
             catch (Exception ex)
             {
 
-                throw ex;
+                throw;
             }
         }
         if (e.CommandName.Equals("DelefffteData1"))
@@ -589,7 +589,7 @@ public partial class FrmGKPsessionMaster : System.Web.UI.Page
             catch (Exception ex)
             {
 
-                throw ex;
+                throw;
             }
         }
     }

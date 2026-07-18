@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Data;
+using System.Data.SqlClient;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Drawing;
-using System.IO;
-using System.Data.SqlClient;
 
 
 public partial class FrmActivityClusterSearchNew : System.Web.UI.Page
@@ -27,7 +22,7 @@ public partial class FrmActivityClusterSearchNew : System.Web.UI.Page
 
                 LoadData();
 
-            
+
 
                 if (Request.QueryString["ID"] != null)
                 {
@@ -42,9 +37,9 @@ public partial class FrmActivityClusterSearchNew : System.Web.UI.Page
                     }
                     string QueryString = Request.QueryString["ID"];
                     string[] a = QueryString.Split(',');
-                   
+
                     ddlBlock.SelectedValue = Session["BlockCodeAct"].ToString();
-                   
+
                     //TxtFromDate.Text = a[1].ToString();
                     //txtDate.Text = a[2].ToString();
                     //btnSerach.Visible = false;
@@ -52,18 +47,18 @@ public partial class FrmActivityClusterSearchNew : System.Web.UI.Page
                     if (Convert.ToString(Session["Back"]) == "1")
                     {
                         txtDate.Text = a[2].ToString();
-                        TxtFromDate.Text=  a[1].ToString();
+                        TxtFromDate.Text = a[1].ToString();
                         btnSerach_Click(btnSerach, null);
                         Session["Back"] = "";
                     }
-                  
-                        #endregion
+
+                    #endregion
                 }
                 else
                 {
                     #region Main
-                   
-                    btnBack.Visible = false; 
+
+                    btnBack.Visible = false;
                     btnSerach.Visible = true;
                     txtDate.Enabled = true;
                     if (Session["user_level"].ToString() == "39" || Session["user_level"].ToString() == "30" || Session["user_level"].ToString() == "145")
@@ -177,21 +172,21 @@ public partial class FrmActivityClusterSearchNew : System.Web.UI.Page
                         btnBack.Visible = true;
                         #endregion
                     }
-                  
-                 
 
-                    if (Session["user_level"].ToString() == "19" )
+
+
+                    if (Session["user_level"].ToString() == "19")
                     {
                         Session["BlockCodeAct"] = Session["NewBlockCode"].ToString();
-                      //  DataTable dtMain = objMain.GetActivityUpdateDateWiseBlockWise(Session["NewBlockCode"].ToString(), "2", "FC");
-                                 dtMain = objMain.GetActivityUpdateDateWiseBlockWiseNew(ddlBlock.SelectedValue, "2", "FC");
-                            if (dtMain.Rows.Count>0)
-                            {
-                            }
-                            else
-                            {
-                             dtMain = objMain.GetActivityUpdateDateWiseBlockWise(ddlBlock.SelectedValue, "2", "FC");
-                            }
+                        //  DataTable dtMain = objMain.GetActivityUpdateDateWiseBlockWise(Session["NewBlockCode"].ToString(), "2", "FC");
+                        dtMain = objMain.GetActivityUpdateDateWiseBlockWiseNew(ddlBlock.SelectedValue, "2", "FC");
+                        if (dtMain.Rows.Count > 0)
+                        {
+                        }
+                        else
+                        {
+                            dtMain = objMain.GetActivityUpdateDateWiseBlockWise(ddlBlock.SelectedValue, "2", "FC");
+                        }
                         if (dtMain.Rows.Count > 0 && dtMain.Rows[0]["ActivityDate"].ToString() != "")
                         {
                             #region DataSelection
@@ -213,13 +208,13 @@ public partial class FrmActivityClusterSearchNew : System.Web.UI.Page
                             string afromDate = d[2] + '-' + d[1] + '-' + d[0];
                             DateTime dttest = Activitydate.AddDays(14);
                             txtDate.Text = dttest.ToString("dd/MM/yyyy");
-                              string ToDate = txtDate.Text;
+                            string ToDate = txtDate.Text;
                             string[] c = ToDate.Split('/');
                             string aToDate = c[2] + '-' + c[1] + '-' + c[0];
                             Int32 maxdate = Convert.ToInt32(c[0]);
-                            if ( d[1].ToString() !="")
+                            if (d[1].ToString() != "")
                             {
-                                
+
                                 if (Convert.ToInt32(d[1]) != 3)
                                 {
 
@@ -247,9 +242,9 @@ public partial class FrmActivityClusterSearchNew : System.Web.UI.Page
                                     if (Convert.ToInt32(c[0]) >= 25 || Convert.ToInt32(d[1]) != Convert.ToInt32(c[1]))
                                     {
                                         //maxdate = 31 / Convert.ToInt32(d[1]) / Convert.ToInt32(d[2]);
-                                        string data =Convert.ToInt32(d[2]).ToString()  + '-' + d[1] + '-' + "31";
+                                        string data = Convert.ToInt32(d[2]).ToString() + '-' + d[1] + '-' + "31";
                                         //DateTime dttest1 = Activitydate.AddDays(maxdate);
-                                       // txtDate.Text = data;
+                                        // txtDate.Text = data;
                                         DateTime dttest1 = Convert.ToDateTime(data);
                                         txtDate.Text = dttest1.ToString("dd/MM/yyyy");
                                         maxdate = 31;
@@ -261,7 +256,7 @@ public partial class FrmActivityClusterSearchNew : System.Web.UI.Page
                                     }
                                 }
 
-                                else  if (maxdate > DateTime.Now.Day)
+                                else if (maxdate > DateTime.Now.Day)
                                 {
                                     txtDate.Text = DateTime.Now.ToString("dd/MM/yyyy");
                                 }
@@ -270,9 +265,9 @@ public partial class FrmActivityClusterSearchNew : System.Web.UI.Page
                             #endregion
 
                         }
-                        else 
+                        else
                         {
-                            
+
                             TxtFromDate.Text = DateTime.Now.ToString("dd/MM/yyyy");
                             txtDate.Text = DateTime.Now.ToString("dd/MM/yyyy");
                             //DateTime dttest = DateTime.Now.AddDays(14);
@@ -290,9 +285,9 @@ public partial class FrmActivityClusterSearchNew : System.Web.UI.Page
 
                     #endregion
                 }
-                
-              
-                  
+
+
+
             }
 
 
@@ -637,7 +632,7 @@ public partial class FrmActivityClusterSearchNew : System.Web.UI.Page
                     //txtDate.Text = dttest.ToString("dd/MM/yyyy");
                 }
 
-              
+
                 txtDate.Enabled = true;
                 btnBack.Visible = true;
                 Session["BlockName"] = ddlBlock.SelectedItem.Text;
@@ -660,7 +655,7 @@ public partial class FrmActivityClusterSearchNew : System.Web.UI.Page
             throw;
         }
     }
-   public void LoadDataBlock(string blockName)
+    public void LoadDataBlock(string blockName)
     {
 
 
@@ -684,7 +679,7 @@ public partial class FrmActivityClusterSearchNew : System.Web.UI.Page
             Session["BlockName"] = blockName;
             Session["BlockCodeAct"] = dtBlock.Rows[0]["BlockCode"].ToString();
         }
-      else  if (Session["user_level"].ToString() == "145" )
+        else if (Session["user_level"].ToString() == "145")
         {
             string strQry = "";
 
@@ -724,19 +719,19 @@ public partial class FrmActivityClusterSearchNew : System.Web.UI.Page
     }
     public void LoadData()
     {
-        
-       
+
+
         conditions = "";
         if (Session["user_level"].ToString() == "39" || Session["user_level"].ToString() == "30")
         {
             conditions = "  DistrictCode='" + Session["NewDistrictCode"].ToString() + "' ";
 
-           
+
 
             objComman.BindDLL("mst3Block", "BlockCode,dbo.TitleCase(upper(BlockName)) as BlockName ", conditions, "BlockName", "asc", ddlBlock, "BlockName", "BlockCode", "--Select--");
             ddlBlock.Enabled = true;
         }
-     else  if (Session["user_level"].ToString() == "145" )
+        else if (Session["user_level"].ToString() == "145")
         {
             conditions = "   DistrictCode in(" + Session["DistrictCodeMul"].ToString() + ")  ";
 
@@ -750,18 +745,18 @@ public partial class FrmActivityClusterSearchNew : System.Web.UI.Page
 
             conditions = conditions + "  DistrictCode='" + Session["NewDistrictCode"].ToString() + "'  and BlockCode ='" + Session["NewBlockCode"].ToString() + "' ";
 
-            
+
 
             objComman.BindDLL("mst3Block", "BlockCode,dbo.TitleCase(upper(BlockName)) as BlockName ", conditions, "BlockName", "asc", ddlBlock, "BlockName", "BlockCode", "--Select--");
-       
+
             ddlBlock.Enabled = false;
 
             ddlBlock.SelectedValue = Session["NewBlockCode"].ToString();
         }
 
-        
 
-        
+
+
     }
     protected void btnBack_Click(object sender, EventArgs e)
     {
@@ -769,12 +764,12 @@ public partial class FrmActivityClusterSearchNew : System.Web.UI.Page
         Response.Redirect("~/FrmActivityBlockWiseSearch.aspx");
     }
 
-   
-   
-    
+
+
+
     protected void btnSave_Click(object sender, EventArgs e)
     {
-      //  DGV_Report.Visible = true;
+        //  DGV_Report.Visible = true;
         Gv_Profile_Search.Visible = false;
         string fromDate = TxtFromDate.Text;
         string[] d = fromDate.Split('/');
@@ -811,8 +806,8 @@ public partial class FrmActivityClusterSearchNew : System.Web.UI.Page
              {
                new SqlParameter("@fDate",  afromDate),
                new SqlParameter("@todate",  aToDate),
-              
-      
+
+
                  };
 
         DataTable dtUserVillage = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptActivityUdate]", parm);
@@ -820,14 +815,14 @@ public partial class FrmActivityClusterSearchNew : System.Web.UI.Page
         //DGV_Report.DataBind();
         //ViewState["dtUserVillage"] = dtUserVillage;
     }
- 
+
 
 
     protected void Export_To_Excel(object sender, EventArgs e)
     {
-        DataTable dt= ViewState["dtUserVillage"] as DataTable;
-       // ExporttoExcel(DGV_Report, dt);
-        
+        DataTable dt = ViewState["dtUserVillage"] as DataTable;
+        // ExporttoExcel(DGV_Report, dt);
+
 
     }
 
@@ -836,7 +831,7 @@ public partial class FrmActivityClusterSearchNew : System.Web.UI.Page
         Session["FromData"] = TxtFromDate.Text;
         Session["Todate"] = txtDate.Text;
         Response.Redirect("~/FrmReportActivityClusterSearch.aspx?ID=" + ddlBlock.SelectedValue + "");
-      
+
     }
 
     public void ApproveData()
@@ -852,7 +847,7 @@ public partial class FrmActivityClusterSearchNew : System.Web.UI.Page
         string[] c = ToDate.Split('/');
         string aToDate = c[2] + '-' + c[1] + '-' + c[0];
 
-        
+
         DateTime d1 = Convert.ToDateTime(afromDate);
         DateTime d2 = Convert.ToDateTime(aToDate);
         int month = Convert.ToInt32(c[1]) - Convert.ToInt32(d[1]);
@@ -886,64 +881,64 @@ public partial class FrmActivityClusterSearchNew : System.Web.UI.Page
         string Query = " SELECT   CONVERT(varchar,dateadd(d,number-1,'" + afromDate + "'),103) as ActivityDate from Numbers WHERE Number<=DATEDIFF(day,('" + afromDate + "'),CONVERT(datetime,'" + aToDate + "')+1)";
         DataTable dtBlackAll = objMain.LoadData(Query);
 
-        
-       string QueryCluseter = "select mstCluster.ClusterName,mstCluster.ClusterCode from mst5Village ";
-       QueryCluseter += " inner join mstCluster on mstCluster.ClusterCode=mst5Village.ClusterCode where mst5Village.BlockCode='" + ddlBlock.SelectedValue + "'  and  len(EGClusterCode)>2  group by mstCluster.ClusterName,mstCluster.ClusterCode ";
-       DataTable dtBlackCluseter = objMain.LoadData(QueryCluseter);
 
-       for (int dr = 0; dr < dtBlackCluseter.Rows.Count; dr++)
-       {
+        string QueryCluseter = "select mstCluster.ClusterName,mstCluster.ClusterCode from mst5Village ";
+        QueryCluseter += " inner join mstCluster on mstCluster.ClusterCode=mst5Village.ClusterCode where mst5Village.BlockCode='" + ddlBlock.SelectedValue + "'  and  len(EGClusterCode)>2  group by mstCluster.ClusterName,mstCluster.ClusterCode ";
+        DataTable dtBlackCluseter = objMain.LoadData(QueryCluseter);
 
-          DataRow[] drNew = null;
-           for (int r = 0; r < dtBlackAll.Rows.Count; r++)
-           {
-               //if (dtEditblackData.Rows.Count > 0)
-               //{
-                   //for (int i = 0; i < dtEditblackData.Rows.Count; i++)
-                   //{
-                       DateTime dateValue = Convert.ToDateTime(dtBlackAll.Rows[r]["ActivityDate"].ToString());
-                       string str = dateValue.ToString("ddd");
-                       if (str == "Sun")
-                       {
-                       }
-                       else
-                       {
-                           DataTable dtMainRecord = objMain.GetActivityDateWiseBlankRecord(Convert.ToDateTime(dtBlackAll.Rows[r]["ActivityDate"]).ToString("yyyy-MM-dd"), aToDate, dtBlackCluseter.Rows[dr]["ClusterCode"].ToString(), 6);
-                           //drNew = dtMainRecord.Select("ActivityDate='" + dtBlackAll.Rows[r]["ActivityDate"] + "' and VillageCode='" + dtBlackCluseter.Rows[dr]["VillageCode"] + "'  ");
-                           if (dtMainRecord.Rows.Count > 0)
-                           {
+        for (int dr = 0; dr < dtBlackCluseter.Rows.Count; dr++)
+        {
+
+            DataRow[] drNew = null;
+            for (int r = 0; r < dtBlackAll.Rows.Count; r++)
+            {
+                //if (dtEditblackData.Rows.Count > 0)
+                //{
+                //for (int i = 0; i < dtEditblackData.Rows.Count; i++)
+                //{
+                DateTime dateValue = Convert.ToDateTime(dtBlackAll.Rows[r]["ActivityDate"].ToString());
+                string str = dateValue.ToString("ddd");
+                if (str == "Sun")
+                {
+                }
+                else
+                {
+                    DataTable dtMainRecord = objMain.GetActivityDateWiseBlankRecord(Convert.ToDateTime(dtBlackAll.Rows[r]["ActivityDate"]).ToString("yyyy-MM-dd"), aToDate, dtBlackCluseter.Rows[dr]["ClusterCode"].ToString(), 6);
+                    //drNew = dtMainRecord.Select("ActivityDate='" + dtBlackAll.Rows[r]["ActivityDate"] + "' and VillageCode='" + dtBlackCluseter.Rows[dr]["VillageCode"] + "'  ");
+                    if (dtMainRecord.Rows.Count > 0)
+                    {
 
 
-                           }
-                           else
-                           {
-                               ScriptManager.RegisterStartupScript(Page, GetType(), "Message", "<SCRIPT LANGUAGE='javascript'>alert('Activity Should not be blank please update  black activity  in Next Page')</script>", false);
+                    }
+                    else
+                    {
+                        ScriptManager.RegisterStartupScript(Page, GetType(), "Message", "<SCRIPT LANGUAGE='javascript'>alert('Activity Should not be blank please update  black activity  in Next Page')</script>", false);
 
-                               return;
+                        return;
 
-                           }
-                       }
-                
-             
-           }
-       }
+                    }
+                }
+
+
+            }
+        }
         #endregion
 
         string condation = "";
         string condationOffice = "";
-       
+
         if (Session["user_level"].ToString() == "19")
         {
             condation = "ActivityDate between('" + afromDate + "') and '" + aToDate + "' and blk.blockcode='" + Session["NewBlockCode"].ToString() + "' and  UserEntry ='2' and ApproveStatus='FC'  ";
             condationOffice = "ActivityDate between('" + afromDate + "') and '" + aToDate + "' and blk.blockcode='" + Session["NewBlockCode"].ToString() + "' and   ApproveStatus='FC'  ";
-           /// condationOffice1 = "Registrationdate between('" + afromDate + "') and '" + aToDate + "' and blk.blockcode='" + Session["NewBlockCode"].ToString() + "' and   ApproveStatus='FC'  ";
+            /// condationOffice1 = "Registrationdate between('" + afromDate + "') and '" + aToDate + "' and blk.blockcode='" + Session["NewBlockCode"].ToString() + "' and   ApproveStatus='FC'  ";
 
         }
         if (Session["user_level"].ToString() == "39" || Session["user_level"].ToString() == "30" || Session["user_level"].ToString() == "145")
         {
             condation = "ActivityDate between('" + afromDate + "') and '" + aToDate + "' and blk.blockcode='" + ddlBlock.SelectedValue.ToString() + "' and  UserEntry ='3' and ApproveStatus='B'  ";
             condationOffice = "ActivityDate between('" + afromDate + "') and '" + aToDate + "' and blk.blockcode='" + ddlBlock.SelectedValue.ToString() + "' and   ApproveStatus='B'  ";
-           // condationOffice1 = "Registrationdate between('" + afromDate + "') and '" + aToDate + "' and blk.blockcode='" + ddlBlock.SelectedValue.ToString() + "' and   ApproveStatus='B'  ";
+            // condationOffice1 = "Registrationdate between('" + afromDate + "') and '" + aToDate + "' and blk.blockcode='" + ddlBlock.SelectedValue.ToString() + "' and   ApproveStatus='B'  ";
 
         }
         try
@@ -997,7 +992,7 @@ public partial class FrmActivityClusterSearchNew : System.Web.UI.Page
                         #endregion
                     }
 
-                    MainResultSchool = objMain.ActivitySchoolStatusUpdateNew(Statas, condation,1);
+                    MainResultSchool = objMain.ActivitySchoolStatusUpdateNew(Statas, condation, 1);
 
 
                     //DataTable dtApproveData = objMain.LoadSchoolActivtiyApproveNew(condation, 2);
@@ -1050,7 +1045,7 @@ public partial class FrmActivityClusterSearchNew : System.Web.UI.Page
                         }
                         #endregion
                     }
-                    MainResultSchool = objMain.ActivitySchoolStatusUpdateNew(Statas, condation,2);
+                    MainResultSchool = objMain.ActivitySchoolStatusUpdateNew(Statas, condation, 2);
                     //DataTable dtApproveData = objMain.LoadVillageActivtiyApproveNew(condation, 2);
                     //foreach (DataRow dr in dtApproveData.Rows)
                     //{
@@ -1059,7 +1054,7 @@ public partial class FrmActivityClusterSearchNew : System.Web.UI.Page
                     //}
                 }
 
-                if (dtApproveGKP.Rows.Count>0)
+                if (dtApproveGKP.Rows.Count > 0)
                 {
                     if (Session["user_level"].ToString() == "19")
                     {
@@ -1078,11 +1073,11 @@ public partial class FrmActivityClusterSearchNew : System.Web.UI.Page
                 Int32 MainResultOffice2 = 0;
                 if (Session["user_level"].ToString() == "39" || Session["user_level"].ToString() == "30" || Session["user_level"].ToString() == "145")
                 {
-                     MainResultOffice2 = objMain.ActivityeApproveStatus(ddlBlock.SelectedValue, Convert.ToDateTime(afromDate), Convert.ToDateTime(aToDate), 1);
+                    MainResultOffice2 = objMain.ActivityeApproveStatus(ddlBlock.SelectedValue, Convert.ToDateTime(afromDate), Convert.ToDateTime(aToDate), 1);
                 }
                 else
                 {
-                     MainResultOffice2 = objMain.ActivityeApproveStatus(ddlBlock.SelectedValue, Convert.ToDateTime(afromDate), Convert.ToDateTime(aToDate), 2);
+                    MainResultOffice2 = objMain.ActivityeApproveStatus(ddlBlock.SelectedValue, Convert.ToDateTime(afromDate), Convert.ToDateTime(aToDate), 2);
                 }
 
                 if (dtApproveOffice.Rows.Count > 0)
@@ -1125,7 +1120,7 @@ public partial class FrmActivityClusterSearchNew : System.Web.UI.Page
                         }
                         #endregion
                     }
-                    MainResultSchool = objMain.ActivitySchoolStatusUpdateNew(Statas, condationOffice,3);
+                    MainResultSchool = objMain.ActivitySchoolStatusUpdateNew(Statas, condationOffice, 3);
                     //DataTable dtApproveData = objMain.LoadOfficeActivtiyApprove(condationOffice, 2);
                     //foreach (DataRow dr in dtApproveData.Rows)
                     //{
@@ -1174,11 +1169,11 @@ public partial class FrmActivityClusterSearchNew : System.Web.UI.Page
                     //    }
                     //    #endregion
                     //}
-                   
+
                 }
 
 
-                if (MainResultSchool > 0 || MainResultVillage > 0 || MainResultOffice > 0 || MainResultOffice2 >0)
+                if (MainResultSchool > 0 || MainResultVillage > 0 || MainResultOffice > 0 || MainResultOffice2 > 0)
                 {
                     DataTable dtMain = null;
                     //if (Session["user_level"].ToString() == "19")
@@ -1218,14 +1213,14 @@ public partial class FrmActivityClusterSearchNew : System.Web.UI.Page
                 return;
             }
         }
-        catch (Exception  ex)
+        catch (Exception ex)
         {
-            throw ex;
+            throw;
         }
     }
     protected void btnApprove_Click(object sender, EventArgs e)
     {
-       
+
         btnApprove.Attributes.Add("onclick", "javascript:return " + "confirm('Please confirm if you want to approve? ')");
         ApproveData();
         if (Gv_Profile_Search.Rows.Count > 0)
@@ -1274,11 +1269,11 @@ public partial class FrmActivityClusterSearchNew : System.Web.UI.Page
         }
 
 
-    
-      
+
+
     }
-  
-    
+
+
     protected void btnSerach_Click(object sender, EventArgs e)
     {
         if (txtDate.Text == "")
@@ -1318,7 +1313,7 @@ public partial class FrmActivityClusterSearchNew : System.Web.UI.Page
         if (Math.Round(Days) > 14)
         {
             ScriptManager.RegisterStartupScript(Page, GetType(), "Message", "<SCRIPT LANGUAGE='javascript'>alert('Max 14 day can be selected')</script>", false);
-          
+
             return;
         }
         DataTable dtCheck = objMain.GetActivityUpdateDateWiseBlockWiseNew(ddlBlock.SelectedValue, "2", "FC");
@@ -1335,10 +1330,10 @@ public partial class FrmActivityClusterSearchNew : System.Web.UI.Page
                 }
             }
         }
-      LoadSerarchSchoolActivity();
-       LoadSearchVillageActivity();
+        LoadSerarchSchoolActivity();
+        LoadSearchVillageActivity();
         LoadSearchOfficeActivtiy();
-       
+
     }
 
     public DataTable LoadActivtiyAllClusterWise(string fdate, string toDate, string userName, string WhereQuery, string WhereQuery1, Int32 Flag)
@@ -1357,10 +1352,10 @@ public partial class FrmActivityClusterSearchNew : System.Web.UI.Page
     public void LoadSerarchSchoolActivity()
     {
         Session["dt"] = null;
-       // DGV_Report.Visible = false;
+        // DGV_Report.Visible = false;
         Gv_Profile_Search.Visible = true;
 
-      
+
 
         string fromDate = TxtFromDate.Text;
         string[] d = fromDate.Split('/');
@@ -1398,7 +1393,7 @@ public partial class FrmActivityClusterSearchNew : System.Web.UI.Page
         //}
         Gv_Profile_Search.DataSource = null;
         Gv_Profile_Search.DataBind();
-      
+
 
         if (Session["user_level"].ToString() == "19")
         {
@@ -1406,17 +1401,17 @@ public partial class FrmActivityClusterSearchNew : System.Web.UI.Page
             con1 = "ActivityDate between('" + afromDate + "') and '" + aToDate + "' and ApproveStatus='FC'  and mst5village.BlockCode='" + Session["NewBlockCode"].ToString() + "' ";
 
             dtMain = LoadActivtiyAllClusterWise(afromDate, aToDate, ddlBlock.SelectedValue, con, con1, 1);
-           // dtMain = objMain.LoadSchoolActivtiyForAllTypeReport(afromDate, aToDate, ddlBlock.SelectedValue, con, 2);
+            // dtMain = objMain.LoadSchoolActivtiyForAllTypeReport(afromDate, aToDate, ddlBlock.SelectedValue, con, 2);
 
         }
         if (Session["user_level"].ToString() == "39" || Session["user_level"].ToString() == "30" || Session["user_level"].ToString() == "145")
         {
             con1 = "ActivityDate between('" + afromDate + "') and '" + aToDate + "' and ApproveStatus='B'  and mst5village.BlockCode='" + ddlBlock.SelectedValue + "' ";
-          
+
             con = "ActivityDate between('" + afromDate + "') and '" + aToDate + "' and ApproveStatus='B' and UserEntry=3 and mst5village.BlockCode='" + ddlBlock.SelectedValue + "' ";
-            dtMain = LoadActivtiyAllClusterWise(afromDate, aToDate, ddlBlock.SelectedValue, con, con1,1);
+            dtMain = LoadActivtiyAllClusterWise(afromDate, aToDate, ddlBlock.SelectedValue, con, con1, 1);
             //dtMain = objMain.LoadSchoolActivtiyForAllTypeReport(afromDate, aToDate, ddlBlock.SelectedValue, con,3);
-           
+
         }
         string condation = "";
         //if (Session["user_level"].ToString() == "19" )
@@ -1431,12 +1426,12 @@ public partial class FrmActivityClusterSearchNew : System.Web.UI.Page
         // DataTable dtApprove = objMain.LoadSchoolActivtiyApprove(condation);
 
         // Session["dtApprove"] = dtApprove;
-        
+
         int count = 0;
         if (dtMain.Rows.Count > 0)
         {
             #region School
-           
+
             btnApprove.Visible = true;
             string strGSS = "TBHandholding";
             DataRow[] dr = dtMain.Select("School='" + strGSS + "'");
@@ -1802,7 +1797,7 @@ public partial class FrmActivityClusterSearchNew : System.Web.UI.Page
                 }
             }
             Gv_Profile_Search.Rows[7].Visible = false;
-           
+
             // gvVillageActivity.HeaderRow.Cells[count].Text = "T.B.Hand Holding";
             DataRow[] drApp = null;
             if (Gv_Profile_Search.HeaderRow.Cells.Count == 17)
@@ -1833,19 +1828,19 @@ public partial class FrmActivityClusterSearchNew : System.Web.UI.Page
 
                 }
             }
-           
+
         }
         else
         {
             Gv_Profile_Search.DataSource = null;
             Gv_Profile_Search.DataBind();
         }
-       
-        //    return;
-     }
 
-      public void LoadSearchVillageActivity()
-	{
+        //    return;
+    }
+
+    public void LoadSearchVillageActivity()
+    {
         string fromDate = TxtFromDate.Text;
         string[] d = fromDate.Split('/');
         string afromDate = d[2] + '-' + d[1] + '-' + d[0];
@@ -1872,7 +1867,7 @@ public partial class FrmActivityClusterSearchNew : System.Web.UI.Page
         //    return;
         //}
         string con = " ";
-        DataTable dtMain =null;
+        DataTable dtMain = null;
 
         if (Session["user_level"].ToString() == "19")
         {
@@ -1891,11 +1886,11 @@ public partial class FrmActivityClusterSearchNew : System.Web.UI.Page
 
 
         int count = 0;
-       
+
         if (dtMain.Rows.Count > 0)
         {
             btnApprove.Visible = true;
-           
+
             string strGSS = "Village Count";
             DataRow[] dr = dtMain.Select("Village='" + strGSS + "'");
             if (dr.Length > 0)
@@ -1907,7 +1902,7 @@ public partial class FrmActivityClusterSearchNew : System.Web.UI.Page
             {
                 DataRow Item1;
                 Item1 = dtMain.NewRow();
-                
+
                 dtMain.Rows.Add(Item1);
 
 
@@ -2166,7 +2161,7 @@ public partial class FrmActivityClusterSearchNew : System.Web.UI.Page
             DataRow[] drApp = null;
             if (gvVillageActivity.HeaderRow.Cells.Count == 17)
             {
-                for (int Index = 1; Index < gvVillageActivity.HeaderRow.Cells.Count ; Index++)
+                for (int Index = 1; Index < gvVillageActivity.HeaderRow.Cells.Count; Index++)
                 {
                     #region ApproveBy
                     var firstCell = gvVillageActivity.HeaderRow.Cells[Index];
@@ -2209,7 +2204,7 @@ public partial class FrmActivityClusterSearchNew : System.Web.UI.Page
             gvVillageActivity.DataSource = null;
             gvVillageActivity.DataBind();
         }
-       
+
     }
 
 
@@ -2257,18 +2252,18 @@ public partial class FrmActivityClusterSearchNew : System.Web.UI.Page
         if (Session["user_level"].ToString() == "19")
         {
             con = "ActivityDate between('" + afromDate + "') and '" + aToDate + "'  and ApproveStatus='FC'  and mst5village.BlockCode='" + Session["NewBlockCode"].ToString() + "' ";
-          //  dtMain = objMain.LoadActivtiyAllClusterWise(afromDate, aToDate, ddlBlock.SelectedValue, con,3);
-            dtMain = objMain.LoadActivtiyAllClusterWise(afromDate, aToDate, ddlBlock.SelectedValue, con,"", 3);
+            //  dtMain = objMain.LoadActivtiyAllClusterWise(afromDate, aToDate, ddlBlock.SelectedValue, con,3);
+            dtMain = objMain.LoadActivtiyAllClusterWise(afromDate, aToDate, ddlBlock.SelectedValue, con, "", 3);
 
         }
         if (Session["user_level"].ToString() == "39" || Session["user_level"].ToString() == "30" || Session["user_level"].ToString() == "145")
         {
             con = "ActivityDate between('" + afromDate + "') and '" + aToDate + "' and ApproveStatus='B'  and mst5village.BlockCode='" + ddlBlock.SelectedValue + "' ";
-            dtMain = objMain.LoadActivtiyAllClusterWise(afromDate, aToDate, ddlBlock.SelectedValue, con,"",3);
-           // dtMain = objMain.LoadActivtiyAllClusterWise(afromDate, aToDate, ddlBlock.SelectedValue, con,3);
+            dtMain = objMain.LoadActivtiyAllClusterWise(afromDate, aToDate, ddlBlock.SelectedValue, con, "", 3);
+            // dtMain = objMain.LoadActivtiyAllClusterWise(afromDate, aToDate, ddlBlock.SelectedValue, con,3);
         }
         int count = 0;
-      
+
         if (dtMain.Rows.Count > 0)
         {
             btnApprove.Visible = true;
@@ -2311,8 +2306,8 @@ public partial class FrmActivityClusterSearchNew : System.Web.UI.Page
 
 
                 Item1["Village"] = "Meeting";
-                 Item1["SRNo"] = "2";
-               
+                Item1["SRNo"] = "2";
+
             }
 
             string strGSS3 = "Other_specify";
@@ -2354,7 +2349,7 @@ public partial class FrmActivityClusterSearchNew : System.Web.UI.Page
             }
 
             //string strGSS5 = "Other Community Meeting";
-     
+
 
             for (int i = 2; i < dtMain.Columns.Count; i++)
             {
@@ -2393,14 +2388,14 @@ public partial class FrmActivityClusterSearchNew : System.Web.UI.Page
                 }
             }
 
-        
+
             // gvVillageActivity.HeaderRow.Cells[count].Text = "T.B.Hand Holding";
             DataRow[] drApp = null;
 
             gvOffice.Rows[4].Visible = false;
             if (gvOffice.HeaderRow.Cells.Count == 17)
             {
-                for (int Index = 1; Index < gvOffice.HeaderRow.Cells.Count ; Index++)
+                for (int Index = 1; Index < gvOffice.HeaderRow.Cells.Count; Index++)
                 {
                     #region ApproveBy
                     var firstCell = gvOffice.HeaderRow.Cells[Index];
@@ -2451,7 +2446,7 @@ public partial class FrmActivityClusterSearchNew : System.Web.UI.Page
 
     //    }
     //}
-  
+
 
     protected void TestGridView_RowDataBound(object sender, GridViewRowEventArgs e)
     {
@@ -2460,12 +2455,12 @@ public partial class FrmActivityClusterSearchNew : System.Web.UI.Page
         {
 
             //string quantity = e.Row.Cells[3].Text;
-          
+
             //foreach (TableCell cell in e.Row.Cells)
             //{
-               
+
             //        cell.BackColor = Color.Red;
-               
+
             //}
         }
     }
@@ -2488,7 +2483,7 @@ public partial class FrmActivityClusterSearchNew : System.Web.UI.Page
         string con2 = "";
         string UniqueCode = (gvr.FindControl("lblUn1") as Label).Text;
 
-         if (UniqueCode == "GKP")
+        if (UniqueCode == "GKP")
         {
             con2 = " and  LEN(LevelID) >0   ";
         }
@@ -2501,7 +2496,7 @@ public partial class FrmActivityClusterSearchNew : System.Web.UI.Page
         {
             con1 = " and tblActivityUpdate_School.Retention_Annual>0 ";
         }
-       
+
         else if (UniqueCode == "SMC Meeting")
         {
             con1 = " and  tblActivityUpdate_School.SMC_Meeting >0 ";
@@ -2574,8 +2569,8 @@ public partial class FrmActivityClusterSearchNew : System.Web.UI.Page
             if (con2.Length > 0)
             {
                 con = " where ActivityDate between('" + afromDate + "') and '" + aToDate + "'  and ApproveStatus='FC' and mst5village.BlockCode='" + Session["NewBlockCode"].ToString() + "' ";
-                 dtMain = objMain.GetGKPWiseActivity(con + con2 );
-                
+                dtMain = objMain.GetGKPWiseActivity(con + con2);
+
             }
             else
             {
@@ -2708,7 +2703,7 @@ public partial class FrmActivityClusterSearchNew : System.Web.UI.Page
             con1 = "and    ActivityStatus=3    ";
             Flag = 3;
         }
-       
+
         else if (UniqueCode == "Support")
         {
             con1 = " and    Support>0  ";
@@ -2732,21 +2727,21 @@ public partial class FrmActivityClusterSearchNew : System.Web.UI.Page
         if (Session["user_level"].ToString() == "19")
         {
             con = " where ActivityDate between('" + afromDate + "') and '" + aToDate + "' and ApproveStatus='FC' and UserEntry=2 and mst5village.BlockCode='" + Session["NewBlockCode"].ToString() + "' ";
-          string d2d="where ActivityDate between('" + afromDate + "') and '" + aToDate + "' and mst5village.BlockCode='" + ddlBlock.SelectedValue + "'";
-          if (Flag == 1)
-          {
-              dtMain = objMain.GeVillageActivtiy(con + con1,Flag);
-          }
-          else
-          {
-              dtMain = objMain.GeVillageActivtiy(d2d + con1, Flag);
-          }
+            string d2d = "where ActivityDate between('" + afromDate + "') and '" + aToDate + "' and mst5village.BlockCode='" + ddlBlock.SelectedValue + "'";
+            if (Flag == 1)
+            {
+                dtMain = objMain.GeVillageActivtiy(con + con1, Flag);
+            }
+            else
+            {
+                dtMain = objMain.GeVillageActivtiy(d2d + con1, Flag);
+            }
 
         }
         if (Session["user_level"].ToString() == "39" || Session["user_level"].ToString() == "30" || Session["user_level"].ToString() == "145")
         {
             con = "where ActivityDate between('" + afromDate + "') and '" + aToDate + "' and ApproveStatus='B' and UserEntry=3 and mst5village.BlockCode='" + ddlBlock.SelectedValue + "' ";
-            string d2d="where ActivityDate between('" + afromDate + "') and '" + aToDate + "' and mst5village.BlockCode='" + ddlBlock.SelectedValue + "'";
+            string d2d = "where ActivityDate between('" + afromDate + "') and '" + aToDate + "' and mst5village.BlockCode='" + ddlBlock.SelectedValue + "'";
             if (Flag == 1)
             {
                 dtMain = objMain.GeVillageActivtiy(con + con1, Flag);
@@ -2766,7 +2761,7 @@ public partial class FrmActivityClusterSearchNew : System.Web.UI.Page
         {
             gvVillageDeatial.DataSource = null;
             gvVillageDeatial.DataBind();
-          
+
         }
 
         if (Gv_Profile_Search.Rows.Count > 0)
@@ -2851,7 +2846,7 @@ public partial class FrmActivityClusterSearchNew : System.Web.UI.Page
             con = "where ActivityDate between('" + afromDate + "') and '" + aToDate + "' and ApproveStatus='B' and mst5village.BlockCode='" + ddlBlock.SelectedValue + "' ";
 
             dtMain = objMain.GetOfficeWiseActivity(con + con1);
-           
+
         }
         if (Session["user_level"].ToString() == "19")
         {
@@ -2870,7 +2865,7 @@ public partial class FrmActivityClusterSearchNew : System.Web.UI.Page
             gvVillageOffice.DataSource = null;
             gvVillageOffice.DataBind();
 
-            
+
         }
         if (Gv_Profile_Search.Rows.Count > 0)
         {

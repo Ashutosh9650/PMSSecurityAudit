@@ -12,15 +12,12 @@ public partial class login : System.Web.UI.Page
     public System.Data.DataTable dtSessionGlobal = new DataTable();
     clsMain Objmain = new clsMain();
     SqlConnection mycon = new SqlConnection(SqlHelper.mainConnectionString);
+    //protected string RecaptchaSiteKey;
     protected void Page_Load(object sender, EventArgs e)
     {
 
         if (!IsPostBack)
         {
-            // Response.Redirect("http://educategirls.ngo/pms/");
-            // string ip = Server.HtmlEncode(Request.UserHostAddress);
-
-
 
         }
 
@@ -69,7 +66,7 @@ public partial class login : System.Web.UI.Page
                         "Message",
                         "<script>alert('Invalid User ID or Password');</script>",
                         false);
-
+                    Session.Remove("Captcha");
                     return;
                 }
 
@@ -311,6 +308,7 @@ public partial class login : System.Web.UI.Page
                     else
                     {
                         string mmsg = "Inactive User";
+                        Session.Remove("Captcha");
                         // lblMessage.Text = mmsg;
                         return;
                     }
@@ -502,6 +500,18 @@ public partial class login : System.Web.UI.Page
     }
     protected void btnLogin_Click(object sender, EventArgs e)
     {
+        if (!ValidateCaptcha())
+        {
+            Session.Remove("Captcha");
+            ScriptManager.RegisterStartupScript(
+                this,
+                GetType(),
+                "captcha",
+                "alert('Please complete the CAPTCHA.');",
+                true);
+
+            return;
+        }
 
         Userlogin();
     }
@@ -565,5 +575,39 @@ public partial class login : System.Web.UI.Page
         }
     }
 
+    private bool ValidateCaptcha()
+    {
+        if (Session["Captcha"] == null)
+            return false;
+
+        return txtCaptcha.Text.Trim().ToUpper()
+               == Session["Captcha"].ToString().ToUpper();
+    }
+
+    //private bool ValidateCaptcha()
+    //{
+    //    string captchaResponse = Request.Form["g-recaptcha-response"];
+
+    //    if (string.IsNullOrEmpty(captchaResponse))
+    //        return false;
+
+    //    string secret =
+    //        ConfigurationManager.AppSettings["RecaptchaSecretKey"];
+
+    //    using (WebClient client = new WebClient())
+    //    {
+    //        string url =
+    //            "https://www.google.com/recaptcha/api/siteverify?secret="
+    //            + secret +
+    //            "&response=" + captchaResponse;
+
+    //        string result = client.DownloadString(url);
+
+    //        GoogleCaptchaResponse captcha =
+    //            JsonConvert.DeserializeObject<GoogleCaptchaResponse>(result);
+
+    //        return captcha.Success;
+    //    }
+    //}
 
 }

@@ -1003,7 +1003,7 @@ public partial class FrmSealSignApproval : System.Web.UI.Page
         }
         catch (SqlException exp)
         {
-            throw exp;
+            throw;
         }
         finally
         {

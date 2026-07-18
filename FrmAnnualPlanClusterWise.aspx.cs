@@ -6627,7 +6627,7 @@ public partial class FrmAnnualPlanClusterWise : System.Web.UI.Page
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -6671,7 +6671,7 @@ public partial class FrmAnnualPlanClusterWise : System.Web.UI.Page
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {

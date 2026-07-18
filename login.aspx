@@ -13,13 +13,14 @@
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="css/font-awesome.css" />
     <link rel="stylesheet" type="text/css" href="css/bootstrap-multiselect.css" />
-
+        <link rel="stylesheet" href="css/font-awesome.css" />
     <script type="text/javascript" src="js/jquery-2.1.0.js"></script>
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.js"></script>
     <script type="text/javascript" src="js/bootstrap-multiselect.js"></script>
     <script type="text/javascript" src="js/bootstrap-multiselect.js"></script>
     <link rel="stylesheet" type="text/css" href="css/pk_login.css" />
+
 
 
 </head>
@@ -105,6 +106,39 @@
                             runat="server" ValidationGroup="VGLogin" Font-Size="11px" ForeColor="Red" ErrorMessage="Please enter Password" class="alert-border"></asp:RequiredFieldValidator>
                     </div>
                 </div>
+                <div class="form-group">
+
+   <div class="form-group">
+    <div style="display:flex;align-items:center;justify-content:left;gap:15px;">
+
+        <img id="imgCaptcha"
+             src="CaptchaImage.aspx"
+             alt="CAPTCHA"
+             style="width:90px;height:35px;border:1px solid #ccc;" />
+
+        <asp:ImageButton
+            ID="btnRefresh"
+            runat="server"
+            ImageUrl="~/images/Reset.png"
+            Width="28"
+            Height="28"
+            CausesValidation="false"
+            ToolTip="Refresh CAPTCHA"
+            Style="border:none;background:none;margin-right:10px;"
+            OnClientClick="document.getElementById('imgCaptcha').src='CaptchaImage.aspx?'+new Date().getTime();return false;" />
+
+        <asp:TextBox
+            ID="txtCaptcha"
+            runat="server"
+            CssClass="form-control"
+            MaxLength="6"
+            placeholder="Enter CAPTCHA"
+            Style="width:130px;height:35px;" />
+
+    </div>
+</div>
+
+</div>
             <asp:Button runat="server" CssClass="btn   btn-block btn btn-black" OnClick="btnLogin_Click" Text="Sign In" />
             </div>
 

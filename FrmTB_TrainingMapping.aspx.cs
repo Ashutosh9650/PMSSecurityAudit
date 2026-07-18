@@ -704,7 +704,7 @@ public partial class FrmTB_TrainingMapping : System.Web.UI.Page
         }
         catch (SqlException exp)
         {
-            throw exp;
+            throw;
         }
         finally
         {
@@ -734,7 +734,7 @@ public partial class FrmTB_TrainingMapping : System.Web.UI.Page
         }
         catch (SqlException exp)
         {
-            throw exp;
+            throw;
         }
         finally
         {
@@ -785,7 +785,7 @@ public partial class FrmTB_TrainingMapping : System.Web.UI.Page
         }
         catch (SqlException exp)
         {
-            throw exp;
+            throw;
         }
         finally
         {

@@ -176,7 +176,7 @@ public partial class frmEnrllomentValidation : System.Web.UI.Page
         }
         catch (SqlException exp)
         {
-            throw exp;
+            throw;
         }
         finally
         {

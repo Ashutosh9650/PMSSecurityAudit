@@ -253,7 +253,7 @@ public partial class FrmRetionDataUpload : System.Web.UI.Page
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -294,7 +294,7 @@ public partial class FrmRetionDataUpload : System.Web.UI.Page
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -365,7 +365,7 @@ public partial class FrmRetionDataUpload : System.Web.UI.Page
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -404,7 +404,7 @@ public partial class FrmRetionDataUpload : System.Web.UI.Page
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {

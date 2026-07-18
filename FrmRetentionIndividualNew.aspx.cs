@@ -712,7 +712,7 @@ public partial class FrmRetentionIndividualNew : System.Web.UI.Page
         }
         catch (SqlException exp)
         {
-            throw exp;
+            throw;
         }
         finally
         {

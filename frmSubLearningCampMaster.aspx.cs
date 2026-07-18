@@ -270,7 +270,7 @@ public partial class frmSubLearningCampMaster : System.Web.UI.Page
         }
         catch (Exception ex)
         {
-            throw ex;
+            throw;
         }
     }
     //public int InsertUpdateLearningCampMaster(int CampId, int campNo, string campDurationInWeek, string sessioninCamp, string sessioninWeek, string hindiBaselineSessionNo, string hindiEndlineSessionNo, string mathBaselineSessionNo, string mathEndlineSessionNo, string hindiBaselineHeading1, string hindiBaselineHeading2, string mathBaselineHeading1, string mathBaselineHeading2, string hindiBaselineEndlineMaxScore, string mathBaselineEndlineMaxScore, string hindiBaselineEndlineHeading2Active, string mathBaselineEndlineHeading2Active, string userName, string operation,string  HindiBaselineEndlineMaxScore1, string MathBaselineEndlineMaxScore1,string HindiBaselineHeading3Name, string MathBaselineHeading3Name,string HindiBaselineEndlineHeading3Active,string MathBaselineEndlineHeading3Active,string HindiBaselineEndlineMaxScore2, string MathBaselineEndlineMaxScore2,string hh4,string MM4,string hhs4,string mms4,string ahs4,string ams4)
@@ -386,7 +386,7 @@ public partial class frmSubLearningCampMaster : System.Web.UI.Page
         }
         catch (Exception ex)
         {
-            throw ex;
+            throw;
         }
     }
 
@@ -443,7 +443,7 @@ public partial class frmSubLearningCampMaster : System.Web.UI.Page
             catch (Exception ex)
             {
 
-                throw ex;
+                throw;
             }
         }
         if (e.CommandName.Equals("DelefffteData"))
@@ -470,7 +470,7 @@ public partial class frmSubLearningCampMaster : System.Web.UI.Page
             catch (Exception ex)
             {
 
-                throw ex;
+                throw;
             }
         }
     }

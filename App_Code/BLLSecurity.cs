@@ -80,6 +80,9 @@ public class SqlInjection : IHttpModule//CommonBLL,
             foreach (string key in Request.Cookies)
             {
                 HttpCookie cookie = Request.Cookies[key];
+                cookie.HttpOnly = true;
+                cookie.Secure = true;
+                cookie.SameSite = SameSiteMode.Strict;
                 if (cookie != null)
                 {
                     if (cookie.HasKeys)
@@ -110,7 +113,7 @@ public class SqlInjection : IHttpModule//CommonBLL,
                 }
             }
         }
- 
+
     }
 
     //The utility method that performs the blacklist comparisons 

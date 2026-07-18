@@ -3366,7 +3366,7 @@ function Identity( v ) {
 	return v;
 }
 function Thrower( ex ) {
-	throw ex;
+	throw;
 }
 
 function adoptValue( value, resolve, reject, noValue ) {
@@ -9513,7 +9513,7 @@ jQuery.extend( {
 
 				// Rethrow post-completion exceptions
 				if ( completed ) {
-					throw e;
+					throw;
 				}
 
 				// Propagate others as results
@@ -9932,7 +9932,7 @@ jQuery.ajaxTransport( function( options ) {
 
 					// trac-14683: Only rethrow if this hasn't been notified as an error yet
 					if ( callback ) {
-						throw e;
+						throw;
 					}
 				}
 			},

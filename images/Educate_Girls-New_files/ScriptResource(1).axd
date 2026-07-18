@@ -25,7 +25,7 @@ $type = Sys.WebForms.BeginRequestEventArgs = function BeginRequestEventArgs(requ
         {name: "postBackElement", mayBeNull: true, domElement: true},
         {name: "updatePanelsToUpdate", type: Array, mayBeNull: true, optional: true, elementType: String}
     ]);
-    if (e) throw e;
+    if (e) throw;
     Sys.WebForms.BeginRequestEventArgs.initializeBase(this);
     this._request = request;
     this._postBackElement = postBackElement;
@@ -61,7 +61,7 @@ $type = Sys.WebForms.EndRequestEventArgs = function EndRequestEventArgs(error, d
         {name: "dataItems", type: Object, mayBeNull: true},
         {name: "response", type: Sys.Net.WebRequestExecutor}
     ]);
-    if (e) throw e;
+    if (e) throw;
 
     Sys.WebForms.EndRequestEventArgs.initializeBase(this);
     this._errorHandled = false;
@@ -90,7 +90,7 @@ $type.prototype = {
     },
     set_errorHandled: function EndRequestEventArgs$set_errorHandled(value) {
         var e = Function._validateParams(arguments, [{name: "value", type: Boolean}]);
-        if (e) throw e;
+        if (e) throw;
         this._errorHandled = value;
     },
 
@@ -112,7 +112,7 @@ $type = Sys.WebForms.InitializeRequestEventArgs = function InitializeRequestEven
         {name: "postBackElement", mayBeNull: true, domElement: true},
         {name: "updatePanelsToUpdate", type: Array, mayBeNull: true, optional: true, elementType: String}
     ]);
-    if (e) throw e;
+    if (e) throw;
     Sys.WebForms.InitializeRequestEventArgs.initializeBase(this);
     this._request = request;
     this._postBackElement = postBackElement;
@@ -137,7 +137,7 @@ $type.prototype = {
     },
     set_updatePanelsToUpdate: function InitializeRequestEventArgs$set_updatePanelsToUpdate(value) {
         var e = Function._validateParams(arguments, [{name: "value", type: Array, elementType: String}]);
-        if (e) throw e;
+        if (e) throw;
         this._updated = true;
         this._updatePanelsToUpdate = value;
     }
@@ -154,7 +154,7 @@ $type = Sys.WebForms.PageLoadedEventArgs = function PageLoadedEventArgs(panelsUp
         {name: "panelsCreated", type: Array},
         {name: "dataItems", type: Object, mayBeNull: true}
     ]);
-    if (e) throw e;
+    if (e) throw;
     Sys.WebForms.PageLoadedEventArgs.initializeBase(this);
 
     this._panelsUpdated = panelsUpdated;
@@ -193,7 +193,7 @@ $type = Sys.WebForms.PageLoadingEventArgs = function PageLoadingEventArgs(panels
         {name: "panelsDeleting", type: Array},
         {name: "dataItems", type: Object, mayBeNull: true}
     ]);
-    if (e) throw e;
+    if (e) throw;
     Sys.WebForms.PageLoadingEventArgs.initializeBase(this);
 
     this._panelsUpdating = panelsUpdating;
@@ -231,7 +231,7 @@ $type = Sys._ScriptLoaderTask = function _ScriptLoaderTask(scriptElement, comple
         { name: "scriptElement", domElement: true },
         { name: "completedCallback", type: Function }
     ]);
-    if (e) throw e;
+    if (e) throw;
     this._scriptElement = scriptElement;
     this._completedCallback = completedCallback;
 }
@@ -358,7 +358,7 @@ $type.prototype = {
             {name: "scriptLoadFailedCallback", type: Function, mayBeNull: true},
             {name: "scriptLoadTimeoutCallback", type: Function, mayBeNull: true}
         ]);
-        if (e) throw e;
+        if (e) throw;
         var session = {
             allScriptsLoadedCallback: allScriptsLoadedCallback,
             scriptLoadFailedCallback: scriptLoadFailedCallback,
@@ -379,7 +379,7 @@ $type.prototype = {
         var e = Function._validateParams(arguments, [
             {name: "scriptAttributes"}
         ]);
-        if (e) throw e;
+        if (e) throw;
         if(!this._scriptsToLoad) {
             this._scriptsToLoad = [];
         }
@@ -392,7 +392,7 @@ $type.prototype = {
         var e = Function._validateParams(arguments, [
             {name: "scriptContent", type: String}
         ]);
-        if (e) throw e;
+        if (e) throw;
         if(!this._scriptsToLoad) {
             this._scriptsToLoad = [];
         }
@@ -405,7 +405,7 @@ $type.prototype = {
         var e = Function._validateParams(arguments, [
             {name: "scriptUrl", type: String}
         ]);
-        if (e) throw e;
+        if (e) throw;
         if(!this._scriptsToLoad) {
             this._scriptsToLoad = [];
         }
@@ -607,60 +607,60 @@ $type.prototype = {
     add_beginRequest: function PageRequestManager$add_beginRequest(handler) {
         /// <summary locid="E:J#Sys.WebForms.PageRequestManager.beginRequest">Adds a beginRequest event handler.</summary>
         var e = Function._validateParams(arguments, [{name: "handler", type: Function}]);
-        if (e) throw e;
+        if (e) throw;
         Sys.Observer.addEventHandler(this, "beginRequest", handler);
     },
     remove_beginRequest: function PageRequestManager$remove_beginRequest(handler) {
         var e = Function._validateParams(arguments, [{name: "handler", type: Function}]);
-        if (e) throw e;
+        if (e) throw;
         Sys.Observer.removeEventHandler(this, "beginRequest", handler);
     },
 
     add_endRequest: function PageRequestManager$add_endRequest(handler) {
         /// <summary locid="E:J#Sys.WebForms.PageRequestManager.endRequest">Adds a endRequest event handler.</summary>
         var e = Function._validateParams(arguments, [{name: "handler", type: Function}]);
-        if (e) throw e;
+        if (e) throw;
         Sys.Observer.addEventHandler(this, "endRequest", handler);
     },
     remove_endRequest: function PageRequestManager$remove_endRequest(handler) {
         var e = Function._validateParams(arguments, [{name: "handler", type: Function}]);
-        if (e) throw e;
+        if (e) throw;
         Sys.Observer.removeEventHandler(this, "endRequest", handler);
     },
 
     add_initializeRequest: function PageRequestManager$add_initializeRequest(handler) {
         /// <summary locid="E:J#Sys.WebForms.PageRequestManager.initializeRequest">Adds a initializeRequest event handler.</summary>
         var e = Function._validateParams(arguments, [{name: "handler", type: Function}]);
-        if (e) throw e;
+        if (e) throw;
         Sys.Observer.addEventHandler(this, "initializeRequest", handler);
     },
     remove_initializeRequest: function PageRequestManager$remove_initializeRequest(handler) {
         var e = Function._validateParams(arguments, [{name: "handler", type: Function}]);
-        if (e) throw e;
+        if (e) throw;
         Sys.Observer.removeEventHandler(this, "initializeRequest", handler);
     },
 
     add_pageLoaded: function PageRequestManager$add_pageLoaded(handler) {
         /// <summary locid="E:J#Sys.WebForms.PageRequestManager.pageLoaded">Adds a pageLoaded event handler.</summary>
         var e = Function._validateParams(arguments, [{name: "handler", type: Function}]);
-        if (e) throw e;
+        if (e) throw;
         Sys.Observer.addEventHandler(this, "pageLoaded", handler);
     },
     remove_pageLoaded: function PageRequestManager$remove_pageLoaded(handler) {
         var e = Function._validateParams(arguments, [{name: "handler", type: Function}]);
-        if (e) throw e;
+        if (e) throw;
         Sys.Observer.removeEventHandler(this, "pageLoaded", handler);
     },
 
     add_pageLoading: function PageRequestManager$add_pageLoading(handler) {
         /// <summary locid="E:J#Sys.WebForms.PageRequestManager.pageLoading">Adds a pageLoading event handler.</summary>
         var e = Function._validateParams(arguments, [{name: "handler", type: Function}]);
-        if (e) throw e;
+        if (e) throw;
         Sys.Observer.addEventHandler(this, "pageLoading", handler);
     },
     remove_pageLoading: function PageRequestManager$remove_pageLoading(handler) {
         var e = Function._validateParams(arguments, [{name: "handler", type: Function}]);
-        if (e) throw e;
+        if (e) throw;
         Sys.Observer.removeEventHandler(this, "pageLoading", handler);
     },
 
@@ -685,7 +685,7 @@ $type.prototype = {
             {name: "causesValidation", type: Boolean, mayBeNull: true, optional: true},
             {name: "validationGroup", type: String, mayBeNull: true, optional: true}
         ]);
-        if (e) throw e;
+        if (e) throw;
         if (causesValidation && (typeof(Page_ClientValidate) === 'function') && !Page_ClientValidate(validationGroup || null)) {
             return;
         }
@@ -2007,7 +2007,7 @@ $type.prototype = {
     },
     set_displayAfter: function _UpdateProgress$set_displayAfter(value) {
         var e = Function._validateParams(arguments, [{name: "value", type: Number}]);
-        if (e) throw e;
+        if (e) throw;
         this._displayAfter = value;
     },
     get_dynamicLayout: function _UpdateProgress$get_dynamicLayout() {
@@ -2017,7 +2017,7 @@ $type.prototype = {
     },
     set_dynamicLayout: function _UpdateProgress$set_dynamicLayout(value) {
         var e = Function._validateParams(arguments, [{name: "value", type: Boolean}]);
-        if (e) throw e;
+        if (e) throw;
         this._dynamicLayout = value;
     },
     get_associatedUpdatePanelId: function _UpdateProgress$get_associatedUpdatePanelId() {
@@ -2027,7 +2027,7 @@ $type.prototype = {
     },
     set_associatedUpdatePanelId: function _UpdateProgress$set_associatedUpdatePanelId(value) {
         var e = Function._validateParams(arguments, [{name: "value", type: String, mayBeNull: true}]);
-        if (e) throw e;
+        if (e) throw;
         this._associatedUpdatePanelId = value;
     },
     get_role: function _UpdateProgress$get_role() {

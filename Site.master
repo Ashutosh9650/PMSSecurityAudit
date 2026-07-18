@@ -316,8 +316,7 @@
 
     // OK button
     $(document).on("click", "#btnForcePwd", function () {
-
-        alert("Button Clicked");
+     
 
         window.location.href = "Frm_Change_Password.aspx";
     });

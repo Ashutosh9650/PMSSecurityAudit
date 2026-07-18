@@ -174,7 +174,7 @@ public partial class frmModelocking : System.Web.UI.Page
         }
         catch (SqlException exp)
         {
-            throw exp;
+            throw;
         }
         finally
         {

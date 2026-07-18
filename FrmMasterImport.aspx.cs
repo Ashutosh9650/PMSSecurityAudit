@@ -258,7 +258,7 @@ public partial class FrmMasterImport : System.Web.UI.Page
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -299,7 +299,7 @@ public partial class FrmMasterImport : System.Web.UI.Page
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -340,7 +340,7 @@ public partial class FrmMasterImport : System.Web.UI.Page
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {

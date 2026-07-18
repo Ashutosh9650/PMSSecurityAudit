@@ -401,7 +401,7 @@ public partial class frmMoibileUserRights : System.Web.UI.Page
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {

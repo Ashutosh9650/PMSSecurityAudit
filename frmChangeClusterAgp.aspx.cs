@@ -314,7 +314,7 @@ public partial class frmChangeClusterAgp : System.Web.UI.Page
         }
         catch (SqlException exp)
         {
-            throw exp;
+            throw;
         }
         finally
         {
@@ -348,7 +348,7 @@ public partial class frmChangeClusterAgp : System.Web.UI.Page
         }
         catch (SqlException exp)
         {
-            throw exp;
+            throw;
         }
         finally
         {
@@ -384,7 +384,7 @@ public partial class frmChangeClusterAgp : System.Web.UI.Page
         }
         catch (SqlException exp)
         {
-            throw exp;
+            throw;
         }
         finally
         {

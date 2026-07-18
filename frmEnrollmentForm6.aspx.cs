@@ -400,7 +400,7 @@ public partial class frmEnrollmentForm6 : System.Web.UI.Page
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw;
             }
             finally
             {

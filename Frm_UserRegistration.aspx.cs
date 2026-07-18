@@ -378,7 +378,7 @@ public partial class Frm_UserRegistration : System.Web.UI.Page
         }
         catch (Exception)
         {
-            //throw ex;
+            //throw;
             throw;
         }
 

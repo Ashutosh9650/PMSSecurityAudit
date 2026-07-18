@@ -786,7 +786,7 @@ public partial class FrmGovtTarget : System.Web.UI.Page
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -827,7 +827,7 @@ public partial class FrmGovtTarget : System.Web.UI.Page
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -898,7 +898,7 @@ public partial class FrmGovtTarget : System.Web.UI.Page
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {
@@ -937,7 +937,7 @@ public partial class FrmGovtTarget : System.Web.UI.Page
                 sqlConnection.Dispose();
             }
 
-            throw e;
+            throw;
         }
         finally
         {

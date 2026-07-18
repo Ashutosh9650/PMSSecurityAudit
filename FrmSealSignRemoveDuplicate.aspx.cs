@@ -303,7 +303,7 @@ public partial class FrmSealSignRemoveDuplicate : System.Web.UI.Page
         }
         catch (SqlException exp)
         {
-            throw exp;
+            throw;
         }
         finally
         {

@@ -1065,7 +1065,7 @@ public partial class frmChangeCluster2025 : System.Web.UI.Page
         }
         catch (SqlException exp)
         {
-            throw exp;
+            throw;
         }
         finally
         {
@@ -1110,7 +1110,7 @@ public partial class frmChangeCluster2025 : System.Web.UI.Page
         }
         catch (SqlException exp)
         {
-            throw exp;
+            throw;
         }
         finally
         {
@@ -1149,7 +1149,7 @@ public partial class frmChangeCluster2025 : System.Web.UI.Page
         }
         catch (SqlException exp)
         {
-            throw exp;
+            throw;
         }
         finally
         {

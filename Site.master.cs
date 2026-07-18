@@ -123,6 +123,9 @@ public partial class SiteNewMaster : System.Web.UI.MasterPage
         if (Request.Cookies["ASP.NET_SessionId"] != null)
         {
             HttpCookie cookie = new HttpCookie("ASP.NET_SessionId", "");
+            cookie.HttpOnly = true;
+            cookie.Secure = true;
+            cookie.SameSite = SameSiteMode.Strict;
             cookie.Expires = DateTime.Now.AddDays(-1);
             cookie.HttpOnly = true;
             Response.Cookies.Add(cookie);

@@ -285,7 +285,7 @@
         //        { name: "x", type: Number, integer: true },
         //        { name: "y", type: Number, integer: true }
         //    ]);
-        //    if (e) throw e;
+        //    if (e) throw;
         //    this.x = x;
         //    this.y = y;
         //}
@@ -312,7 +312,7 @@
                     { name: "x", type: Number, integer: true },
                     { name: "y", type: Number, integer: true }
                 ]);
-                if (e) throw e;
+                if (e) throw;
                 this.x = x;
                 this.y = y;
             }

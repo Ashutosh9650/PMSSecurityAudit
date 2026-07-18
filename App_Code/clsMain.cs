@@ -49,7 +49,7 @@ public class clsMain
         }
         catch (Exception)
         {
-
+            throw;
         }
         return dtcombo;
     }
@@ -72,7 +72,7 @@ new SqlParameter("@Filter3",Filter3),
         }
         catch (Exception)
         {
-
+            throw;
         }
         return dtcombo;
     }
@@ -90,7 +90,7 @@ new SqlParameter("@Filter3",Filter3),
         }
         catch (Exception)
         {
-
+            throw;
         }
         return dtcombo;
     }
@@ -277,6 +277,7 @@ new SqlParameter("@Filter3",Filter3),
         }
         catch (Exception)
         {
+            throw;
         }
         return result;
     }
@@ -2345,7 +2346,7 @@ new SqlParameter("@condtion", Frist)
         }
         catch (Exception)
         {
-
+            throw;
         }
         return dtcombo;
     }

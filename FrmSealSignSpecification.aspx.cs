@@ -1206,7 +1206,7 @@ public partial class FrmSealSignSpecification : System.Web.UI.Page
         }
         catch (SqlException exp)
         {
-            throw exp;
+            throw;
         }
         finally
         {

@@ -390,7 +390,7 @@ public partial class FrmPhaseMapping : System.Web.UI.Page
         }
         catch (SqlException exp)
         {
-            throw exp;
+            throw;
         }
         finally
         {
