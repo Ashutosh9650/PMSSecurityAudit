@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Educate_Girls-New</title>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+     <link rel="stylesheet" type="text/css" href="css/custom.css" />
     <link rel="stylesheet" type="text/css" href="css/font-awesome.css" />
     <link rel="stylesheet" type="text/css" href="css/font-awesome.css" />
     <%-- <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />--%>
@@ -15,8 +16,14 @@
     <script type="text/javascript" src="js/jquery-2.1.0.js"></script>
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <%--<script type="text/javascript" src="js/bootstrap.min.js"></script>--%>
-    <script type="text/javascript" src="js/bootstrap.js"></script>
+    <%--<script type="text/javascript" src="js/bootstrap.js"></script>--%>
     <script type="text/javascript" src="js/bootstrap-multiselect.js"></script>
+
+   <%-- <link rel="stylesheet" type="text/css" href="css/oldcss/bootstrap.css" />--%>
+   
+     <script type="text/javascript" src="css/oldcss/bootstrap.js"></script>
+
+
 
     <link href="https://db.onlinewebfonts.com/c/9fad9fb4f8926dd5f3e0156e4d8ba11d?family=Vagabond"
         rel="stylesheet" type="text/cs" />
