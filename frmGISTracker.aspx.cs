@@ -17,6 +17,7 @@ public partial class frmGISTracker : System.Web.UI.Page
     public bool vADD = false;
     public bool vVerify = false;
     public bool vDelete = false;
+    DataTableMaskingHelper dataTableMaskingHelper = new DataTableMaskingHelper();
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -1570,13 +1571,14 @@ public partial class frmGISTracker : System.Web.UI.Page
         SqlParameter[] cmdParameters = new SqlParameter[]
         {
             new SqlParameter("@condtion",conditions),
-                new SqlParameter("@Year",ddlYear.SelectedValue),
-
+            new SqlParameter("@Year",ddlYear.SelectedValue),
         };
         DataTable dt = null;
 
 
         dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[ReportEnrollDeatilsNewFrom2021Fuzzmataching]", cmdParameters);
+
+        dataTableMaskingHelper.DecryptAndMaskDataTable(dt, true, "HHNo", "Enrolment Child Name", "D2D Child Name", "MotherName", "D2D MotherName", "Father Name", "D2D Father Name", "DOB", "Contact DOB", "Contact Child Name", "Contact Father Name", "Samagra ID", "Latitude", "Longitude");
 
         if (dt.Rows.Count > 0)
         {
@@ -1759,13 +1761,27 @@ public partial class frmGISTracker : System.Web.UI.Page
         {
             SqlParameter[] cmdParameters = new SqlParameter[]
             {
-            new SqlParameter("@condtion",conditions),
+                new SqlParameter("@condtion",conditions),
                 new SqlParameter("@Year",ddlYear.SelectedValue),
-
             };
             DataTable dt = null;
 
             dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[ReportEnrollDeatilsNewFrom2021]", cmdParameters);
+
+            if (Convert.ToInt32(ddlYear.SelectedValue) == 2026)
+                dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Enrolment Child Name", "MotherName", "Father Name", "DOB", "Contact DOB", "Contact Child Name", "Contact Father Name", "Samagra ID", "HHNo", "D2D Child Name", "D2D Mother Name", "D2D Father Name", "Latitude", "Longitude", "AgeAson");
+            else if (Convert.ToInt32(ddlYear.SelectedValue) == 2025)
+                dataTableMaskingHelper.DecryptAndMaskDataTable(dt, true, "Enrolment Child Name", "MotherName", "Father Name", "DOB", "Contact DOB", "Contact Child Name", "Contact Father Name", "Samagra ID", "HHNo", "D2D Child Name", "D2D Mother Name", "D2D Father Name", "Latitude", "Longitude");
+            else if (Convert.ToInt32(ddlYear.SelectedValue) == 2024)
+                dataTableMaskingHelper.DecryptAndMaskDataTable(dt, true, "Enrolment Child Name", "MotherName", "Father Name", "DOB", "Contact DOB", "Contact Child Name", "Contact Father Name", "Samagra ID", "HHNo", "D2D Child Name", "D2D Mother Name", "D2D Father Name", "Latitude", "Longitude");
+            else if (Convert.ToInt32(ddlYear.SelectedValue) == 2023)
+                dataTableMaskingHelper.DecryptAndMaskDataTable(dt, true, "Enrolment Child Name", "MotherName", "Father Name", "DOB", "Contact Child Name", "Contact Father Name", "Samagra ID", "HHNo", "D2D Child Name", "D2D Mother Name", "D2D Father Name", "Latitude", "Longitude");
+            else if (Convert.ToInt32(ddlYear.SelectedValue) == 2022)
+                dataTableMaskingHelper.DecryptAndMaskDataTable(dt, true, "Enrolment Child Name", "MotherName", "Father Name", "DOB", "Contact Child Name", "Contact Father Name", "Samagra ID", "HHNo", "D2D Child Name", "D2D Mother Name", "D2D Father Name", "Latitude", "Longitude");
+            else if (Convert.ToInt32(ddlYear.SelectedValue) == 2021)
+                dataTableMaskingHelper.DecryptAndMaskDataTable(dt, true, "Enrolment Child Name", "MotherName", "Father Name", "DOB", "Contact Child Name", "Contact Father Name", "Samagra ID", "HHNo", "D2D Child Name", "D2D Mother Name", "D2D Father Name");
+            else
+                dataTableMaskingHelper.DecryptAndMaskDataTable(dt, true, "Enrolment Child Name", "MotherName", "Father Name", "DOB", "Contact Child Name", "Contact Father Name", "Samagra ID", "HHNo", "D2D Child Name", "D2D Mother Name", "D2D Father Name");
 
             if (dt.Rows.Count > 0)
             {
@@ -2254,21 +2270,20 @@ public partial class frmGISTracker : System.Web.UI.Page
         SqlParameter[] cmdParameters = new SqlParameter[]
         {
             new SqlParameter("@condtion",conditions),
-
         };
+
         DataTable dt = null;
 
 
         dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "ReportEnrollDeatilsNewFromException", cmdParameters);
+     
 
         if (dt.Rows.Count > 0)
         {
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, true, "HHNo", "ChildName", "Father Name", "DOB");
+
             ExportToCSVFile(dt, "ExceptionReport");
         }
-
-
-
-
     }
 
 

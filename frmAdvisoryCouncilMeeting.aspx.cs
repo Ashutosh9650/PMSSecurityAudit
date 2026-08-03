@@ -16,6 +16,9 @@ public partial class frmAdvisoryCouncilMeeting : System.Web.UI.Page
     public bool vVerify = false;
     public bool vDelete = false;
     string conditions = "";
+    DataTableMaskingHelper dataTableMaskingHelper = new DataTableMaskingHelper();
+
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -1114,44 +1117,32 @@ public partial class frmAdvisoryCouncilMeeting : System.Web.UI.Page
 
         SqlParameter[] cmdParameters = new SqlParameter[]
         {
-
-
-        new SqlParameter("@Con", conditions1),
-
+            new SqlParameter("@Con", conditions1),
         };
         dtMain = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptInfluencerProfile]", cmdParameters);
+
+        dataTableMaskingHelper.DecryptAndMaskDataTable(dtMain, "Member Name", "Mobile No.", "Father Name/Husband Name", "DOB", "Replacement of", "Age");
+
         ViewState["SAC"] = dtMain;
+
         if (dtMain.Rows.Count > 0)
         {
-            //DataTable newDataTable = dtMain.Clone();
-            //DataTable dtn = dtMain.Clone();
-            //for (int i = 0; i < 3; i++)
-            //{
-            //    dtn.ImportRow(dtMain.Rows[i]);
-            //}
             if (dtMain.Rows.Count > 500)
             {
                 ExportToCSVFile(dtMain, "ACMembersProfile");
             }
             else
             {
-
                 GV_DynamicGrid.Visible = true;
                 GV_DynamicGrid.DataSource = dtMain;
                 GV_DynamicGrid.DataBind();
             }
-
-
-
-            //  GenerateExcelSIP(dtMain, aprove);
-
         }
         else
         {
             GV_DynamicGrid.DataSource = null;
             GV_DynamicGrid.DataBind();
         }
-
     }
 
     public void getActivitySIPTargetvsAchv(Int32 Flag)

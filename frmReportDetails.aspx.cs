@@ -17,6 +17,8 @@ public partial class frmReportDetails : System.Web.UI.Page
     string flag = "";
     Password objPass = new Password();
     public DataTable dtUserDeatils;
+    DataTableMaskingHelper dataTableMaskingHelper = new DataTableMaskingHelper();
+
     protected void Page_Load(object sender, EventArgs e)
     {
         lblTotalCount.Text = "";
@@ -558,11 +560,10 @@ public partial class frmReportDetails : System.Web.UI.Page
         SqlParameter[] cmdParameters = new SqlParameter[]
         {
             new SqlParameter("@con", conditions),
-
-
-
         };
         DataTable dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptGovtRelations]", cmdParameters);
+
+        dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Representative Name", "Representative Contact No.", "Representative Email");
 
         ViewState["D2dUser"] = dt;
 
@@ -930,15 +931,14 @@ public partial class frmReportDetails : System.Web.UI.Page
         }
 
         SqlParameter[] parm = new SqlParameter[]
-            {
-
+        {
             new SqlParameter("@Condition", conditions),
             new SqlParameter("@Flag", Flag),
-                new SqlParameter("@Year", ddlYear.SelectedValue)
-
-                 };
+            new SqlParameter("@Year", ddlYear.SelectedValue)
+        };
         DataTable dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptMasterTeamBailkTraining2026]", parm);
 
+        dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "TB Name", "Internal Trainer Name", "External Trainer Name", "External Trainer Email", "External Trainer Contact No.");
 
         ViewState["D2dUser"] = dt;
 
@@ -1142,11 +1142,12 @@ public partial class frmReportDetails : System.Web.UI.Page
         }
 
         SqlParameter[] cmdParameters = new SqlParameter[]
-    {
+        {
             new SqlParameter("@con", conditions),
-
-    };
+        };
         DataTable dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptSafetySecurity]", cmdParameters);
+
+        dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Employee Name", "Mobile Number", "Emergency Contact Person Name", "Emergency Contact Mobile Number", "Age in Years");
 
         ViewState["D2dUser"] = dt;
 
@@ -1169,14 +1170,8 @@ public partial class frmReportDetails : System.Web.UI.Page
             GV_DynamicGrid.DataSource = null;
             GV_DynamicGrid.DataBind();
         }
-
-
-
-
-
-
-
     }
+
     protected void LnkMobileDataReport_OnClick(object sender, EventArgs e)
     {
         ViewState["1"] = 116;
@@ -2025,13 +2020,16 @@ public partial class frmReportDetails : System.Web.UI.Page
         //    subject = ddlsubject.SelectedItem.Text;
         //}
         SqlParameter[] parm = new SqlParameter[]
-            {
-       new SqlParameter("@condition",  conditions),
-       new SqlParameter("@subject",  subject),
-        new SqlParameter("@flag",2),
+        {
+            new SqlParameter("@condition",  conditions),
+            new SqlParameter("@subject",  subject),
+            new SqlParameter("@flag",2),
+        };
 
-                 };
         DataTable dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[Get_CLT_Report_Data]", parm);
+
+        dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Student Name", "Class");
+
         ViewState["dt"] = dt;
         lblTotalCount.Text = dt.Rows.Count.ToString();
         GV_DynamicGrid.DataSource = null;
@@ -2200,15 +2198,22 @@ public partial class frmReportDetails : System.Web.UI.Page
         string FristCon = conditions;
 
         SqlParameter[] cmdParameters = new SqlParameter[]
-    {
+        {
             new SqlParameter("@condtion", FristCon),
             new SqlParameter("@Fyear", ddlYear.SelectedValue)
-    };
+        };
+
         DataTable dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[ReportEnrollDeatilsNewAGP]", cmdParameters);
 
-        //DataTable dt = objMain.ReportEnrollDeatilsNew(FristCon);
         if (dt.Rows.Count > 0)
         {
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, true, "HHNo", "ChildName", "Father Name", "Samagra ID", "DOB");
+
+            if (dt.Columns.Contains("EnrolmentDate"))
+            {
+                dt.Columns.Remove("EnrolmentDate");
+            }
+
             GV_DynamicGrid.Visible = true;
             ViewState["Enroll"] = dt;
             lblTotalCount.Text = (dt.Rows.Count).ToString();
@@ -2221,16 +2226,7 @@ public partial class frmReportDetails : System.Web.UI.Page
                 GV_DynamicGrid.DataSource = dt;
                 GV_DynamicGrid.DataBind();
             }
-
-
-
         }
-
-
-
-
-
-
     }
 
     public void LoadReportEnrollment()
@@ -2453,15 +2449,22 @@ public partial class frmReportDetails : System.Web.UI.Page
             string FristCon = conditions + conditionsCr;
 
             SqlParameter[] cmdParameters = new SqlParameter[]
-        {
-            new SqlParameter("@condtion", FristCon),
-            new SqlParameter("@Fyear", ddlYear.SelectedValue)
-        };
+            {
+                new SqlParameter("@condtion", FristCon),
+                new SqlParameter("@Fyear", ddlYear.SelectedValue)
+            };
+
             DataTable dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[ReportEnrollDeatilsNew2020]", cmdParameters);
 
-            //DataTable dt = objMain.ReportEnrollDeatilsNew(FristCon);
             if (dt.Rows.Count > 0)
             {
+                dataTableMaskingHelper.DecryptAndMaskDataTable(dt, true, "HHNo", "ChildName", "Father Name", "Samagra ID", "DOB");
+
+                if (dt.Columns.Contains("EnrolmentDate"))
+                {
+                    dt.Columns.Remove("EnrolmentDate");
+                }
+
                 gvnroll.Visible = true;
                 ViewState["Enroll"] = dt;
                 lblTotalCount.Text = (dt.Rows.Count).ToString();
@@ -2474,8 +2477,6 @@ public partial class frmReportDetails : System.Web.UI.Page
                     gvnroll.DataSource = dt;
                     gvnroll.DataBind();
                 }
-
-
             }
             else
             {
@@ -2702,15 +2703,22 @@ public partial class frmReportDetails : System.Web.UI.Page
 
         string FristCon = conditions + conditionsCr;
 
-        //  DataTable dt = objMain.ReportEnrollDeatilsNew(FristCon);
+
         SqlParameter[] cmdParameters = new SqlParameter[]
-    {
+        {
             new SqlParameter("@condtion", FristCon)
-    };
+        };
 
         DataTable dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[ReportEnrollDeatilsNewdelate]", cmdParameters);
         if (dt.Rows.Count > 0)
         {
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, true, "HHNo", "ChildName", "Father Name", "DOB");
+
+            if (dt.Columns.Contains("EnrolmentDate"))
+            {
+                dt.Columns.Remove("EnrolmentDate");
+            }
+
             GV_DynamicGrid.Visible = true;
             ViewState["Enroll123"] = dt;
             lblTotalCount.Text = (dt.Rows.Count).ToString();
@@ -2896,7 +2904,6 @@ public partial class frmReportDetails : System.Web.UI.Page
 
         string FristCon = conditions + conditionsCr;
 
-        //  DataTable dt = objMain.ReportEnrollDeatilsNew(FristCon);
         SqlParameter[] cmdParameters = new SqlParameter[]
         {
             new SqlParameter("@condtion", FristCon)
@@ -2905,6 +2912,13 @@ public partial class frmReportDetails : System.Web.UI.Page
         DataTable dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptEnrollmetDuplicateRecord]", cmdParameters);
         if (dt.Rows.Count > 0)
         {
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "HHNo", "ChildName", "Father Name", "DOB");
+
+            if (dt.Columns.Contains("EnrolmentDate"))
+            {
+                dt.Columns.Remove("EnrolmentDate");
+            }
+
             dt.Columns.Remove("Tempschoolcode");
             dt.Columns.Remove("TempSerial");
             dt.Columns.Remove("tempclass");
@@ -3105,7 +3119,6 @@ public partial class frmReportDetails : System.Web.UI.Page
         if (dt.Tables[0].Rows.Count > 0)
         {
 
-
             gvEnrollSummary.Visible = true;
             Session["Enroll123"] = dt;
             lblTotalCount.Text = (dt.Tables[0].Rows.Count).ToString();
@@ -3119,12 +3132,8 @@ public partial class frmReportDetails : System.Web.UI.Page
             GV_DynamicGrid.DataBind();
             Session["Enroll123"] = null;
         }
-
-
-
-
-
     }
+
     private void GenerateExcelNewEnroll(string FIleName)
     {
         try
@@ -3603,9 +3612,10 @@ public partial class frmReportDetails : System.Web.UI.Page
         SqlParameter[] cmdParameters = new SqlParameter[]
         {
             new SqlParameter("@Con", conditions)
-
         };
         DataTable dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptInfluencerProfile]", cmdParameters);
+
+        dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Member Name", "Mobile No.", "Father Name/Husband Name", "DOB", "Replacement of", "Age");
 
         ViewState["D2dUser"] = dt;
 
@@ -3627,12 +3637,6 @@ public partial class frmReportDetails : System.Web.UI.Page
             GV_DynamicGrid.DataSource = dt;
             GV_DynamicGrid.DataBind();
         }
-
-
-
-
-
-
     }
 
     public void LoadMasterData(int Flag)
@@ -3804,20 +3808,40 @@ public partial class frmReportDetails : System.Web.UI.Page
             string[] Year1 = Year.Split('-');
             string fDate = "And FromDate >= '" + Year1[0] + "-04-01' and ToDate<= '" + Year1[1] + "-03-31'";
             dt = LoadMasterDataNewTr(conditions, Flag, fDate);
+
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "TB Name", "FatherName", "MotherName", "DOB", "Contact", "Alternate Mobile Number", "Name of Employee");
         }
         else
-
         {
             if (Convert.ToInt32(ddlYear.SelectedValue) >= 2026)
             {
                 dt = LoadMasterDataNew2026(conditions, Flag);
+
+                if (Flag == 1)
+                    dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "TB Name", "FatherName", "MotherName", "DOB", "Contact", "Alternate Mobile Number", "Name of Employee");
+                else if (Flag == 0)
+                    dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Teacher Name", "Teacher Mobile Number", "School Donor Name", "Village Latitude", "Village Longitude");
+                else if (Flag == 12)
+                    dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Teacher Name", "Teacher Mobile Number", "School Donor Name", "School Latitude Longitude", "Latitude", "Longitute");
+                else if (Flag == 9)
+                    dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Employee Name", "Email", "Contact No", "IMEINo", "Android ID");
             }
             else if (Convert.ToInt32(ddlYear.SelectedValue) == 2024 | Convert.ToInt32(ddlYear.SelectedValue) == 2025)
             {
                 dt = objMain.LoadMasterDataNew(conditions, Flag);
+
+                if (Flag == 1)
+                    dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "TB Name", "FatherName", "MotherName", "DOB", "Contact", "Alternate Mobile Number", "Name of Employee");
+                else if (Flag == 0)
+                    dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Teacher Name", "Teacher Mobile Number", "School Donor Name", "Village Latitude", "Village Longitude");
+                else if (Flag == 12)
+                    dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Teacher Name", "Teacher Mobile Number", "School Donor Name", "Latitude", "Longitute");
+                else if (Flag == 9)
+                    dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Employee Name", "Email", "Contact No", "IMEINo", "Android ID");
             }
-            // dt = objMain.LoadMasterDataNew(conditions, Flag);
         }
+
+
         ViewState["D2dUser"] = dt;
 
         GV_DynamicGrid.DataSource = null;
@@ -3902,8 +3926,7 @@ public partial class frmReportDetails : System.Web.UI.Page
         {
             new SqlParameter("@Condition", condition),
             new SqlParameter("@Flag", Flag),
-             new SqlParameter("@Fdate", fromdate),
-
+            new SqlParameter("@Fdate", fromdate),
         };
         return SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[Report_Master_TeamBail]", cmdParameters);
     }
@@ -4034,61 +4057,6 @@ public partial class frmReportDetails : System.Web.UI.Page
             conditions += " and mst5Village.VillageCode in(" + ddlVillage + ") ";
         }
 
-        //if (ViewState["1"].ToString() == "1")
-        //{
-        //    GvReport.Visible = true;
-        //    if (ddlUser.SelectedIndex > 0)
-        //    {
-        //        conditionsCr += " and CreateBy =  '" + ddlUser.SelectedValue + "' ";
-        //        conditionsmo += " and ModifyBy = '" + ddlUser.SelectedValue + "' ";
-        //        conditionsDe += " and DeleteBy = '" + ddlUser.SelectedValue + "' ";
-        //    }
-        //    if (txtDate.Text != "")
-        //    {
-        //        DateTime Fromdate = Convert.ToDateTime(txtDate.Text);
-        //        conditionsCr += " and Createdate >=  '" + Fromdate.ToString("yyyy-MM-dd") + "' ";
-        //        conditionsmo += " and ModifyDate >= '" + Fromdate.ToString("yyyy-MM-dd") + "' ";
-        //        conditionsDe += " and DeletedDate >= '" + Fromdate.ToString("yyyy-MM-dd") + "' ";
-        //    }
-        //    if (txtTodate.Text != "")
-        //    {
-        //        DateTime Todate = Convert.ToDateTime(txtTodate.Text);
-        //        conditionsCr += " and Createdate <=  '" + Todate.ToString("yyyy-MM-dd") + "' ";
-        //        conditionsmo += " and ModifyDate <= '" + Todate.ToString("yyyy-MM-dd") + "' ";
-        //        conditionsDe += " and DeletedDate <= '" + Todate.ToString("yyyy-MM-dd") + "' ";
-        //    }
-        //    if (txtDate.Text != "" && txtTodate.Text != "")
-        //    {
-        //        DateTime Fromdate = Convert.ToDateTime(txtDate.Text);
-        //        DateTime Todate = Convert.ToDateTime(txtTodate.Text);
-        //        conditionsCr += " and Createdate BETWEEN '" + Fromdate.ToString("yyyy-MM-dd") + "' and '" + Todate.ToString("yyyy-MM-dd") + "'";
-        //        conditionsmo += " and ModifyDate BETWEEN '" + Fromdate.ToString("yyyy-MM-dd") + "'  and '" + Todate.ToString("yyyy-MM-dd") + "' ";
-        //        conditionsDe += " and DeletedDate BETWEEN '" + Fromdate.ToString("yyyy-MM-dd") + "'  and '" + Todate.ToString("yyyy-MM-dd") + "' ";
-        //    }
-        //    if (ddlUser.SelectedIndex > 0)
-        //    {
-        //        conditionsAll += " and UserName1 =  '" + ddlUser.SelectedValue + "' ";
-
-        //    }
-        //    string FristCon = conditions + conditionsCr;
-        //    string Second = conditions + conditionsmo;
-        //    string Third = conditions + conditionsDe;
-        //    DataTable dt = objMain.Report(FristCon, Second, Third, conditionsAll);
-        //    if (dt.Rows.Count > 0)
-        //    {
-        //        GvReport.DataSource = dt;
-        //        GvReport.DataBind();
-        //        ViewState["D2dUser"] = dt;
-        //        lblTotalCount.Text = (dt.Rows.Count).ToString();
-        //    }
-        //    else
-        //    {
-        //        GvReport.DataSource = null;
-        //        GvReport.DataBind();
-        //        lblTotalCount.Text = "";
-        //    }
-        //}
-
 
         if (ViewState["1"].ToString() == "2")
         {
@@ -4120,28 +4088,23 @@ public partial class frmReportDetails : System.Web.UI.Page
             string FristCon = conditions + conditionsCr;
 
             DataTable dt = objMain.ReportD2dAllReport(FristCon, 1);
-            //  int icount = objMain.InsertReportAudittrail("Report Details", "Door to Door", Convert.ToString(Session["username"]));
+
             if (dt.Rows.Count > 0)
             {
+                dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Mauhalla", "House", "ChildName", "FathersName", "Mother Name", "Grandfather Name", "Contact Number", "Date of Birth", "Guardian Name", "Surveyor Name", "Latitude", "Longitude", "Age");
 
                 gvD2d.Visible = true;
                 ViewState["D2dAllData"] = dt;
                 lblTotalCount.Text = (dt.Rows.Count).ToString();
                 if (dt.Rows.Count > 10000)
                 {
-
                     ExportToCSVFile(dt, "D2DRawData");
-                    //  btnCSV_Click(LinkButton5, null);
                 }
                 else
                 {
-
                     gvD2d.DataSource = dt;
                     gvD2d.DataBind();
                 }
-
-
-
             }
             else
             {
@@ -4181,8 +4144,11 @@ public partial class frmReportDetails : System.Web.UI.Page
             string FristCon = conditions + conditionsCr;
 
             DataTable dt = objMain.ReportD2dAllReport(FristCon, 2);
+
             if (dt.Rows.Count > 0)
             {
+                dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Mauhalla", "House", "ChildName", "FathersName", "Mother Name", "Grandfather Name", "Contact Number", "Date of Birth", "Age");
+
                 gvD2d.Visible = true;
                 ViewState["OutD2d"] = dt;
                 lblTotalCount.Text = (dt.Rows.Count).ToString();
@@ -4195,7 +4161,6 @@ public partial class frmReportDetails : System.Web.UI.Page
                     gvD2d.DataSource = dt;
                     gvD2d.DataBind();
                 }
-
             }
             else
             {
@@ -4204,54 +4169,8 @@ public partial class frmReportDetails : System.Web.UI.Page
                 lblTotalCount.Text = "";
             }
         }
-
-
-
-        //////if (ViewState["1"].ToString() == "3")
-        //////{
-
-        //////    if (ddlUser.SelectedIndex > 0)
-        //////    {
-        //////        conditionsCr += " and CreateBy =  '" + ddlUser.SelectedValue + "' ";
-
-        //////    }
-        //////    if (txtDate.Text != "")
-        //////    {
-        //////        DateTime Fromdate = Convert.ToDateTime(txtDate.Text);
-        //////        conditionsCr += " and Createdate >=  '" + Fromdate.ToString("yyyy-MM-dd") + "' ";
-        //////    }
-        //////    if (txtTodate.Text != "")
-        //////    {
-        //////        DateTime Todate = Convert.ToDateTime(txtTodate.Text);
-        //////        conditionsCr += " and Createdate <=  '" + Todate.ToString("yyyy-MM-dd") + "' ";
-
-        //////    }
-        //////    if (txtDate.Text != "" && txtTodate.Text != "")
-        //////    {
-        //////        DateTime Fromdate = Convert.ToDateTime(txtDate.Text);
-        //////        DateTime Todate = Convert.ToDateTime(txtTodate.Text);
-        //////        conditionsCr += " and Createdate BETWEEN '" + Fromdate.ToString("yyyy-MM-dd") + "' and '" + Todate.ToString("yyyy-MM-dd") + "'";
-        //////    }
-
-        //////    string FristCon = conditions + conditionsCr;
-
-        //////    DataTable dt = objMain.ReportUserEntery(FristCon);
-        //////    if (dt.Rows.Count > 0)
-        //////    {
-        //////        gvUserReport.Visible = true;
-        //////        gvUserReport.DataSource = dt;
-        //////        gvUserReport.DataBind();
-        //////        ViewState["D2dUserDet"] = dt;
-        //////        lblTotalCount.Text = (dt.Rows.Count).ToString();
-        //////    }
-        //////    else
-        //////    {
-        //////        gvUserReport.DataSource = null;
-        //////        gvUserReport.DataBind();
-        //////        lblTotalCount.Text = "";
-        //////    }
-        //////}
     }
+
     public void LoadIneligable(int Flag)
     {
         string condition = string.Empty;
@@ -4399,7 +4318,11 @@ public partial class frmReportDetails : System.Web.UI.Page
         {
             conditions += "  and I_Fyear = '" + ddlYear.SelectedItem.Text + "' ";
         }
+
         DataTable dt = objMain.ReportD2dAllReport(conditions, 3);
+
+        dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "HHNo", "ChildName", "FatherName", "Age", "Migration_Place", "Permanent_Add");
+
         ViewState["D2dUser"] = dt;
 
         GV_DynamicGrid.DataSource = null;
@@ -4421,10 +4344,7 @@ public partial class frmReportDetails : System.Web.UI.Page
                 GV_DynamicGrid.DataSource = dt;
                 GV_DynamicGrid.DataBind();
             }
-
         }
-
-
     }
     protected void GvReport_RowDataBound(object sender, GridViewRowEventArgs e)
     {
@@ -6006,13 +5926,19 @@ public partial class frmReportDetails : System.Web.UI.Page
         }
 
         SqlParameter[] parm = new SqlParameter[]
-            {
-       new SqlParameter("@condition",  conditions),
-       new SqlParameter("@subject",  "0"),
-        new SqlParameter("@flag",flag),
+        {
+            new SqlParameter("@condition",  conditions),
+            new SqlParameter("@subject",  "0"),
+            new SqlParameter("@flag",flag),
+        };
 
-                 };
         DataTable dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "Get_CLT_Report_Data", parm);
+
+        if (flag == 3)
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Name of Sarpanch", "Mobile No. Sarpanch");
+        else if (flag == 4)
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Principal Name", "Principal Contact", "Teacher Name", "Teacher Contact");
+
         ViewState["villageschool"] = dt;
         lblTotalCount.Text = dt.Rows.Count.ToString();
         if (dt.Rows.Count > 0)
@@ -6175,6 +6101,8 @@ public partial class frmReportDetails : System.Web.UI.Page
 
         dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "rptRetentionIndividualNewwithCV", cmdParameters);
 
+        dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Child Name", "Father Name", "DOB");
+
         ViewState["RetentionIndividual"] = dt;
 
         GV_DynamicGrid.DataSource = null;
@@ -6325,6 +6253,18 @@ public partial class frmReportDetails : System.Web.UI.Page
 
 
         DataTable dt = objMain.ReportMobileActivityStatus(conditions, ddlYear.SelectedValue.ToString());
+
+        if (Convert.ToInt32(ddlYear.SelectedValue) == 2017 || Convert.ToInt32(ddlYear.SelectedValue) == 2018)
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "House", "ChildName", "Father Name", "CurrentAge");
+        else if (Convert.ToInt32(ddlYear.SelectedValue) == 2019)
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Mauhalla", "House", "Child Name", "Father Name", "DOB", "SamgraID/GovtID", "Age");
+        else if (Convert.ToInt32(ddlYear.SelectedValue) == 2020)
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Mauhalla", "House", "Child Name", "Father Name", "DOB", "SamgraID/GovtID", "Mobile No", "Age", "Latitude", "Longitude", "Class");
+        else if (Convert.ToInt32(ddlYear.SelectedValue) == 2021)
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Mauhalla", "House", "Child Name", "Father Name", "DOB", "SamgraID/GovtID", "Mobile No", "Alternate Mobile Number", "Alternate mobile Owner Name", "Latitude", "Longitude", "Class");
+        else if (Convert.ToInt32(ddlYear.SelectedValue) == 2022)
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Mauhalla", "House", "Child Name", "Father Name", "DOB", "SamgraID/GovtID", "Mobile No", "Alternate Mobile Number", "Alternate mobile Owner Name", "Age");
+
         ViewState["ReportMobileActivityStatus"] = dt;
 
         GV_DynamicGrid.DataSource = null;
@@ -6473,15 +6413,14 @@ public partial class frmReportDetails : System.Web.UI.Page
         //}
 
         SqlParameter[] cmdParameters = new SqlParameter[]
-    {
-                    new SqlParameter("@condtion", conditions),
-
-                    new SqlParameter("@Year", ddlYear.SelectedValue),
-
-    };
+        {
+           new SqlParameter("@condtion", conditions),
+           new SqlParameter("@Year", ddlYear.SelectedValue),
+        };
 
         DataTable dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "ReportMobileActivityStatus15to18", cmdParameters);
 
+        dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Mauhalla", "House", "Child Name", "Father Name", "DOB", "SamgraID/GovtID", "Mobile No", "Alternate Mobile Number", "Alternate mobile Owner Name", "Latitude", "Longitude", "Age");
 
         ViewState["ReportMobileActivityStatus"] = dt;
 

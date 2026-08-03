@@ -1846,14 +1846,15 @@ public partial class frmActivitySummaryReport : System.Web.UI.Page
 
         SqlParameter[] cmdParameters = new SqlParameter[]
         {
-
             new SqlParameter("@schoolCode", conditions1 + Con),
-        new SqlParameter("@Con", conditions1),
-        new SqlParameter("@schoolCodeAprove", schoolCodeAprove + Con),
+            new SqlParameter("@Con", conditions1),
+            new SqlParameter("@schoolCodeAprove", schoolCodeAprove + Con),
             new SqlParameter("@Fyear", ddlYear.SelectedItem.Text),
-               new SqlParameter("@Groupby", ddlGroup.SelectedValue),
+            new SqlParameter("@Groupby", ddlGroup.SelectedValue),
         };
         dtMain = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptActivitySACUpdateSummaryReport]", cmdParameters);
+
+
         ViewState["SAC"] = dtMain;
         if (dtMain.Rows.Count > 0)
         {

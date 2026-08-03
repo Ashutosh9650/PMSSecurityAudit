@@ -18,6 +18,7 @@ public partial class frmDonorReportTB : System.Web.UI.Page
     string flag = "";
     Password objPass = new Password();
     public DataTable dtUserDeatils;
+    DataTableMaskingHelper dataTableMaskingHelper = new DataTableMaskingHelper();
     protected void Page_Load(object sender, EventArgs e)
     {
         lblTotalCount.Text = "";
@@ -1035,29 +1036,19 @@ public partial class frmDonorReportTB : System.Web.UI.Page
 
         //  DataTable dt = objMain.ReportEnrollDeatilsNew(FristCon);
         SqlParameter[] cmdParameters = new SqlParameter[]
-       {
+        {
             new SqlParameter("@con", conditions),
-               new SqlParameter("@Dr", conditionsNe),
-
-
-
-       };
+            new SqlParameter("@Dr", conditionsNe),
+        };
 
         DataTable dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptTeamBlalikReportWorking]", cmdParameters);
+
         if (dt.Rows.Count > 0)
         {
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "TB Name", "FatherName", "MotherName", "DOB", "Contact", "Alternate Mobile Number");
+
             ExportToCSVFile(dt, "TeamBalika");
-
         }
-        else
-        {
-
-        }
-
-
-
-
-
     }
 
     protected void btnTBPrograss_Click(object sender, EventArgs e)
@@ -2340,32 +2331,17 @@ public partial class frmDonorReportTB : System.Web.UI.Page
 
         //  DataTable dt = objMain.ReportEnrollDeatilsNew(FristCon);
         SqlParameter[] cmdParameters = new SqlParameter[]
-       {
+        {
             new SqlParameter("@Con", FristCon),
-
-              new SqlParameter("@Fyear", ddlYear.SelectedValue),
-
-
-
-       };
+            new SqlParameter("@Fyear", ddlYear.SelectedValue),
+        };
 
         DataTable dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptTBProcessReport202511]", cmdParameters);
         if (dt.Rows.Count > 0)
         {
-
-
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "TB Name");
             GenerateExcelNewBlock2023Alter(dt);
-
         }
-        else
-        {
-
-        }
-
-
-
-
-
     }
 
 
@@ -2484,38 +2460,25 @@ public partial class frmDonorReportTB : System.Web.UI.Page
 
         //  DataTable dt = objMain.ReportEnrollDeatilsNew(FristCon);
         SqlParameter[] cmdParameters = new SqlParameter[]
-       {
+        {
             new SqlParameter("@Con", FristCon),
-             new SqlParameter("@Flag", flag),
-
-
-       };
+            new SqlParameter("@Flag", flag),
+        };
 
         DataTable dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptTBFCReport]", cmdParameters);
         if (dt.Rows.Count > 0)
         {
-
             if (flag == 1)
             {
                 ExportToCSVFile(dt, "FCTBCLusterMeeting");
-
             }
             else
             {
+                dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "TB Name");
+
                 ExportToCSVFile(dt, "FCTBClusterMeetingAttendance");
             }
-
-
         }
-        else
-        {
-
-        }
-
-
-
-
-
     }
 
     public void LoadReportTeamTBCalling(Int32 flag)
@@ -2631,39 +2594,26 @@ public partial class frmDonorReportTB : System.Web.UI.Page
 
         string FristCon = conditions;
 
-        //  DataTable dt = objMain.ReportEnrollDeatilsNew(FristCon);
         SqlParameter[] cmdParameters = new SqlParameter[]
-       {
+        {
             new SqlParameter("@Con", FristCon),
-
-
-       };
+        };
 
         DataTable dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptTBCalling]", cmdParameters);
+
         if (dt.Rows.Count > 0)
         {
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "TB Name", "TB Contact", "Alternet Mobile Number");
 
             if (flag == 1)
             {
                 ExportToCSVFile(dt, "TBCalling");
-
             }
             else
             {
                 ExportToExcelGridView(dt, "TBCalling");
             }
-
-
         }
-        else
-        {
-
-        }
-
-
-
-
-
     }
 
     public void LoadReportTeamTBCallingAward(Int32 flag)
@@ -2779,40 +2729,27 @@ public partial class frmDonorReportTB : System.Web.UI.Page
 
         string FristCon = conditions;
 
-        //  DataTable dt = objMain.ReportEnrollDeatilsNew(FristCon);
         SqlParameter[] cmdParameters = new SqlParameter[]
-       {
+        {
             new SqlParameter("@Con", FristCon),
-
-
-       };
+        };
 
         DataTable dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptTBaward]", cmdParameters);
         if (dt.Rows.Count > 0)
         {
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "TB Contact");
 
             if (flag == 1)
             {
                 ExportToCSVFile(dt, "TBaward");
-
             }
             else
             {
                 ExportToExcelGridView(dt, "TBaward");
             }
-
-
         }
-        else
-        {
-
-        }
-
-
-
-
-
     }
+
     private void ExportToExcelGridView(DataTable table, string FileName)
     {
         //Gv.DataSource = table;

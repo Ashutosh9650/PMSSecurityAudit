@@ -17,6 +17,7 @@ public partial class FrmRetentionTracker : System.Web.UI.Page
     public bool vADD = false;
     public bool vVerify = false;
     public bool vDelete = false;
+    DataTableMaskingHelper dataTableMaskingHelper = new DataTableMaskingHelper();
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -1182,18 +1183,16 @@ public partial class FrmRetentionTracker : System.Web.UI.Page
         if (Convert.ToInt32(ddlYear.SelectedValue) == 2024)
         {
             dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "rptRetentionCourseCorrection", cmdParameters);
+
             if (dt.Rows.Count > 0)
             {
                 objMain.ReportDownload("Course Correction Detail", "Retention trackers", Convert.ToString(Session["username"]));
+
+                dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Childname");
+
                 ExportToCSVFile(dt, "CourseCorrectionDetail");
             }
-
         }
-
-
-
-
-
     }
 
 
@@ -1823,13 +1822,15 @@ public partial class FrmRetentionTracker : System.Web.UI.Page
         SqlParameter[] cmdParameters = new SqlParameter[]
         {
             new SqlParameter("@condtion",conditions),
-                new SqlParameter("@Year",ddlYear.SelectedValue),
-
+            new SqlParameter("@Year",ddlYear.SelectedValue),
         };
+
         DataTable dt = null;
 
 
         dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[ReportEnrollDeatilsmatachingContact]", cmdParameters);
+
+        dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "HHNo", "Enrolment Child Name", "MotherName", "Father Name", "DOB", "Contact DOB", "Contact Child Name", "Contact Father Name", "Samagra ID", "D2D Child Name", "D2D MotherName", "D2D Father Name", "Latitude", "Longitude");
 
         if (dt.Rows.Count > 0)
         {
@@ -2012,13 +2013,14 @@ public partial class FrmRetentionTracker : System.Web.UI.Page
         SqlParameter[] cmdParameters = new SqlParameter[]
         {
             new SqlParameter("@condtion",conditions),
-                new SqlParameter("@Year",ddlYear.SelectedValue),
-
+            new SqlParameter("@Year",ddlYear.SelectedValue),
         };
         DataTable dt = null;
 
 
         dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[ReportEnrollDeatilsNewFrom2021Fuzzmataching]", cmdParameters);
+
+        dataTableMaskingHelper.DecryptAndMaskDataTable(dt, true, "HHNo", "Enrolment Child Name", "D2D Child Name", "MotherName", "D2D MotherName", "Father Name", "D2D Father Name", "DOB", "Contact DOB", "Contact Child Name", "Contact Father Name", "Samagra ID", "Latitude", "Longitude");
 
         if (dt.Rows.Count > 0)
         {
@@ -2208,20 +2210,13 @@ public partial class FrmRetentionTracker : System.Web.UI.Page
 
             if (dt.Rows.Count > 0)
             {
-
                 objMain.ReportDownload("Retention Individual", "Retention trackers", Convert.ToString(Session["username"]));
 
-                ExportToCSVFile(dt, "RetentionIndividual ");
+                dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Child Name", "Father Name", "DOB");
 
+                ExportToCSVFile(dt, "RetentionIndividual ");
             }
         }
-
-
-
-
-
-
-
     }
 
     public void LoadRetentionSummary(int Flag)
@@ -2362,31 +2357,22 @@ public partial class FrmRetentionTracker : System.Web.UI.Page
         if (Convert.ToInt32(ddlYear.SelectedValue) <= 2025)
         {
             SqlParameter[] cmdParameters = new SqlParameter[]
-        {
-            new SqlParameter("@Con",conditions),
+            {
+                new SqlParameter("@Con",conditions),
                 new SqlParameter("@Myear",ddlYear.SelectedValue),
-
-        };
+            };
 
 
             dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptRSummary]", cmdParameters);
 
             if (dt.Rows.Count > 0)
             {
-
                 objMain.ReportDownload("Retention Summary", "Retention trackers", Convert.ToString(Session["username"]));
                 ExportToCSVFile(dt, "RetentionSummary ");
-
             }
         }
-
-
-
-
-
-
-
     }
+
     static void FilterAndCreateCSV(string inputFilePath, string filterValue1, string filterValue2, string filterValue3, string filterValue4, string filterValue5, string filterValue6, int columnToFilter1, int columnToFilter2, int columnToFilter3, int columnToFilter4, int columnToFilter5, int columnToFilter6, string outputFilePath)
     {
         try
@@ -2687,12 +2673,10 @@ public partial class FrmRetentionTracker : System.Web.UI.Page
 
         if (dt.Rows.Count > 0)
         {
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, true, "HHNo", "ChildName", "Father Name", "DOB");
+
             ExportToCSVFile(dt, "ExceptionReport");
         }
-
-
-
-
     }
 
 

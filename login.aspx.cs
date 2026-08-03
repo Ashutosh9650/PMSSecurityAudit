@@ -1,9 +1,11 @@
-﻿using System;
+﻿using PMS.Crypto.Core;
+using System;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Net;
 using System.Net.Sockets;
+using System.Text;
 using System.Web.Configuration;
 using System.Web.UI;
 public partial class login : System.Web.UI.Page
@@ -13,18 +15,19 @@ public partial class login : System.Web.UI.Page
     clsMain Objmain = new clsMain();
     SqlConnection mycon = new SqlConnection(SqlHelper.mainConnectionString);
     //protected string RecaptchaSiteKey;
+
     protected void Page_Load(object sender, EventArgs e)
     {
+        #region Mobile Secret Key
+        string secretKey = CryptoService.GenerateSecretKey();
+        string encryptedSecretKey = CryptoService.Encrypt(secretKey);
+        #endregion
 
         if (!IsPostBack)
         {
 
         }
-
     }
-
-
-
 
 
     PageStatePersister pageStatePersister;
@@ -252,6 +255,16 @@ public partial class login : System.Web.UI.Page
                                         if (ds.Tables[0].Rows[0]["ForcePassword"] != DBNull.Value && !string.IsNullOrWhiteSpace(ds.Tables[0].Rows[0]["ForcePassword"].ToString()))
                                         {
                                             Session["ForcePassword"] = Convert.ToInt32(ds.Tables[0].Rows[0]["ForcePassword"]);
+                                        }
+
+                                        int userRoleId = Convert.ToInt32(ds.Tables[0].Rows[0]["RID"].ToString());
+                                        try
+                                        {
+                                            RoleMaskingConfig.Instance.LoadConfigToSession(userRoleId);
+                                        }
+                                        catch (Exception maskingEx)
+                                        {
+                                            System.Diagnostics.Debug.WriteLine("Error loading masking config: " + maskingEx.Message);
                                         }
 
                                         //LoadCheck();

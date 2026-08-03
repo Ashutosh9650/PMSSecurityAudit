@@ -17,6 +17,8 @@ public partial class frmGKpChildRegPlus : System.Web.UI.Page
     public bool vADD = false;
     public bool vVerify = false;
     public bool vDelete = false;
+    SqlInjection sqlInjection = new SqlInjection();
+    DataTableMaskingHelper dataTableMaskingHelper = new DataTableMaskingHelper();
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -1833,13 +1835,9 @@ public partial class frmGKpChildRegPlus : System.Web.UI.Page
         if (Convert.ToInt32(ddlYear.SelectedValue) >= 2024)
         {
             SqlParameter[] cmdParameters = new SqlParameter[]
-               {
-            new SqlParameter("@Con",conditions),
-
-
-               };
-
-
+            {
+              new SqlParameter("@Con",conditions),
+            };
 
             dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptGKPchildRestraion2024Plus]", cmdParameters);
         }
@@ -1848,14 +1846,12 @@ public partial class frmGKpChildRegPlus : System.Web.UI.Page
         {
             objMain.ReportDownload("GKP Child Registration", "GKP Report", Convert.ToString(Session["username"]));
 
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Child Name", "Father Name");
+
             ExportToCSVFile(dt, "ChildRegistration");
-
         }
-
-
-
-
     }
+
     public void LoadGKSUmmaryReport(int Flag)
     {
         string conditions = "";
@@ -1994,14 +1990,12 @@ public partial class frmGKpChildRegPlus : System.Web.UI.Page
             {
                 objMain.ReportDownload("GKP Summary", "GKP Report", Convert.ToString(Session["username"]));
 
+                dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Child Name", "Father Name");
+
                 ViewState["SAC"] = dt;
                 ExportToCSVFile(dt, "FormativeAssessmentReport");
             }
         }
-
-
-
-
     }
 
     public void LoadGKSUmmaryReport1(int Flag)
@@ -8955,6 +8949,8 @@ public partial class frmGKpChildRegPlus : System.Web.UI.Page
             {
                 objMain.ReportDownload("GKP Assessment", "GKP Report", Convert.ToString(Session["username"]));
 
+                dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Child Name", "Father Name");
+
                 ExportToCSVFile(dt, "AssessmentReport");
             }
         }
@@ -8966,13 +8962,11 @@ public partial class frmGKpChildRegPlus : System.Web.UI.Page
             {
                 objMain.ReportDownload("GKP Assessment", "GKP Report", Convert.ToString(Session["username"]));
 
+                dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Child Name", "Father Name");
+
                 ExportToCSVFile(dt, "AssessmentReport");
             }
         }
-
-
-
-
     }
 
 
@@ -10013,59 +10007,46 @@ public partial class frmGKpChildRegPlus : System.Web.UI.Page
         SqlParameter[] cmdParameters = new SqlParameter[]
         {
             new SqlParameter("@con",conditions),
-
         };
+
         DataTable dt = null;
         if (Convert.ToInt32(ddlYear.SelectedValue) >= 2025)
         {
-            //if (Convert.ToString(Session["username"]) == "SuperAdmin" || Convert.ToString(Session["username"]) == "PMSAdmin" || Convert.ToString(Session["username"]) == "EGE7557")
-            //{
-            dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "rptGKPchildAttention2024Plus2025", cmdParameters);
-            //}
-            //else
-            //{
-            //    dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "rptGKPchildAttention2023", cmdParameters);
-            //}
+             dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "rptGKPchildAttention2024Plus2025", cmdParameters);
 
             if (dt.Rows.Count > 0)
             {
                 objMain.ReportDownload("GKP Child Attendence", "GKP Report", Convert.ToString(Session["username"]));
+
+                dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Child Name", "Father Name");
 
                 ExportToCSVFile(dt, "GKPChildAttendance");
             }
         }
         else if (Convert.ToInt32(ddlYear.SelectedValue) == 2024)
         {
-            //if (Convert.ToString(Session["username"]) == "SuperAdmin" || Convert.ToString(Session["username"]) == "PMSAdmin" || Convert.ToString(Session["username"]) == "EGE7557")
-            //{
             dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "rptGKPchildAttention2024Plus", cmdParameters);
-            //}
-            //else
-            //{
-            //    dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "rptGKPchildAttention2023", cmdParameters);
-            //}
+
 
             if (dt.Rows.Count > 0)
             {
                 objMain.ReportDownload("GKP Child Attendence", "GKP Report", Convert.ToString(Session["username"]));
+
+                dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Child Name", "Father Name");
 
                 ExportToCSVFile(dt, "GKPChildAttendance");
             }
         }
         else if (Convert.ToInt32(ddlYear.SelectedValue) == 2023)
         {
-            //if (Convert.ToString(Session["username"]) == "SuperAdmin" || Convert.ToString(Session["username"]) == "PMSAdmin" || Convert.ToString(Session["username"]) == "EGE7557")
-            //{
             dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "rptGKPchildAttention2023New", cmdParameters);
-            //}
-            //else
-            //{
-            //    dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "rptGKPchildAttention2023", cmdParameters);
-            //}
+            
 
             if (dt.Rows.Count > 0)
             {
                 objMain.ReportDownload("GKP Child Attendence", "GKP Report", Convert.ToString(Session["username"]));
+
+                dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Child Name", "Father Name");
 
                 ExportToCSVFile(dt, "GKPChildAttendance");
             }
@@ -10078,13 +10059,11 @@ public partial class frmGKpChildRegPlus : System.Web.UI.Page
             {
                 objMain.ReportDownload("GKP Child Attendence", "GKP Report", Convert.ToString(Session["username"]));
 
+                dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Child Name", "Father Name");
+
                 ExportToCSVFile(dt, "GKPChildAttendance");
             }
-
         }
-
-
-
     }
 
     public void LoadChildSummaryData(int Flag)
@@ -10251,10 +10230,10 @@ public partial class frmGKpChildRegPlus : System.Web.UI.Page
         SqlParameter[] cmdParameters = new SqlParameter[]
         {
             new SqlParameter("@Con",conditions),
-                new SqlParameter("@Group",ddlGroup.SelectedValue),
-                    new SqlParameter("@Flag","2"),
-             new SqlParameter("@MYear",ddlYear.SelectedValue),
-               new SqlParameter("@Gender",ddlGender.SelectedValue),
+            new SqlParameter("@Group",ddlGroup.SelectedValue),
+            new SqlParameter("@Flag","2"),
+            new SqlParameter("@MYear",ddlYear.SelectedValue),
+            new SqlParameter("@Gender",ddlGender.SelectedValue),
         };
         DataTable dt = null;
 

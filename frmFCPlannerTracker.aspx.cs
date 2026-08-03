@@ -19,6 +19,7 @@ public partial class frmFCPlannerTracker : System.Web.UI.Page
     public bool vADD = false;
     public bool vVerify = false;
     public bool vDelete = false;
+    DataTableMaskingHelper dataTableMaskingHelper = new DataTableMaskingHelper();
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -959,18 +960,12 @@ public partial class frmFCPlannerTracker : System.Web.UI.Page
     protected void LnkChildSummary_OnClick(object sender, EventArgs e)
     {
         ViewState["1"] = 8;
-
-
         LoadChildSummaryData(Convert.ToInt32(ddlTpye.SelectedValue));
         GVChildTarget.Visible = false;
         GVChild.Visible = true;
         GV_DynamicGrid.Visible = false;
-
-
-
-
-
     }
+
     protected void LnkDeatild_OnClick(object sender, EventArgs e)
     {
         ViewState["1"] = 98;
@@ -1093,17 +1088,13 @@ public partial class frmFCPlannerTracker : System.Web.UI.Page
             // sb += "<table width='100%' cellspacing='0' cellpadding='2'>";
 
             SqlParameter[] parm1 = new SqlParameter[]
-     {
-
-             new SqlParameter("@UserName", UserName),
-             new SqlParameter("@month", ddlGender.SelectedValue),
-              new SqlParameter("@Myear",mYear),
-                 new SqlParameter("@UserRole",Convert.ToString(Session["user_level_Role"])),
-         new SqlParameter("@FromNo",fno),
-
-
-
-     };
+            {
+                new SqlParameter("@UserName", UserName),
+                new SqlParameter("@month", ddlGender.SelectedValue),
+                new SqlParameter("@Myear",mYear),
+                new SqlParameter("@UserRole",Convert.ToString(Session["user_level_Role"])),
+                new SqlParameter("@FromNo",fno),
+            };
 
 
             DataSet dstravle = SqlHelper.GetDataSet(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "rptTravelDeatil2024View", parm1);
@@ -1913,10 +1904,6 @@ public partial class frmFCPlannerTracker : System.Web.UI.Page
         {
             ExportToCSVFile(dt, "CourseCorrectionDetail");
         }
-
-
-
-
     }
 
 
@@ -2598,13 +2585,14 @@ public partial class frmFCPlannerTracker : System.Web.UI.Page
         SqlParameter[] cmdParameters = new SqlParameter[]
         {
             new SqlParameter("@condtion",conditions),
-                new SqlParameter("@Year",ddlYear.SelectedValue),
-
+            new SqlParameter("@Year",ddlYear.SelectedValue),
         };
+
         DataTable dt = null;
 
-
         dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[ReportEnrollDeatilsmatachingContact]", cmdParameters);
+
+        dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "HHNo", "Enrolment Child Name", "MotherName", "Father Name", "DOB", "Contact DOB", "Contact Child Name", "Contact Father Name", "Samagra ID", "D2D Child Name", "D2D MotherName", "D2D Father Name", "Latitude", "Longitude");
 
         if (dt.Rows.Count > 0)
         {
@@ -2787,13 +2775,14 @@ public partial class frmFCPlannerTracker : System.Web.UI.Page
         SqlParameter[] cmdParameters = new SqlParameter[]
         {
             new SqlParameter("@condtion",conditions),
-                new SqlParameter("@Year",ddlYear.SelectedValue),
-
+            new SqlParameter("@Year",ddlYear.SelectedValue),
         };
         DataTable dt = null;
 
 
         dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[ReportEnrollDeatilsNewFrom2021Fuzzmataching]", cmdParameters);
+
+        dataTableMaskingHelper.DecryptAndMaskDataTable(dt, true, "HHNo", "Enrolment Child Name", "D2D Child Name", "MotherName", "D2D MotherName", "Father Name", "D2D Father Name", "DOB", "Contact DOB", "Contact Child Name", "Contact Father Name", "Samagra ID", "Latitude", "Longitude");
 
         if (dt.Rows.Count > 0)
         {
@@ -2977,12 +2966,27 @@ public partial class frmFCPlannerTracker : System.Web.UI.Page
         SqlParameter[] cmdParameters = new SqlParameter[]
         {
             new SqlParameter("@condtion",conditions),
-                new SqlParameter("@Year",ddlYear.SelectedValue),
-
+            new SqlParameter("@Year",ddlYear.SelectedValue),
         };
         DataTable dt = null;
 
         dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[ReportEnrollDeatilsNewFrom2021]", cmdParameters);
+
+        if (Convert.ToInt32(ddlYear.SelectedValue) == 2026)
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Enrolment Child Name", "MotherName", "Father Name", "DOB", "Contact DOB", "Contact Child Name", "Contact Father Name", "Samagra ID", "HHNo", "D2D Child Name", "D2D Mother Name", "D2D Father Name", "Latitude", "Longitude", "AgeAson");
+        else if (Convert.ToInt32(ddlYear.SelectedValue) == 2025)
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, true, "Enrolment Child Name", "MotherName", "Father Name", "DOB", "Contact DOB", "Contact Child Name", "Contact Father Name", "Samagra ID", "HHNo", "D2D Child Name", "D2D Mother Name", "D2D Father Name", "Latitude", "Longitude");
+        else if (Convert.ToInt32(ddlYear.SelectedValue) == 2024)
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, true, "Enrolment Child Name", "MotherName", "Father Name", "DOB", "Contact DOB", "Contact Child Name", "Contact Father Name", "Samagra ID", "HHNo", "D2D Child Name", "D2D Mother Name", "D2D Father Name", "Latitude", "Longitude");
+        else if (Convert.ToInt32(ddlYear.SelectedValue) == 2023)
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, true, "Enrolment Child Name", "MotherName", "Father Name", "DOB", "Contact Child Name", "Contact Father Name", "Samagra ID", "HHNo", "D2D Child Name", "D2D Mother Name", "D2D Father Name", "Latitude", "Longitude");
+        else if (Convert.ToInt32(ddlYear.SelectedValue) == 2022)
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, true, "Enrolment Child Name", "MotherName", "Father Name", "DOB", "Contact Child Name", "Contact Father Name", "Samagra ID", "HHNo", "D2D Child Name", "D2D Mother Name", "D2D Father Name", "Latitude", "Longitude");
+        else if (Convert.ToInt32(ddlYear.SelectedValue) == 2021)
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, true, "Enrolment Child Name", "MotherName", "Father Name", "DOB", "Contact Child Name", "Contact Father Name", "Samagra ID", "HHNo", "D2D Child Name", "D2D Mother Name", "D2D Father Name");
+        else
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, true, "Enrolment Child Name", "MotherName", "Father Name", "DOB", "Contact Child Name", "Contact Father Name", "Samagra ID", "HHNo", "D2D Child Name", "D2D Mother Name", "D2D Father Name");
+
 
         if (dt.Rows.Count > 0)
         {
@@ -2994,10 +2998,7 @@ public partial class frmFCPlannerTracker : System.Web.UI.Page
                 {
                     if (item.Selected)
                     {
-
                         Dname += "'" + item.Text + "'" + ",";
-
-
                     }
                 }
 
@@ -3016,169 +3017,6 @@ public partial class frmFCPlannerTracker : System.Web.UI.Page
                 ExportToCSVFile(dt, "EnrollmentDetails");
             }
         }
-        //}
-        //if (Convert.ToInt32(ddlYear.SelectedValue) >= 2023)
-        //{
-        //    // dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[ReportEnrollDeatilsNewFrom2021]", cmdParameters);
-
-        //    dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[ReportEnrollDeatilsNewFrom2023]", cmdParameters);
-        //}
-        //else
-        //{
-        //    dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[ReportEnrollDeatilsNewFrom2021]", cmdParameters);
-        //}
-
-        //else
-        //{
-        //     conditions = "";
-        //     ddlBlock = "";
-        //     ddlDistrict = "";
-        //     ddlPhan = "";
-        //     ddlVillage = "";
-        //     ddlStatecode = "";
-        //    foreach (ListItem item in ChkState.Items)
-        //    {
-        //        if (item.Selected)
-        //        {
-
-        //            ddlStatecode += "'" + item.Text.ToUpper() + "'" + ",";
-        //        }
-        //    }
-
-        //    if (ddlStatecode.Length > 0)
-        //    {
-        //        ddlStatecode = ddlStatecode.Substring(0, ddlStatecode.LastIndexOf(","));
-        //    }
-        //    foreach (ListItem item in chkDistrict.Items)
-        //    {
-        //        if (item.Selected)
-        //        {
-
-        //            ddlDistrict += "'" + item.Text.ToUpper() + "'" + ",";
-
-
-        //        }
-        //    }
-
-        //    if (ddlDistrict.Length > 0)
-        //    {
-        //        ddlDistrict = ddlDistrict.Substring(0, ddlDistrict.LastIndexOf(","));
-        //    }
-        //    foreach (ListItem item in chkBlock.Items)
-        //    {
-        //        if (item.Selected)
-        //        {
-
-        //            ddlBlock += "'" + item.Text.ToUpper() + "'" + ",";
-
-
-        //        }
-        //    }
-
-        //    if (ddlBlock.Length > 0)
-        //    {
-        //        ddlBlock = ddlBlock.Substring(0, ddlBlock.LastIndexOf(","));
-        //    }
-
-        //    foreach (ListItem item in ddlPanchayat.Items)
-        //    {
-        //        if (item.Selected)
-        //        {
-
-        //            ddlPhan += "'" + item.Text.ToUpper() + "'" + ",";
-
-
-        //        }
-        //    }
-
-        //    if (ddlPhan.Length > 0)
-        //    {
-        //        ddlPhan = ddlPhan.Substring(0, ddlPhan.LastIndexOf(","));
-        //    }
-        //    foreach (ListItem item in chkVillage.Items)
-        //    {
-        //        if (item.Selected)
-        //        {
-
-        //            ddlVillage += "'" + item.Value + "'" + ",";
-
-
-        //        }
-        //    }
-
-        //    if (ddlVillage.Length > 0)
-        //    {
-        //        ddlVillage = ddlVillage.Substring(0, ddlVillage.LastIndexOf(","));
-        //    }
-
-
-        //    string sFileDir = Server.MapPath(Comman.GetImagePath("EnrolmentDetailsPath") + "/");
-        //    string path = sFileDir + "EnrolmentDetails" + ddlYear.SelectedItem.Text + ".csv";
-        //    string FileName = "EnrolmentDetails" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".csv";
-        //    string path1 = sFileDir + FileName;
-        //    string CSVFNAME = "EnrolmentDetails" + DateTime.Now.ToString("yyyyMMddHHmmss");
-
-        //    string inputFilePath = path;
-
-        //    #region Filter and Position
-        //    string filterValue1 = ddlYear.SelectedItem.Text; // Replace with your filter value
-        //    string filterValue2 = ddlStatecode; // Replace with another filter value
-        //    string filterValue3 = ddlDistrict;
-        //    string filterValue4 = ddlBlock;
-        //    string filterValue5 = ddlPhan;
-        //    string filterValue6 = "";
-        //    if (ddlGender.SelectedItem.Text.ToString() == "----All----")
-        //    {
-        //        filterValue6 = "";
-        //    }
-        //    else
-        //    {
-        //        filterValue6 = ddlGender.SelectedItem.Text;
-        //    }
-        //    int columnToFilter1 = 0; // Replace with the index of the column you want to filter
-        //    int columnToFilter2 = 0;
-        //    int columnToFilter3 = 2;
-        //    int columnToFilter4 = 6;
-        //    int columnToFilter5 = 10;
-        //    int columnToFilter6 = 29;
-        //    #endregion Filter and Position
-        //    FilterAndCreateCSV(inputFilePath, filterValue1, filterValue2, filterValue3, filterValue4, filterValue5, filterValue6, columnToFilter1, columnToFilter2, columnToFilter3, columnToFilter4, columnToFilter5, columnToFilter6, path1);
-
-        //    FileStream fs = null;
-        //    string foldername =  Server.MapPath(Comman.GetImagePath("EnrolmentDetailsPath") + "/" + FileName + "");
-        //    string fullPath = Request.MapPath("~/EnrolmentDetails/" + FileName + "" + ".zip");
-        //    using (ZipFile zip = new ZipFile())
-        //    {
-        //        zip.UseZip64WhenSaving = Zip64Option.Always;
-        //        zip.AddFile(foldername, "");
-        //        zip.Save(Server.MapPath(Comman.GetImagePath("EnrolmentDetailsPath") + "/" + FileName + "" + ".zip"));
-        //    }
-
-        //    HttpResponse Response = HttpContext.Current.Response; Response.Clear(); Response.ClearHeaders(); Response.Charset = "UTF-8";
-        //    fs = File.Open(fullPath, FileMode.Open);
-        //    byte[] bytBytes = new byte[(fs.Length)];
-        //    fs.Read(bytBytes, 0, (int)fs.Length);
-        //    fs.Close();
-        //    Response.AddHeader("Content-disposition", "attachment; filename=" + FileName + ".zip");
-        //    Response.ContentType = "application/octet-stream";
-        //    Response.BinaryWrite(bytBytes);
-        //    if (File.Exists(path1))
-        //    {
-        //        System.IO.File.Delete(path1);
-        //    }
-        //    if (File.Exists(fullPath))
-        //    {
-        //        System.IO.File.Delete(fullPath);
-        //    }
-        //    Response.Flush();
-        //    Response.End();
-        //}
-
-
-
-
-
-
     }
     static void FilterAndCreateCSV(string inputFilePath, string filterValue1, string filterValue2, string filterValue3, string filterValue4, string filterValue5, string filterValue6, int columnToFilter1, int columnToFilter2, int columnToFilter3, int columnToFilter4, int columnToFilter5, int columnToFilter6, string outputFilePath)
     {
@@ -3480,12 +3318,10 @@ public partial class frmFCPlannerTracker : System.Web.UI.Page
 
         if (dt.Rows.Count > 0)
         {
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, true, "HHNo", "ChildName", "Father Name", "DOB");
+
             ExportToCSVFile(dt, "ExceptionReport");
         }
-
-
-
-
     }
 
 
@@ -4062,19 +3898,16 @@ public partial class frmFCPlannerTracker : System.Web.UI.Page
         SqlParameter[] cmdParameters = new SqlParameter[]
         {
             new SqlParameter("@Con",conditions),
-
-
-                        new SqlParameter("@Fyear",ddlYear.SelectedItem.Text),
-                             new SqlParameter("@Gender",ddlGender.SelectedValue),
-                                 new SqlParameter("@ConState",ConState),
-                                     new SqlParameter("@ConDistict",ConDistict),
-                                         new SqlParameter("@ConBlock",ConBlock),
+            new SqlParameter("@Fyear",ddlYear.SelectedItem.Text),
+            new SqlParameter("@Gender",ddlGender.SelectedValue),
+            new SqlParameter("@ConState",ConState),
+            new SqlParameter("@ConDistict",ConDistict),
+            new SqlParameter("@ConBlock",ConBlock),
         };
         DataSet dt = null;
         if (Convert.ToInt32(ddlYear.SelectedValue) >= 2024)
         {
             dt = GetDataSet(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "rptEnrolmentQualityAlertFinal2024202517Total", cmdParameters);
-            //dt = GetDataSet(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "rptEnrolmentQualityAlertNew2021", cmdParameters);
 
             if (dt.Tables[0].Rows.Count > 0)
             {
@@ -4083,12 +3916,10 @@ public partial class frmFCPlannerTracker : System.Web.UI.Page
                 ViewState["SAC"] = dt;
                 MultipuExeclTrackFinal2023();
             }
-
         }
         else if (Convert.ToInt32(ddlYear.SelectedValue) == 2023)
         {
             dt = GetDataSet(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "rptEnrolmentQualityAlertFinal2023272023Total", cmdParameters);
-            //dt = GetDataSet(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "rptEnrolmentQualityAlertNew2021", cmdParameters);
 
             if (dt.Tables[0].Rows.Count > 0)
             {
@@ -4097,12 +3928,11 @@ public partial class frmFCPlannerTracker : System.Web.UI.Page
                 ViewState["SAC"] = dt;
                 MultipuExeclTrackFinal2023();
             }
-
         }
         else
         {
             dt = GetDataSet(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "rptEnrolmentQualityAlertFinal202327", cmdParameters);
-            //dt = GetDataSet(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "rptEnrolmentQualityAlertNew2021", cmdParameters);
+
             objMain.ReportDownload("Enrolment Quality Alert", "Enrolment trackers", Convert.ToString(Session["username"]));
 
             if (dt.Tables[0].Rows.Count > 0)
@@ -4110,11 +3940,9 @@ public partial class frmFCPlannerTracker : System.Web.UI.Page
                 ViewState["SAC"] = dt;
                 MultipuExeclTrackFinal2022();
             }
-
         }
-
-
     }
+
     public void MultipuExeclTrackFinal2023()
     {
         DataSet dtMain1 = ViewState["SAC"] as DataSet;
@@ -11383,9 +11211,6 @@ public partial class frmFCPlannerTracker : System.Web.UI.Page
         //    }
         //}
 
-
-
-
         DataTable dt = null;
         if (Convert.ToInt32(ddlYear.SelectedValue) >= 2025)
         {
@@ -11397,40 +11222,28 @@ public partial class frmFCPlannerTracker : System.Web.UI.Page
                 {
                     condition5 += "    And tblPlanActivity2025.createDate >= '" + Year1[0] + "-04-01' and  tblPlanActivity2025.createDate<='" + Year1[1] + "-03-31'";
                     SqlParameter[] cmdParameters = new SqlParameter[]
-      {
-
-
-
-                           new SqlParameter("@Con", condition5),
-                              new SqlParameter("@Myear", ddlYear.SelectedValue),
-
-
-      };
+                    {
+                         new SqlParameter("@Con", condition5),
+                         new SqlParameter("@Myear", ddlYear.SelectedValue),
+                    };
                     dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptContactWeellySmartPlannerDetail20252026]", cmdParameters);
 
+                    dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "FC Name", "Approver Name", "BO Name for Support", "TB Name for Support");
                 }
                 else
                 {
-
                     condition5 += "    And tblPlanActivity.createDate >= '" + Year1[0] + "-04-01' and  tblPlanActivity.createDate<='" + Year1[1] + "-03-31'";
                     SqlParameter[] cmdParameters1 = new SqlParameter[]
-              {
-
-
-
-               new SqlParameter("@Con", condition5),
-                  new SqlParameter("@Myear", ddlYear.SelectedValue),
-
-
-              };
+                    {
+                        new SqlParameter("@Con", condition5),
+                        new SqlParameter("@Myear", ddlYear.SelectedValue),
+                    };
 
                     dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptContactWeellySmartPlannerDetail]", cmdParameters1);
 
+                    dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "FC Name", "Approver Name", "BO Name for Support", "TB Name for Support");
                 }
-
-
             }
-
         }
         else
         {
@@ -11441,20 +11254,14 @@ public partial class frmFCPlannerTracker : System.Web.UI.Page
                 condition5 += "    And tblPlanActivity2024.createDate >= '" + Year1[0] + "-04-01' and  tblPlanActivity2024.createDate<='" + Year1[1] + "-03-31'";
 
                 SqlParameter[] cmdParameters = new SqlParameter[]
-           {
-
-
-
-               new SqlParameter("@Con", condition5),
-                  new SqlParameter("@Myear", ddlYear.SelectedValue),
-
-
-           };
+                {
+                    new SqlParameter("@Con", condition5),
+                    new SqlParameter("@Myear", ddlYear.SelectedValue),
+                };
                 dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptContactWeellySmartPlannerDetail2025]", cmdParameters);
 
+                dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "FC Name", "Approver Name", "BO Name for Support", "TB Name for Support");
             }
-            //  dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptContactWeellySmartPlannerDetail2024]", cmdParameters);
-
         }
         if (dt.Rows.Count > 0)
         {
@@ -11462,18 +11269,7 @@ public partial class frmFCPlannerTracker : System.Web.UI.Page
             {
                 ExportToCSVFile(dt, "SmartPlannerDetail");
             }
-            else
-            {
-
-            }
         }
-        else
-        {
-            //LinkButton1.Visible = false;
-
-        }
-
-
     }
     public void LoadSV(DataTable dt)
     {
@@ -12308,17 +12104,13 @@ public partial class frmFCPlannerTracker : System.Web.UI.Page
 
         SqlParameter[] cmdParameters = new SqlParameter[]
         {
-
-
-
-               new SqlParameter("@Con", condition5),
-                  new SqlParameter("@Myear", ddlYear.SelectedValue),
-
-
+            new SqlParameter("@Con", condition5),
+            new SqlParameter("@Myear", ddlYear.SelectedValue),
         };
 
         dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptContactWeellySmartPlannerDetailAch2025]", cmdParameters);
 
+        dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "FC Name");
 
         if (dt.Rows.Count > 0)
         {
@@ -12326,18 +12118,7 @@ public partial class frmFCPlannerTracker : System.Web.UI.Page
             {
                 MultipuExeclTrack(dt);
             }
-            else
-            {
-
-            }
         }
-        else
-        {
-            //LinkButton1.Visible = false;
-
-        }
-
-
     }
     public void MultipuExeclTrack(DataTable dt)
     {

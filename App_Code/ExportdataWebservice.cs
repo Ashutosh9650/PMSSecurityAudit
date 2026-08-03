@@ -14,6 +14,9 @@ using System.Text;
 using System.Web.Script.Services;
 using System.Web.Services;
 using System.Xml;
+using PMS.Crypto.Core;
+
+
 /// <summary>
 /// Summary description for ExportdataWebservice
 /// </summary>
@@ -27,6 +30,8 @@ public class ExportdataWebservice : System.Web.Services.WebService
     clsMain objMain = new clsMain();
     Password objPass = new Password();
     clsMain DBTask = new clsMain();
+    JsonCryptoHelper jsonCryptoHelper = new JsonCryptoHelper();
+
     public ExportdataWebservice()
     {
 
@@ -13049,15 +13054,13 @@ public class ExportdataWebservice : System.Web.Services.WebService
     [ScriptMethod(UseHttpGet = true)]
     public string GetUserLoginAuthenticate(string UserName, string Password, string IMEINo)
     {
-
         string sReturn = string.Empty;
         try
         {
-
             DataSet dtExportData = new DataSet();
             int UserID = 0;
-            //if (UserName.Trim() != "" && Password.Trim() != "")
-            //{
+            string mobileSecretKey = string.Empty;
+
             string checkpass = objPass.CreatePasswordHashSecurityAudit(Password);
 
             DataTable dtUser = DBTask.GetUserLoginAuthenticateFC(UserName, checkpass, IMEINo);
@@ -13067,26 +13070,35 @@ public class ExportdataWebservice : System.Web.Services.WebService
             {
                 UserID = Convert.ToInt32(dtUser.Rows[0]["UserID"].ToString());
 
-                sReturn = "{\"Table\":[{\"RetValue\":1}]}";
+                if (dtUser.Columns.Contains("MobileSecretKey") && dtUser.Rows[0]["MobileSecretKey"] != DBNull.Value)
+                {
+                    mobileSecretKey = dtUser.Rows[0]["MobileSecretKey"].ToString();
+                }
+
+                var responseObj = new
+                {
+                    Table = new[]
+                    {
+                        new
+                        {
+                            RetValue = 1,
+                            MobileSecretKey = mobileSecretKey
+                        }
+                    }
+                };
+
+                sReturn = JsonConvert.SerializeObject(responseObj);
             }
             else
             {
                 sReturn = "{\"Table\":[{\"RetValue\":-5}]}";
             }
-
-            //}
-            //else
-            //{
-            //    sReturn = "{\"Table\":[{\"RetValue\":-5}]}";
-            //}
-
         }
         catch (Exception)
         {
             sReturn = "{\"Table\":[{\"RetValue\":-5}]}";
         }
         return sReturn;
-
     }
 
     [WebMethod]
@@ -14144,6 +14156,115 @@ public class ExportdataWebservice : System.Web.Services.WebService
         }
         return sReturn;
     }
+
+    #region Dynamic Decryption To Download Master Data
+    [WebMethod]
+    public string GetMasterDataTabletVillageWise201906262024_New(string UserName, string Password, string Villagecode)
+    {
+        string sReturn = string.Empty;
+        try
+        {
+            DataTable dtUser = objComman.GetUserAuthenticate(UserName, Password);
+            if (dtUser == null || dtUser.Rows.Count == 0)
+            {
+                return "0";
+            }
+
+            HashSet<string> encryptedColumns = GetColumnsToDecrypt();
+
+            SqlParameter[] para = new SqlParameter[]
+            {
+                new SqlParameter("@UserName", UserName),
+                new SqlParameter("@Villagecode", Villagecode),
+            };
+
+
+            DataSet dttabletdata = SqlHelper.GetDataSet(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "Get_Masters_dataTabletVillageWise201906262024", para);
+
+            if (dttabletdata != null && dttabletdata.Tables.Count > 0)
+            {
+                int index = 0;
+
+                foreach (DataTable dt in dttabletdata.Tables)
+                {
+                    dt.TableName = GetTableNameTablateNewVillagewise2019(index);
+                    index++;
+
+                    List<DataColumn> colsToDecrypt = new List<DataColumn>();
+                    foreach (DataColumn col in dt.Columns)
+                    {
+                        if (encryptedColumns.Contains(col.ColumnName.ToLower().Trim()))
+                        {
+                            colsToDecrypt.Add(col);
+                        }
+                    }
+
+                    if (colsToDecrypt.Count > 0)
+                    {
+                        foreach (DataRow row in dt.Rows)
+                        {
+                            foreach (DataColumn col in colsToDecrypt)
+                            {
+                                if (row[col] != DBNull.Value)
+                                {
+                                    string encryptedValue = row[col].ToString();
+                                    if (!string.IsNullOrEmpty(encryptedValue))
+                                    {
+                                        row[col] = DecryptData(encryptedValue);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                sReturn = JsonConvert.SerializeObject(dttabletdata);
+            }
+            else
+            {
+                sReturn = "9999";
+            }
+        }
+        catch (Exception ex)
+        {
+            sReturn = "0";
+        }
+        return sReturn;
+    }
+
+    private HashSet<string> GetColumnsToDecrypt()
+    {
+        HashSet<string> columns = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        try
+        {
+            string query = "SELECT DISTINCT LTRIM(RTRIM(LOWER(FieldName))) as FieldName FROM MstRoleMaskingConfig WHERE FieldName IS NOT NULL";
+
+            DataTable dtConfig = SqlHelper.GetDataSet(SqlHelper.mainConnectionString, CommandType.Text, query).Tables[0];
+
+            foreach (DataRow row in dtConfig.Rows)
+            {
+                columns.Add(row["FieldName"].ToString());
+            }
+        }
+        catch
+        {
+
+        }
+        return columns;
+    }
+
+    private string DecryptData(string cipherText)
+    {
+        try
+        {
+            return CryptoService.Decrypt(cipherText);
+        }
+        catch
+        {
+            return cipherText;
+        }
+    }
+    #endregion
+
     [WebMethod]
     public string UploadImageBalsaba(string filebytes, string sFilename)
     {
@@ -17152,6 +17273,18 @@ public class ExportdataWebservice : System.Web.Services.WebService
             {
                 DataSet dsMyData = new DataSet();
                 XmlDocument xdMyData = new XmlDocument();
+
+                // ================================================================
+                // DEFINE TARGET FIELDS TO ENCRYPT
+                // ================================================================
+                string[] fieldsToEncrypt = new string[] { "GrandParentName", "MotherName", "GuardianMobileNo", "GuardianName", "FatherName" };
+
+                // ================================================================
+                // CALL THE COMMON ENCRYPTOR
+                // ================================================================
+                sData = jsonCryptoHelper.EncryptJsonFields(sData, fieldsToEncrypt);
+
+
                 sData = "{ \"rootNode\": {" + sData.Trim().TrimStart('{').TrimEnd('}') + "} }";
                 xdMyData = (XmlDocument)JsonConvert.DeserializeXmlNode(sData);
                 dsMyData.ReadXml(new XmlNodeReader(xdMyData));

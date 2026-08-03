@@ -17,6 +17,8 @@ public partial class frmStafftrainingReport : System.Web.UI.Page
     string flag = "";
     Password objPass = new Password();
     public DataTable dtUserDeatils;
+    DataTableMaskingHelper dataTableMaskingHelper = new DataTableMaskingHelper();
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -190,15 +192,12 @@ public partial class frmStafftrainingReport : System.Web.UI.Page
         }
 
         SqlParameter[] parm = new SqlParameter[]
-            {
-
-            new SqlParameter("@Con", conditions),
-            //new SqlParameter("@Flag", Flag),
-            //    new SqlParameter("@Year", ddlYear.SelectedValue)
-
-                 };
+        {
+           new SqlParameter("@Con", conditions),
+        };
         DataTable dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptMasterTeamBailkTrainingattendence]", parm);
 
+        dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Internal Trainer Name", "TB Name");
 
         ViewState["D2dUser"] = dt;
 
@@ -352,6 +351,7 @@ public partial class frmStafftrainingReport : System.Web.UI.Page
                  };
         DataTable dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptMasterTeamBailkTraining2026]", parm);
 
+        dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "TB Name", "Internal Trainer Name", "External Trainer Name", "External Trainer Email", "External Trainer Contact No.");
 
         ViewState["D2dUser"] = dt;
 
@@ -1602,6 +1602,9 @@ public partial class frmStafftrainingReport : System.Web.UI.Page
 
         dataTable = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptStaffTrainingReport2026]", cmdParameters);
 
+        dataTableMaskingHelper.DecryptAndMaskDataTable(dataTable, "Emp Name", "Contact No", "Email", "Internal Trainer Name", "External Trainer Name",
+        "External Trainer Email", "External Trainer Contact No.", "Employee Name", "ContactNo", "Trainers Name", "Username");
+
         if (ddlDistrict.Length > 0)
         {
             string expression = "[Emp DistrictName] in(" + ddlDistrictName + ") ";
@@ -1649,8 +1652,6 @@ public partial class frmStafftrainingReport : System.Web.UI.Page
         }
         GV_DynamicGrid.DataSource = null;
         GV_DynamicGrid.DataBind();
-
-
     }
 
 
@@ -1844,6 +1845,8 @@ public partial class frmStafftrainingReport : System.Web.UI.Page
 
         dataTable = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptStaffTrainingReport2026Att]", cmdParameters);
 
+        dataTableMaskingHelper.DecryptAndMaskDataTable(dataTable, "Emp Name", "Contact No", "Email", "Internal Trainer Name");
+
         if (ddlDistrict.Length > 0)
         {
             string expression = "[Emp DistrictName] in(" + ddlDistrictName + ") ";
@@ -2036,7 +2039,5 @@ public partial class frmStafftrainingReport : System.Web.UI.Page
         }
         GV_DynamicGrid.DataSource = null;
         GV_DynamicGrid.DataBind();
-
-
     }
 }

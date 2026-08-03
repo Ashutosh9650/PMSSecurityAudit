@@ -8,6 +8,7 @@ using System.IO;
 using System.Text;
 using System.Web;
 using System.Web.UI.WebControls;
+
 public partial class frmConnectSummary : System.Web.UI.Page
 {
     clsMain objMain = new clsMain();
@@ -15,6 +16,10 @@ public partial class frmConnectSummary : System.Web.UI.Page
     public bool vADD = false;
     public bool vVerify = false;
     public bool vDelete = false;
+    SqlInjection sqlInjection = new SqlInjection();
+    DataTableMaskingHelper dataTableMaskingHelper = new DataTableMaskingHelper();
+
+
 
     string conditions = "";
     protected void Page_Load(object sender, EventArgs e)
@@ -3438,49 +3443,52 @@ public partial class frmConnectSummary : System.Web.UI.Page
 
         if (Flag == 1)
         {
-
             SqlParameter[] cmdParameters = new SqlParameter[]
-        {
-                    new SqlParameter("@Condition", conditions),
+            {
+              new SqlParameter("@Condition", conditions),
+              new SqlParameter("@FYear", ddlYear.SelectedValue),
+            };
 
-                    new SqlParameter("@FYear", ddlYear.SelectedValue),
-
-        };
-            //---rptContactStatusReport
             dataTable = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptContactStatusReport2024]", cmdParameters);
             FileName = "Contact Status Report";
+
+            if (Convert.ToInt32(ddlYear.SelectedValue) >= 2026)
+                dataTableMaskingHelper.DecryptAndMaskDataTable(dataTable, "Mohalla", "House", "Child Name", "Father Name", "DOB", "Contact DOB", "D2D Age-Current Year", "Child Name_SR", "Father Name_SR", "Mother Name_SR", "DOB_SR", "Respondent Relation with Child", "Mobile No", "Date of Birth", "Child SSSMID", "Family SSSMID");
+            else if (Convert.ToInt32(ddlYear.SelectedValue) >= 2024)
+                dataTableMaskingHelper.DecryptAndMaskDataTable(dataTable, "Mohalla", "House", "Child Name", "Contact Child Name", "Father Name", "Contact Father Name", "DOB", "Contact DOB", "D2D Age-Current Year", "Respondent Relation with Child", "Mobile No", "Date of Birth", "Child SSSMID", "Family SSSMID");
+            else
+                dataTableMaskingHelper.DecryptAndMaskDataTable(dataTable, "Mohalla", "House", "Child Name", "Father Name", "DOB", "D2D Age-Current Year", "Respondent Relation with Child", "Mobile No", "Date of Birth", "Child SSSMID", "Family SSSMID");
         }
 
         if (Flag == 2)
         {
-
             SqlParameter[] cmdParameters = new SqlParameter[]
-        {
+            {
                     new SqlParameter("@Condition", conditions),
-                       new SqlParameter("@Con", ddlYear.SelectedItem.Text),
+                    new SqlParameter("@Con", ddlYear.SelectedItem.Text),
                     new SqlParameter("@FYear", ddlYear.SelectedValue),
-
-        };
+            };
 
             dataTable = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "rptContactMobileTargetD2dDetials15to18", cmdParameters);
             FileName = "ContactReport(15to18)";
+
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dataTable, "Mauhalla", "House", "Child Name", "Father Name", "D2D Age-Current Year", "DOB", "SamagraID", "Mobile No", "Alternate Mobile Number", "Alternate mobile OwneName");
+
         }
         if (Flag == 3)
         {
-
             SqlParameter[] cmdParameters = new SqlParameter[]
-        {
-                    new SqlParameter("@Condition", conditions),
-                       new SqlParameter("@Con", ddlYear.SelectedItem.Text),
-                    new SqlParameter("@FYear", ddlYear.SelectedValue),
-
-        };
+            {
+                 new SqlParameter("@Condition", conditions),
+                 new SqlParameter("@Con", ddlYear.SelectedItem.Text),
+                 new SqlParameter("@FYear", ddlYear.SelectedValue),
+            };
 
             dataTable = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "rptContactMobileTargetD2dDetialsFourYear", cmdParameters);
             FileName = "ContactReport(4 Year)";
+
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dataTable, "Mauhalla", "House", "D2D Age-Current Year", "DOB", "Child Name", "Father Name", "SamagraID", "Mobile No", "Alternate Mobile Number", "Alternate mobile OwneName", "Relation with Child");
         }
-
-
 
         ViewState["dt"] = dataTable;
         if (dataTable.Rows.Count > 0)
@@ -3488,11 +3496,6 @@ public partial class frmConnectSummary : System.Web.UI.Page
             ReportDownload("Contact Status Report", "Contact Summary Report");
             ExportToCSVFile(dataTable, FileName);
         }
-
-
-
-
-
     }
 
     public void getreportContactDeatlisosg(Int32 Flag)
@@ -3604,63 +3607,59 @@ public partial class frmConnectSummary : System.Web.UI.Page
         }
 
 
-
-
-        //if (ddlGender.SelectedIndex > 0)
-        //{
-        //    conditions += " and [Gender]='" + ddlGender.SelectedItem.Text + "'";
-        //}
         DataTable dataTable = null;
         string FileName = "";
 
-
-
         if (Flag == 1)
         {
-
             SqlParameter[] cmdParameters = new SqlParameter[]
-        {
-                    new SqlParameter("@Condition", conditions),
-
-                    new SqlParameter("@FYear", ddlYear.SelectedValue),
-
-        };
+            {
+               new SqlParameter("@Condition", conditions),
+               new SqlParameter("@FYear", ddlYear.SelectedValue),
+            };
 
             dataTable = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptD2dOSG2024]", cmdParameters);
             FileName = "Contact Detail Report";
 
-            //rptD2dOSG
+            if (Convert.ToInt32(ddlYear.SelectedValue) >= 2025)
+                dataTableMaskingHelper.DecryptAndMaskDataTable(dataTable, "Mohalla", "House", "Child Name", "Father Name", "D2D Age-Current Year", "Contact DOB", "Child Name_SR", "Father Name_SR", "Mother Name_SR", "DOB_SR", "Respondent Relation with Child", "Mobile No", "Date of Birth", "Migration Place", "Child SSSMID", "Family SSSMID", "Latitude", "Longitude");
+
+            else if (Convert.ToInt32(ddlYear.SelectedValue) >= 2024)
+                dataTableMaskingHelper.DecryptAndMaskDataTable(dataTable, "Mohalla", "House", "Child Name", "Father Name", "D2D Age-Current Year", "Contact DOB", "Child Name_SR", "Father Name_SR", "Mother Name_SR", "DOB_SR", "Respondent Relation with Child", "Mobile No", "Date of Birth", "Migration Place", "Child SSSMID", "Family SSSMID", "Latitude", "Longitude");
+            else
+                dataTableMaskingHelper.DecryptAndMaskDataTable(dataTable, "Mohalla", "House", "Child Name", "Father Name", "D2D Age-Current Year", "Child Name_SR", "Father Name_SR", "Mother Name_SR", "DOB_SR", "Respondent Relation with Child", "Mobile No", "Date of Birth", "Migration Place", "Child SSSMID", "Family SSSMID", "Latitude", "Longitude");
         }
 
         if (Flag == 2)
         {
-
             SqlParameter[] cmdParameters = new SqlParameter[]
-        {
-                    new SqlParameter("@Condition", conditions),
-                       new SqlParameter("@Con", ddlYear.SelectedItem.Text),
-                    new SqlParameter("@FYear", ddlYear.SelectedValue),
-
-        };
+            {
+               new SqlParameter("@Condition", conditions),
+               new SqlParameter("@Con", ddlYear.SelectedItem.Text),
+               new SqlParameter("@FYear", ddlYear.SelectedValue),
+            };
 
             dataTable = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "rptContactMobileTargetD2dDetials15to18", cmdParameters);
             FileName = "ContactReport(15to18)";
+
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dataTable, "Mauhalla", "House", "Child Name", "Father Name", "D2D Age-Current Year", "DOB", "SamagraID", "Mobile No", "Alternate Mobile Number", "Alternate mobile OwneName");
+
         }
+
         if (Flag == 3)
         {
-
             SqlParameter[] cmdParameters = new SqlParameter[]
-        {
-                    new SqlParameter("@Condition", conditions),
-                       new SqlParameter("@Con", ddlYear.SelectedItem.Text),
-                    new SqlParameter("@FYear", ddlYear.SelectedValue),
-
-        };
+            {
+                 new SqlParameter("@Condition", conditions),
+                 new SqlParameter("@Con", ddlYear.SelectedItem.Text),
+                 new SqlParameter("@FYear", ddlYear.SelectedValue),
+            };
 
             dataTable = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "rptContactMobileTargetD2dDetialsFourYear", cmdParameters);
             FileName = "ContactReport(4 Year)";
-        }
 
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dataTable, "Mauhalla", "House", "D2D Age-Current Year", "DOB", "Child Name", "Father Name", "SamagraID", "Mobile No", "Alternate Mobile Number", "Alternate mobile OwneName", "Relation with Child");
+        }
 
 
         ViewState["dt"] = dataTable;
@@ -3669,11 +3668,6 @@ public partial class frmConnectSummary : System.Web.UI.Page
             ReportDownload("Contact Detail Report", "Contact Summary Report");
             ExportToCSVFile(dataTable, FileName);
         }
-
-
-
-
-
     }
 
     public void getreportContactDeatlis(Int32 Flag)
@@ -3803,12 +3797,11 @@ public partial class frmConnectSummary : System.Web.UI.Page
         {
 
             SqlParameter[] cmdParameters = new SqlParameter[]
-        {
-                    new SqlParameter("@Condition", conditions),
-                       new SqlParameter("@Con", ddlYear.SelectedItem.Text),
-                    new SqlParameter("@FYear", ddlYear.SelectedValue),
-
-        };
+            {
+                   new SqlParameter("@Condition", conditions),
+                   new SqlParameter("@Con", ddlYear.SelectedItem.Text),
+                   new SqlParameter("@FYear", ddlYear.SelectedValue),
+            };
 
             dataTable = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptContactMobileTargetD2dDetials]", cmdParameters);
             FileName = "ContactReport";
@@ -3818,43 +3811,38 @@ public partial class frmConnectSummary : System.Web.UI.Page
         {
 
             SqlParameter[] cmdParameters = new SqlParameter[]
-        {
-                    new SqlParameter("@Condition", conditions),
-                       new SqlParameter("@Con", ddlYear.SelectedItem.Text),
-                    new SqlParameter("@FYear", ddlYear.SelectedValue),
-
-        };
+            {
+                  new SqlParameter("@Condition", conditions),
+                  new SqlParameter("@Con", ddlYear.SelectedItem.Text),
+                  new SqlParameter("@FYear", ddlYear.SelectedValue),
+            };
 
             dataTable = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "rptContactMobileTargetD2dDetials15to18", cmdParameters);
             FileName = "ContactReport(15to18)";
+
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dataTable, "Mauhalla", "House", "Child Name", "Father Name", "D2D Age-Current Year", "DOB", "SamagraID", "Mobile No", "Alternate Mobile Number", "Alternate mobile OwneName");
         }
         if (Flag == 3)
         {
 
             SqlParameter[] cmdParameters = new SqlParameter[]
-        {
-                    new SqlParameter("@Condition", conditions),
-                       new SqlParameter("@Con", ddlYear.SelectedItem.Text),
-                    new SqlParameter("@FYear", ddlYear.SelectedValue),
-
-        };
+            {
+                  new SqlParameter("@Condition", conditions),
+                  new SqlParameter("@Con", ddlYear.SelectedItem.Text),
+                  new SqlParameter("@FYear", ddlYear.SelectedValue),
+            };
 
             dataTable = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "rptContactMobileTargetD2dDetialsFourYear", cmdParameters);
             FileName = "ContactReport(4 Year)";
+
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dataTable, "Mauhalla", "House", "D2D Age-Current Year", "DOB", "Child Name", "Father Name", "SamagraID", "Mobile No", "Alternate Mobile Number", "Alternate mobile OwneName", "Relation with Child");
         }
-
-
 
         ViewState["dt"] = dataTable;
         if (dataTable.Rows.Count > 0)
         {
             ExportToCSVFile(dataTable, FileName);
         }
-
-
-
-
-
     }
 
     protected void LnkMobileDataReport_OnClick(object sender, EventArgs e)
@@ -3985,58 +3973,52 @@ public partial class frmConnectSummary : System.Web.UI.Page
             conditions += " and mst5Village.VillageCode in(" + ddlVillage + ") ";
         }
 
-        //if (ddlYear.SelectedIndex > 0)
-        //{
-        //    conditions += "   mst5Village.Fyear = '" + ddlYear.SelectedItem.Text + "' ";
-        //}
+
         DataTable dt = null;
 
         if (Flag == 1)
         {
-
             SqlParameter[] cmdParameters = new SqlParameter[]
-        {
+            {
                     new SqlParameter("@condtion", conditions),
-
                     new SqlParameter("@Year", ddlYear.SelectedValue),
-
-        };
+            };
 
             dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[ReportMobileActivityStatus]", cmdParameters);
             if (dt.Rows.Count > 0)
             {
-                ExportToCSVFile(dt, "EnrDailyStatus");
+                if (Convert.ToInt32(ddlYear.SelectedValue) == 2017 || Convert.ToInt32(ddlYear.SelectedValue) == 2018)
+                    dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "House", "ChildName", "Father Name", "CurrentAge");
+                else if (Convert.ToInt32(ddlYear.SelectedValue) == 2019)
+                    dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Mauhalla", "House", "Child Name", "Father Name", "DOB", "SamgraID/GovtID", "Age");
+                else if (Convert.ToInt32(ddlYear.SelectedValue) == 2020)
+                    dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Mauhalla", "House", "Child Name", "Father Name", "DOB", "SamgraID/GovtID", "Mobile No", "Age", "Latitude", "Longitude", "Class");
+                else if (Convert.ToInt32(ddlYear.SelectedValue) == 2021)
+                    dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Mauhalla", "House", "Child Name", "Father Name", "DOB", "SamgraID/GovtID", "Mobile No", "Alternate Mobile Number", "Alternate mobile Owner Name", "Latitude", "Longitude", "Class");
+                else if (Convert.ToInt32(ddlYear.SelectedValue) == 2022)
+                    dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Mauhalla", "House", "Child Name", "Father Name", "DOB", "SamgraID/GovtID", "Mobile No", "Alternate Mobile Number", "Alternate mobile Owner Name", "Age");
 
+                ExportToCSVFile(dt, "EnrDailyStatus");
             }
         }
-
         if (Flag == 2)
         {
 
             SqlParameter[] cmdParameters = new SqlParameter[]
-        {
-                    new SqlParameter("@condtion", conditions),
-
-                    new SqlParameter("@Year", ddlYear.SelectedValue),
-
-        };
+            {
+                 new SqlParameter("@condtion", conditions),
+                 new SqlParameter("@Year", ddlYear.SelectedValue),
+            };
 
             dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "ReportMobileActivityStatus15to18", cmdParameters);
             if (dt.Rows.Count > 0)
             {
+                dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Mauhalla", "House", "Child Name", "Father Name", "DOB", "SamgraID/GovtID", "Mobile No", "Alternate Mobile Number", "Alternate mobile Owner Name", "Latitude", "Longitude", "Age");
                 ExportToCSVFile(dt, "EnrDailyStatus(15to18)");
-
             }
         }
-
-
-
-
-
-
-
-
     }
+
     protected void ddlTpye_SelectedIndexChanged(object sender, EventArgs e)
     {
         ViewState["Annual"] = "";
@@ -8609,9 +8591,6 @@ public partial class frmConnectSummary : System.Web.UI.Page
         GV_DynamicGrid.DataSource = null;
         GV_DynamicGrid.DataBind();
 
-
-
-
         if (dt1.Tables[0].Rows.Count > 0)
         {
             ReportDownload("Contact Summary", "Contact Summary Report");
@@ -8633,20 +8612,11 @@ public partial class frmConnectSummary : System.Web.UI.Page
             GV_DynamicGrid.DataSource = null;
             GV_DynamicGrid.DataBind();
         }
-
-
-
-
     }
+
     protected void ContactSummaryNew_Click(object sender, EventArgs e)
     {
-
-
-
-
         LoadContactSumarry(1);
-
-
     }
     public void MultipuExeclProcess2026()
     {
@@ -9034,7 +9004,12 @@ public partial class frmConnectSummary : System.Web.UI.Page
         }
         if (ddlGender.SelectedIndex > 0)
         {
-            conditions += " and Gender ='" + ddlGender.SelectedItem.Text + "' ";
+            if (Convert.ToInt32(ddlYear.SelectedValue) >= 2020)
+                conditions += " and Gender ='" + ddlGender.SelectedItem.Text + "' ";
+            else
+            {
+                conditions += " and tblDTD.Gender = '" + (ddlGender.SelectedItem.Text == "Male" ? "1" : "2") + "' ";
+            }
         }
 
 
@@ -9043,11 +9018,7 @@ public partial class frmConnectSummary : System.Web.UI.Page
         {
             if (item.Selected)
             {
-
                 Age += "" + item.Value + "" + ",";
-
-
-
             }
         }
         string AgeEnGrouopp = "";
@@ -9060,17 +9031,20 @@ public partial class frmConnectSummary : System.Web.UI.Page
         }
 
 
-
         SqlParameter[] cmdParameters = new SqlParameter[]
         {
             new SqlParameter("@Condition",conditions),
-         new SqlParameter("@Fyear",ddlYear.SelectedValue),
-
+            new SqlParameter("@Fyear",ddlYear.SelectedValue)
         };
+
         DataTable dt = null;
-
-
         dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptEnrollTargetD2dDetials]", cmdParameters);
+
+        if (Convert.ToInt32(ddlYear.SelectedValue) >= 2020)
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Mauhalla", "House", "Child Name", "Father Name", "Mother Name", "DOB", "Current Age", "Age");
+        else if (Convert.ToInt32(ddlYear.SelectedValue) < 2020)
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Mauhalla", "House", "Child Name", "Father Name", "DOB", "Current Age", "Age");
+
         ViewState["D2dUser"] = dt;
 
         GV_DynamicGrid.Visible = true;
@@ -9084,9 +9058,5 @@ public partial class frmConnectSummary : System.Web.UI.Page
             GV_DynamicGrid.DataSource = null;
             GV_DynamicGrid.DataBind();
         }
-
-
-
-
     }
 }

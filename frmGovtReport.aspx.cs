@@ -17,6 +17,8 @@ public partial class frmGovtReport : System.Web.UI.Page
     public bool vVerify = false;
     public bool vDelete = false;
     string conditions = "";
+    DataTableMaskingHelper dataTableMaskingHelper = new DataTableMaskingHelper();
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -1321,40 +1323,34 @@ public partial class frmGovtReport : System.Web.UI.Page
             }
         }
 
-
-
-
         SqlParameter[] cmdParameters = new SqlParameter[]
         {
             new SqlParameter("@Condition", conditions),
-               new SqlParameter("@Con", ddlYear.SelectedItem.Text),
+            new SqlParameter("@Con", ddlYear.SelectedItem.Text),
             new SqlParameter("@FYear", ddlYear.SelectedValue),
-
         };
+
         DataTable dt = null;
 
 
         dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptGovTargetandAchD2dDetials]", cmdParameters);
 
+        dataTableMaskingHelper.DecryptAndMaskDataTable(dt, true, "Child Name", "Father Name", "Samagra ID");
 
+        if (dt.Columns.Contains("DOB"))
+        {
+            dt.Columns.Remove("DOB");
+        }
 
         ViewState["Dist"] = dt;
         GV_DynamicGrid.Visible = true;
         GV_DynamicGrid.DataSource = null;
         GV_DynamicGrid.DataBind();
 
-
-
-
         if (dt.Rows.Count > 0)
         {
             ExportToCSVFile(dt, "EnrolmentRawGovt");
         }
-
-
-
-
-
     }
 
     public void LoadDistProfileData(int Flag)
@@ -1879,84 +1875,71 @@ public partial class frmGovtReport : System.Web.UI.Page
 
         if (Convert.ToInt32(ddlYear.SelectedValue) == 2020)
         {
-
             SqlParameter[] cmdParameters = new SqlParameter[]
-        {
-                    new SqlParameter("@schoolCode",conditions),
-                    new SqlParameter("@Year",ddlYear.SelectedItem.Text),
-                        new SqlParameter("@Flag",Flag),
-                        new SqlParameter("@Groupby",ddlGroup.SelectedValue),
-                           new SqlParameter("@EGAdminDist",rblDist.SelectedValue),
-                            new SqlParameter("@ReportType",ddlTpye.SelectedValue),
-                               new SqlParameter("@Mmonth",ddlMonth.SelectedValue),
-                                  new SqlParameter("@MmonthName",ddlMonth.SelectedItem.Text),
-
-                                         new SqlParameter("@schoolCodeNew",NewCon),
-
-        };
+            {
+                 new SqlParameter("@schoolCode",conditions),
+                 new SqlParameter("@Year",ddlYear.SelectedItem.Text),
+                 new SqlParameter("@Flag",Flag),
+                 new SqlParameter("@Groupby",ddlGroup.SelectedValue),
+                 new SqlParameter("@EGAdminDist",rblDist.SelectedValue),
+                 new SqlParameter("@ReportType",ddlTpye.SelectedValue),
+                 new SqlParameter("@Mmonth",ddlMonth.SelectedValue),
+                 new SqlParameter("@MmonthName",ddlMonth.SelectedItem.Text),
+                 new SqlParameter("@schoolCodeNew",NewCon),
+            };
             dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rpGovReport2020New]", cmdParameters);
         }
         else if (Convert.ToInt32(ddlYear.SelectedValue) == 2021)
         {
             SqlParameter[] cmdParameters = new SqlParameter[]
-        {
+            {
                     new SqlParameter("@schoolCode",conditions),
                     new SqlParameter("@Year",ddlYear.SelectedItem.Text),
-                        new SqlParameter("@Flag",Flag),
-                        new SqlParameter("@Groupby",ddlGroup.SelectedValue),
-                           new SqlParameter("@EGAdminDist",rblDist.SelectedValue),
-                            new SqlParameter("@ReportType",ddlTpye.SelectedValue),
-                               new SqlParameter("@Mmonth",ddlMonth.SelectedValue),
-                                  new SqlParameter("@MmonthName",ddlMonth.SelectedItem.Text),
-
-                                         new SqlParameter("@schoolCodeNew",NewCon),
-
-        };
+                    new SqlParameter("@Flag",Flag),
+                    new SqlParameter("@Groupby",ddlGroup.SelectedValue),
+                    new SqlParameter("@EGAdminDist",rblDist.SelectedValue),
+                    new SqlParameter("@ReportType",ddlTpye.SelectedValue),
+                    new SqlParameter("@Mmonth",ddlMonth.SelectedValue),
+                    new SqlParameter("@MmonthName",ddlMonth.SelectedItem.Text),
+                    new SqlParameter("@schoolCodeNew",NewCon),
+            };
             dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rpGovReport2021New]", cmdParameters);
 
         }
-
-
-
         else if (Convert.ToInt32(ddlYear.SelectedValue) == 2022)
         {
             SqlParameter[] cmdParameters = new SqlParameter[]
-        {
-            new SqlParameter("@schoolCode",conditions),
-            new SqlParameter("@Year",ddlYear.SelectedItem.Text),
+            {
+                new SqlParameter("@schoolCode",conditions),
+                new SqlParameter("@Year",ddlYear.SelectedItem.Text),
                 new SqlParameter("@Flag",Flag),
                 new SqlParameter("@Groupby",ddlGroup.SelectedValue),
-                   new SqlParameter("@EGAdminDist",rblDist.SelectedValue),
-                    new SqlParameter("@ReportType",ddlTpye.SelectedValue),
-                       new SqlParameter("@Mmonth",ddlMonth.SelectedValue),
-                          new SqlParameter("@MmonthName",ddlMonth.SelectedItem.Text),
-
-                                 new SqlParameter("@schoolCodeNew",NewCon),
-
-        };
+                new SqlParameter("@EGAdminDist",rblDist.SelectedValue),
+                new SqlParameter("@ReportType",ddlTpye.SelectedValue),
+                new SqlParameter("@Mmonth",ddlMonth.SelectedValue),
+                new SqlParameter("@MmonthName",ddlMonth.SelectedItem.Text),
+                new SqlParameter("@schoolCodeNew",NewCon),
+            };
             dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rpGovReport2022New]", cmdParameters);
             if (dt.Rows.Count > 0)
             {
                 dt.Columns.Remove("NewSrCode");
             }
         }
-
         else if (Convert.ToInt32(ddlYear.SelectedValue) == 2023)
         {
             SqlParameter[] cmdParameters = new SqlParameter[]
-        {
-            new SqlParameter("@schoolCode",conditions),
-            new SqlParameter("@Year",ddlYear.SelectedItem.Text),
+            {
+                new SqlParameter("@schoolCode",conditions),
+                new SqlParameter("@Year",ddlYear.SelectedItem.Text),
                 new SqlParameter("@Flag",Flag),
                 new SqlParameter("@Groupby",ddlGroup.SelectedValue),
-                   new SqlParameter("@EGAdminDist",rblDist.SelectedValue),
-                    new SqlParameter("@ReportType",ddlTpye.SelectedValue),
-                       new SqlParameter("@Mmonth",ddlMonth.SelectedValue),
-                          new SqlParameter("@MmonthName",ddlMonth.SelectedItem.Text),
-
-                                 new SqlParameter("@schoolCodeNew",NewCon),
-
-        };
+                new SqlParameter("@EGAdminDist",rblDist.SelectedValue),
+                new SqlParameter("@ReportType",ddlTpye.SelectedValue),
+                new SqlParameter("@Mmonth",ddlMonth.SelectedValue),
+                new SqlParameter("@MmonthName",ddlMonth.SelectedItem.Text),
+                new SqlParameter("@schoolCodeNew",NewCon),
+            };
             dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rpGovReport2023New]", cmdParameters);
             if (dt.Rows.Count > 0)
             {
@@ -1966,27 +1949,24 @@ public partial class frmGovtReport : System.Web.UI.Page
         else
         {
             SqlParameter[] cmdParameters = new SqlParameter[]
-        {
-            new SqlParameter("@schoolCode",conditions),
-            new SqlParameter("@Year",ddlYear.SelectedItem.Text),
+            {
+                new SqlParameter("@schoolCode",conditions),
+                new SqlParameter("@Year",ddlYear.SelectedItem.Text),
                 new SqlParameter("@Flag",Flag),
                 new SqlParameter("@Groupby",ddlGroup.SelectedValue),
-                   new SqlParameter("@EGAdminDist",rblDist.SelectedValue),
-                    new SqlParameter("@ReportType",ddlTpye.SelectedValue),
-                       new SqlParameter("@Mmonth",ddlMonth.SelectedValue),
-                          new SqlParameter("@MmonthName",ddlMonth.SelectedItem.Text),
+                new SqlParameter("@EGAdminDist",rblDist.SelectedValue),
+                new SqlParameter("@ReportType",ddlTpye.SelectedValue),
+                new SqlParameter("@Mmonth",ddlMonth.SelectedValue),
+                new SqlParameter("@MmonthName",ddlMonth.SelectedItem.Text),
+                new SqlParameter("@schoolCodeNew",NewCon),
+            };
 
-                                 new SqlParameter("@schoolCodeNew",NewCon),
-
-        };
             dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rpGovReport2024New]", cmdParameters);
             if (dt.Rows.Count > 0)
             {
                 dt.Columns.Remove("NewSrCode");
             }
         }
-
-
 
 
 
@@ -2011,11 +1991,8 @@ public partial class frmGovtReport : System.Web.UI.Page
             GV_DynamicGrid.DataSource = dt;
             GV_DynamicGrid.DataBind();
         }
-
-
-
-
     }
+
     private void ExporttoExcel(GridView Gv, DataTable table, string FileName)
     {
 

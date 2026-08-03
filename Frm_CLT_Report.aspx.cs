@@ -22,6 +22,8 @@ public partial class Frm_CLT_Report : System.Web.UI.Page
     Comman objComman = new Comman();
     string conditions = "";
     string labelmainheading = "";
+    DataTableMaskingHelper dataTableMaskingHelper = new DataTableMaskingHelper();
+
     protected void Page_Load(object sender, EventArgs e)
     {
        
@@ -556,31 +558,28 @@ public partial class Frm_CLT_Report : System.Web.UI.Page
             subject = ddlsubject.SelectedItem.Text;
         }
         SqlParameter[] parm = new SqlParameter[]
-            {
-       new SqlParameter("@condition",  conditions),
-       new SqlParameter("@subject",  subject),
-        new SqlParameter("@flag",2),
-      
-                 };
+        {
+            new SqlParameter("@condition",  conditions),
+            new SqlParameter("@subject",  subject),
+            new SqlParameter("@flag",2),
+        };
+
         DataTable dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[Get_CLT_Report_Data]", parm);
+
+        dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Student Name", "Class");
+
         ViewState["dt"] =dt;
         lblTotalCount.Text = dt.Rows.Count.ToString();
         if (dt.Rows.Count > 0)
         {
-
-
             GridView1.DataSource = dt;
             GridView1.DataBind();
-
         }
-
         else
         {
             GridView1.DataSource = null;
             GridView1.DataBind();
-
         }
-
     }
 
 

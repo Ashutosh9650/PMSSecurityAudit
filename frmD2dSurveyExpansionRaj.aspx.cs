@@ -17,6 +17,8 @@ public partial class frmD2dSurveyExpansionRaj : System.Web.UI.Page
     public bool vADD = false;
     public bool vVerify = false;
     public bool vDelete = false;
+    SqlInjection sqlInjection = new SqlInjection();
+    DataTableMaskingHelper dataTableMaskingHelper = new DataTableMaskingHelper();
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -24,10 +26,6 @@ public partial class frmD2dSurveyExpansionRaj : System.Web.UI.Page
         {
             if (Convert.ToString(Session["username"]) != "")
             {
-
-
-
-
                 if (!IsPostBack)
                 {
 
@@ -1194,6 +1192,111 @@ public partial class frmD2dSurveyExpansionRaj : System.Web.UI.Page
 
         if (dt.Rows.Count > 0)
         {
+            int rowCount = dt.Rows.Count;
+
+
+            string[] processedProbableTeamBalikaName = new string[rowCount];
+            string[] processedContactNumber = new string[rowCount];
+            string[] processedUserName = new string[rowCount];
+            string[] processedInfluencerName = new string[rowCount];
+            string[] processedInfluencerContactNumber = new string[rowCount];
+
+
+            int uniqueChildCodeIndex = dt.Columns.IndexOf("UniqueChildCode"); // Change in later
+
+            int probableTeamBalikaNameIndex = dt.Columns.IndexOf("Probable Team Balika Name");
+            int contactNumberIndex = dt.Columns.IndexOf("Contact Number");
+            int userNameIndex = dt.Columns.IndexOf("User Name");
+            int influencerNameIndex = dt.Columns.IndexOf("Influencer Name");
+            int influencerContactNumberIndex = dt.Columns.IndexOf("Influencer Contact Number");
+
+            // ==========================================
+            // 3. PARALLEL FOR LOOP: Decryption & Masking
+            // ==========================================
+            System.Threading.Tasks.Parallel.For(0, rowCount, i =>
+            {
+                DataRow row = dt.Rows[i];
+
+                // Unique Child Code extract karein decryption salt ke liye
+                string uniqueCode = (uniqueChildCodeIndex != -1 && row[uniqueChildCodeIndex] != DBNull.Value)
+                                    ? row[uniqueChildCodeIndex].ToString()
+                                    : string.Empty;
+
+                // 1. Probable Team Balika Name
+                if (probableTeamBalikaNameIndex != -1 && row[probableTeamBalikaNameIndex] != DBNull.Value)
+                {
+                    string enc = row[probableTeamBalikaNameIndex].ToString();
+                    if (!string.IsNullOrEmpty(enc))
+                    {
+                        processedProbableTeamBalikaName[i] = sqlInjection.DecryptMatchingWithSessionMasking(enc, "Probable Team Balika Name");
+                    }
+                }
+
+                // 2. Contact Number
+                if (contactNumberIndex != -1 && row[contactNumberIndex] != DBNull.Value)
+                {
+                    string enc = row[contactNumberIndex].ToString();
+                    if (!string.IsNullOrEmpty(enc))
+                    {
+                        processedContactNumber[i] = sqlInjection.DecryptMatchingWithSessionMasking(enc, "Contact Number");
+                    }
+                }
+
+                // 3. User Name
+                if (userNameIndex != -1 && row[userNameIndex] != DBNull.Value)
+                {
+                    string enc = row[userNameIndex].ToString();
+                    if (!string.IsNullOrEmpty(enc))
+                    {
+                        processedUserName[i] = sqlInjection.DecryptMatchingWithSessionMasking(enc, "User Name");
+                    }
+                }
+
+                // 4. Influencer Name
+                if (influencerNameIndex != -1 && row[influencerNameIndex] != DBNull.Value)
+                {
+                    string enc = row[influencerNameIndex].ToString();
+                    if (!string.IsNullOrEmpty(enc))
+                    {
+                        processedInfluencerName[i] = sqlInjection.DecryptMatchingWithSessionMasking(enc, "Influencer Name");
+                    }
+                }
+
+                // 5. Influencer Contact Number
+                if (influencerContactNumberIndex != -1 && row[influencerContactNumberIndex] != DBNull.Value)
+                {
+                    string enc = row[influencerContactNumberIndex].ToString();
+                    if (!string.IsNullOrEmpty(enc))
+                    {
+                        processedInfluencerContactNumber[i] = sqlInjection.DecryptMatchingWithSessionMasking(enc, "Influencer Contact Number");
+                    }
+                }
+            });
+
+            // ==========================================
+            // 4. SEQUENTIAL LOOP: Update DataTable
+            // ==========================================
+            dt.BeginLoadData();
+
+            for (int i = 0; i < rowCount; i++)
+            {
+                if (processedProbableTeamBalikaName[i] != null && probableTeamBalikaNameIndex != -1)
+                    dt.Rows[i][probableTeamBalikaNameIndex] = processedProbableTeamBalikaName[i];
+
+                if (processedContactNumber[i] != null && contactNumberIndex != -1)
+                    dt.Rows[i][contactNumberIndex] = processedContactNumber[i];
+
+                if (processedUserName[i] != null && userNameIndex != -1)
+                    dt.Rows[i][userNameIndex] = processedUserName[i];
+
+                if (processedInfluencerName[i] != null && influencerNameIndex != -1)
+                    dt.Rows[i][influencerNameIndex] = processedInfluencerName[i];
+
+                if (processedInfluencerContactNumber[i] != null && influencerContactNumberIndex != -1)
+                    dt.Rows[i][influencerContactNumberIndex] = processedInfluencerContactNumber[i];
+            }
+
+            dt.EndLoadData();
 
             if (Flag == 1)
             {
@@ -1203,12 +1306,7 @@ public partial class frmD2dSurveyExpansionRaj : System.Web.UI.Page
             {
                 ExportToCSVFile(dt, "Village Influencer Detail");
             }
-
         }
-
-
-
-
     }
 
     public void VillageSummaryAlter(int Flag)
@@ -3467,30 +3565,22 @@ public partial class frmD2dSurveyExpansionRaj : System.Web.UI.Page
         }
 
 
-
         SqlParameter[] cmdParameters = new SqlParameter[]
         {
             new SqlParameter("@Con",conditions),
-
-
         };
+
         DataTable dt = null;
 
 
         dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptSurveyExpansionRaj]", cmdParameters);
 
+        dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Mother Name", "Father Name", "Children guardian Name", "Mobile Number", "Grandfather Name", "Child Name", "Date of Birth", "Samagra ID", "User Name");
+
         if (dt.Rows.Count > 0)
         {
-
-
             ExportToCSVFile(dt, "ChildDetail");
-
-
         }
-
-
-
-
     }
 
     public void LoadChildEnrollment(int Flag)
@@ -3620,31 +3710,14 @@ public partial class frmD2dSurveyExpansionRaj : System.Web.UI.Page
         SqlParameter[] cmdParameters = new SqlParameter[]
         {
             new SqlParameter("@Con",conditions),
-
-
         };
-        DataTable dt = null;
 
+        DataTable dt = null;
 
         dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptHouseHoldRaJ]", cmdParameters);
 
-        if (dt.Rows.Count > 0)
-        {
-            // objMain.ReportDownload("Door to Door Survey", "Door to Door Survey", Convert.ToString(Session["username"]));
-
-            ExportToCSVFile(dt, "HouseholdDetail");
-
-
-        }
-
-
-
-
+        dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Mohalla", "HH No.", "Mother Name", "Father Name", "Children guardian Name", "Mobile Number", "Grandfather Name", "LandMark", "Latitude", "Longitude");
     }
-
-
-
-
 
     public static DataSet GetDataSet(string connString, CommandType cmdType, string cmdText, params SqlParameter[] cmdParameters)
     {

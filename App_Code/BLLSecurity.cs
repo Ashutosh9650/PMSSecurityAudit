@@ -1,7 +1,10 @@
-﻿using System;
-using System.Security.Cryptography;
+﻿using PMS.Crypto.Core;
+using System;
+using System.Data;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Web;
+
 
 /// <summary>
 /// Summary description for BLLSecurity
@@ -138,41 +141,193 @@ public class SqlInjection : IHttpModule//CommonBLL,
     }
 
     private readonly byte[] key = Encoding.UTF8.GetBytes("EGKeyAESAdityaEG"); //replace with your own key
-
-    public string Encrypt(string plainText)
+ 
+    public string MaskSensitiveData(string plainText, string maskType = "NAME")
     {
-        byte[] encryptedBytes;
-        using (Aes aesAlg = Aes.Create())
+        if (string.IsNullOrEmpty(plainText)) return plainText;
+
+        switch ((maskType ?? "").ToUpperInvariant())
         {
-            aesAlg.Key = key;
-            aesAlg.Mode = CipherMode.ECB;
-            aesAlg.Padding = PaddingMode.PKCS7;
+            case "MOBILE":
+            case "PHONE":
+            case "CONTACT":
+                return MaskMobile(plainText);
 
-            ICryptoTransform encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
-            byte[] plainBytes = Encoding.UTF8.GetBytes(plainText);
+            case "AADHAAR":
+            case "AADHAR":
+                return MaskAadhaar(plainText);
 
-            encryptedBytes = encryptor.TransformFinalBlock(plainBytes, 0, plainBytes.Length);
+            case "EMAIL":
+                return MaskEmail(plainText);
+
+            case "DOB":
+            case "DATE":
+                return MaskDob(plainText);
+
+            case "ID":
+            case "SSSMID":
+            case "SAMAGRA":
+                return MaskId(plainText);
+
+            case "NAME":
+            default:
+                return MaskName(plainText);
         }
-        return Convert.ToBase64String(encryptedBytes);
     }
 
-    public string Decrypt(string encryptedText)
+    #region Standard PII Masking Routines
+    private string MaskName(string name)
     {
-        byte[] decryptedBytes;
-        using (Aes aesAlg = Aes.Create())
+        string[] words = name.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+        for (int i = 0; i < words.Length; i++)
         {
-            aesAlg.Key = key;
-            aesAlg.Mode = CipherMode.ECB;
-            aesAlg.Padding = PaddingMode.PKCS7;
-
-            ICryptoTransform decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
-            byte[] encryptedBytes = Convert.FromBase64String(encryptedText);
-
-            decryptedBytes = decryptor.TransformFinalBlock(encryptedBytes, 0, encryptedBytes.Length);
+            string word = words[i];
+            if (word.Length > 1)
+            {
+                words[i] = word[0] + new string('*', word.Length - 1);
+            }
         }
-        return Encoding.UTF8.GetString(decryptedBytes);
+        return string.Join(" ", words);
     }
 
+    private string MaskMobile(string mobile)
+    {
+        string digits = Regex.Replace(mobile, @"\D", "");
+        if (digits.Length >= 10)
+        {
+            int len = digits.Length;
+            return digits.Substring(0, 2) + new string('*', len - 4) + digits.Substring(len - 2);
+        }
+        return MaskName(mobile);
+    }
 
+    private string MaskAadhaar(string aadhaar)
+    {
+        string digits = Regex.Replace(aadhaar, @"\D", "");
+        if (digits.Length == 12)
+        {
+            return "XXXX-XXXX-" + digits.Substring(8);
+        }
+        return "XXXX-XXXX-XXXX";
+    }
+
+    private string MaskEmail(string email)
+    {
+        if (!email.Contains("@")) return MaskName(email);
+
+        string[] parts = email.Split('@');
+        string username = parts[0];
+        string domain = parts[1];
+
+        if (username.Length > 2)
+        {
+            username = username[0] + new string('*', username.Length - 2) + username[username.Length - 1];
+        }
+        else if (username.Length > 0)
+        {
+            username = username[0] + "*";
+        }
+
+        return username + "@" + domain;
+    }
+
+    private string MaskDob(string dobStr)
+    {
+        if (dobStr.Length >= 10)
+        {
+            return "XX/XX/" + dobStr.Substring(dobStr.Length - 4);
+        }
+        return "XX/XX/XXXX";
+    }
+
+    private string MaskId(string idStr)
+    {
+        if (idStr.Length > 4)
+        {
+            return new string('*', idStr.Length - 4) + idStr.Substring(idStr.Length - 4);
+        }
+        return idStr;
+    }
+
+    #endregion
+
+    public string UdfDateDiffinYrMonDay(DateTime dateFrom, DateTime dateTo)
+    {
+        int years = dateTo.Year - dateFrom.Year;
+
+        if (dateFrom.AddYears(years) > dateTo)
+        {
+            years--;
+        }
+
+        return years.ToString();
+    }
+
+    public void ProcessRowAgeAndDob(DataRow row, string decryptedDOB)
+    {
+        DataTable dt = row.Table;
+        DateTime dobDate;
+
+        if (!string.IsNullOrEmpty(decryptedDOB) &&
+            decryptedDOB != "01/01/1900" &&
+            decryptedDOB != "1900-01-01" &&
+            DateTime.TryParse(decryptedDOB, out dobDate))
+        {
+            if (dt.Columns.Contains("DOB"))
+            {
+                string plainDobStr = dobDate.ToString("dd/MM/yyyy");
+            }
+
+            if (dt.Columns.Contains("EnrolmentDate") && row["EnrolmentDate"] != DBNull.Value && dt.Columns.Contains("Age"))
+            {
+                string enrolDateStr = row["EnrolmentDate"].ToString();
+                DateTime enrolmentDate;
+
+                string[] allowedFormats = {
+                      "dd/MM/yyyy",
+                      "dd-MM-yyyy HH:mm:ss",
+                      "dd/MM/yyyy HH:mm:ss",
+                      "yyyy-MM-dd HH:mm:ss"
+                };
+
+                if (!string.IsNullOrEmpty(enrolDateStr) &&
+                    DateTime.TryParseExact(enrolDateStr, allowedFormats, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out enrolmentDate))
+                {
+                    row["Age"] = UdfDateDiffinYrMonDay(dobDate, enrolmentDate);
+                }
+                else
+                {
+                    row["Age"] = "";
+                }
+            }
+        }
+        else
+        {
+            if (dt.Columns.Contains("DOB")) row["DOB"] = "";
+            if (dt.Columns.Contains("Age")) row["Age"] = "";
+        }
+    }
+
+    public string DecryptMatchingWithSessionMasking(string encryptedData, string fieldName, bool? applyOnField = true)
+    {
+        if (string.IsNullOrEmpty(encryptedData))
+            return encryptedData;
+
+        // First decrypt the data using matching key
+        string decryptedValue = CryptoService.Decrypt(encryptedData);
+
+        // Check if this field should be masked using session config
+        if (applyOnField.HasValue && applyOnField.Value)
+        {
+            Tuple<bool, string> maskingDetails = RoleMaskingConfig.Instance.GetMaskingDetails(fieldName);
+
+            if (maskingDetails.Item1)
+            {
+                return this.MaskSensitiveData(decryptedValue, maskingDetails.Item2);
+            }
+        }
+
+        return decryptedValue;
+    }
 }
-//}
+ 
