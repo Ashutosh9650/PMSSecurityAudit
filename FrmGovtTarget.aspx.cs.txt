@@ -165,7 +165,7 @@ public partial class FrmGovtTarget : System.Web.UI.Page
         conditions = "";
 
 
-        conditions = "StateCode ='" + ddlState.SelectedValue + "' and mst2District.FYear ='" + Session["FinYear"].ToString() + "'";
+        conditions = "StateCode ='" + ddlState.SelectedValue + "' and mst2District.FYear ='2026-2027'";
 
 
         objComman.BindDLL("mst2District", "DistrictCode,dbo.TitleCase(upper(DistrictName)) as DistrictName ", conditions, "DistrictName", "asc", ddlDistrict, "DistrictName", "DistrictCode", "Select");
@@ -358,8 +358,8 @@ public partial class FrmGovtTarget : System.Web.UI.Page
         // need to catch possible exceptions
         catch (Exception ex)
         {
-            //lbl_messages.Text = ex.ToString();
-            //ModalAlert.Show();
+            lbl_messages.Text = ex.ToString();
+            ModalAlert.Show();
 
         }
         finally
@@ -370,8 +370,8 @@ public partial class FrmGovtTarget : System.Web.UI.Page
     private void GenerateExcelData1()
     {
         OleDbConnection oledbConn = new OleDbConnection();
-        try
-        {
+        //try
+        //{
             // need to pass relative path after deploying on server
             string path = System.IO.Path.GetFullPath(Server.MapPath(FileUpload1.FileName));
             /* connection string  to work with excel file. HDR=Yes - indicates 
@@ -486,18 +486,18 @@ public partial class FrmGovtTarget : System.Web.UI.Page
             //}
 
 
-        }
+        //}
         // need to catch possible exceptions
-        catch (Exception ex)
-        {
-            lbl_messages.Text = ex.ToString();
-            ModalAlert.Show();
+        //catch (Exception ex)
+        //{
+        //    //lbl_messages.Text = ex.ToString();
+        //    //ModalAlert.Show();
 
-        }
-        finally
-        {
-            oledbConn.Close();
-        }
+        //}
+        //finally
+        //{
+        //    oledbConn.Close();
+        //}
     }
     private void GenerateExcelData()
     {
@@ -577,9 +577,7 @@ public partial class FrmGovtTarget : System.Web.UI.Page
         // need to catch possible exceptions
         catch (Exception ex)
         {
-            //lbl_messages.Text = ex.ToString();
-            //ModalAlert.Show();
-
+           
         }
         finally
         {

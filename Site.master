@@ -13,15 +13,15 @@
     <link rel="stylesheet" type="text/css" href="css/font-awesome.css" />
     <%-- <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />--%>
     <link rel="stylesheet" type="text/css" href="css/bootstrap-multiselect.css" />
-    <script type="text/javascript" src="js/jquery-2.1.0.js"></script>
-    <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script type="text/javascript" src="js/jquery-3.7.1.min.js"></script>
+    <script type="text/javascript" src="js/jquery-migrate-3.4.1.js"></script>
     <%--<script type="text/javascript" src="js/bootstrap.min.js"></script>--%>
-    <%--<script type="text/javascript" src="js/bootstrap.js"></script>--%>
+    <script type="text/javascript" src="js/bootstrap.js"></script>
     <script type="text/javascript" src="js/bootstrap-multiselect.js"></script>
 
    <%-- <link rel="stylesheet" type="text/css" href="css/oldcss/bootstrap.css" />--%>
    
-     <script type="text/javascript" src="css/oldcss/bootstrap.js"></script>
+   
 
 
 

@@ -183,8 +183,8 @@ public partial class FrmRetionDataUpload : System.Web.UI.Page
         // need to catch possible exceptions
         catch (Exception ex)
         {
-            //lbl_messages.Text = ex.ToString();
-            //ModalAlert.Show();
+           // lbl_messages.Text = ex.ToString();
+           
 
         }
         finally
