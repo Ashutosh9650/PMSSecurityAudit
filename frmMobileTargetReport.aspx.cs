@@ -16,6 +16,7 @@ public partial class frmMobileTargetReport : System.Web.UI.Page
     clsMain objMain = new clsMain();
     string H1 = "", H2 = "", H3 = "", H4 = "", H5 = "";
     Comman objComman = new Comman();
+    DataTableMaskingHelper dataTableMaskingHelper = new DataTableMaskingHelper();
 
     string conditions = "";
     protected void Page_Load(object sender, EventArgs e)
@@ -5875,9 +5876,6 @@ public partial class frmMobileTargetReport : System.Web.UI.Page
         {
             getBalsabhaCLusterWise(4);
         }
-
-
-
     }
     protected void BalsabaRawDataKG_Click(object sender, EventArgs e)
     {
@@ -5894,10 +5892,6 @@ public partial class frmMobileTargetReport : System.Web.UI.Page
         {
             getBalsabhaCLusterWiseNewReportKGBV(1);
         }
-
-
-
-
     }
     protected void BalsabaRawDataLifftt_Click(object sender, EventArgs e)
     {
@@ -5914,10 +5908,6 @@ public partial class frmMobileTargetReport : System.Web.UI.Page
         {
             getBalsabhaCLusterWiseNewReportKGBV(2);
         }
-
-
-
-
     }
 
     protected void BalsabaRawDataLifftt_Click1(object sender, EventArgs e)
@@ -5935,10 +5925,6 @@ public partial class frmMobileTargetReport : System.Web.UI.Page
         {
             getBalsabhaCLusterWiseNewReportKGBV(4);
         }
-
-
-
-
     }
     public void getBalsabhaCLusterWiseNewReportKGBV(Int32 Flag)
     {
@@ -6100,23 +6086,30 @@ public partial class frmMobileTargetReport : System.Web.UI.Page
             if (Flag == 1)
             {
                 // objMain.ReportDownload("Balsabha Report", "Balsabha- Child Registration", Convert.ToString(Session["username"]));
+
+                dataTableMaskingHelper.DecryptAndMaskDataTable(dataTable, true, "Child Name", "Father Name", "Contact No", "DOB");
+
                 ExportToCSVFile(dataTable, "KGBVChildRegistration");
             }
             if (Flag == 2)
             {
                 // objMain.ReportDownload("Balsabha Report", "LSE Attendance Detail", Convert.ToString(Session["username"]));
+
+                dataTableMaskingHelper.DecryptAndMaskDataTable(dataTable, true, "Child Name", "Father Name", "Contact No", "DOB");
+
                 ExportToCSVFile(dataTable, "KGBVAttendanceDetail");
             }
             if (Flag == 4)
             {
                 //  objMain.ReportDownload("Balsabha Report", "LSE Attendance Detail", Convert.ToString(Session["username"]));
+
+                dataTableMaskingHelper.DecryptAndMaskDataTable(dataTable, true, "Child Name", "Father Name", "Contact No", "DOB");
+
                 ExportToCSVFile(dataTable, "KGBVAssessmentDetail");
             }
         }
         GV_DynamicGrid2.DataSource = null;
         GV_DynamicGrid2.DataBind();
-
-
     }
     protected void Balsabasumll_Click(object sender, EventArgs e)
     {
@@ -6168,10 +6161,6 @@ public partial class frmMobileTargetReport : System.Web.UI.Page
         {
             getBalsabhaCLusterWiseNewReport(2);
         }
-
-
-
-
     }
     protected void BalsabaRawDataLiff_Click1(object sender, EventArgs e)
     {
@@ -6486,8 +6475,6 @@ public partial class frmMobileTargetReport : System.Web.UI.Page
         }
         GV_DynamicGrid2.DataSource = null;
         GV_DynamicGrid2.DataBind();
-
-
     }
 
     public void getBalsabhaCLusterWiseNewReportLiffSummry(Int32 Flag)
@@ -7072,28 +7059,38 @@ public partial class frmMobileTargetReport : System.Web.UI.Page
             if (Flag == 1)
             {
                 objMain.ReportDownload("Balsabha Report", "Balsabha- Child Registration", Convert.ToString(Session["username"]));
+
+                dataTableMaskingHelper.DecryptAndMaskDataTable(dataTable, true, "Child Name", "Father Name", "Contact No", "DOB");
+
                 ExportToCSVFile(dataTable, "BalsabhaChildRegistration");
             }
             if (Flag == 2)
             {
                 objMain.ReportDownload("Balsabha Report", "LSE Attendance Detail", Convert.ToString(Session["username"]));
+
+                dataTableMaskingHelper.DecryptAndMaskDataTable(dataTable, true, "Child Name", "Father Name", "Contact No", "DOB");
+
                 ExportToCSVFile(dataTable, "LSEAttendanceDetail");
             }
             if (Flag == 3)
             {
                 objMain.ReportDownload("Balsabha Report", "LSE Attendance Detail", Convert.ToString(Session["username"]));
+
+                dataTableMaskingHelper.DecryptAndMaskDataTable(dataTable, true, "Child Name", "Father Name", "Contact No", "DOB");
+
                 ExportToCSVFile(dataTable, "LSEAssessmentDetail");
             }
             if (Flag == 4)
             {
                 objMain.ReportDownload("Balsabha Report", "LSE Attendance Detail", Convert.ToString(Session["username"]));
+
+                dataTableMaskingHelper.DecryptAndMaskDataTable(dataTable, true, "Child Name", "Father Name", "Contact No", "DOB");
+
                 ExportToCSVFile(dataTable, "LSEAssessmentDetailScore");
             }
         }
         GV_DynamicGrid2.DataSource = null;
         GV_DynamicGrid2.DataBind();
-
-
     }
     public void getBalsabhaCLusterWiseNewReport(Int32 Flag)
     {
@@ -7245,7 +7242,6 @@ public partial class frmMobileTargetReport : System.Web.UI.Page
         {
             new SqlParameter("@Con",conditions ),
             new SqlParameter("@Flag",Flag),
-
         };
         DataTable dataTable = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "rptBalsabaNew", cmdParameters);
 
@@ -7255,16 +7251,25 @@ public partial class frmMobileTargetReport : System.Web.UI.Page
             if (Flag == 1)
             {
                 objMain.ReportDownload("Balsabha Report", "Balsabha- Child Registration", Convert.ToString(Session["username"]));
+
+                dataTableMaskingHelper.DecryptAndMaskDataTable(dataTable, true, "Child Name", "Father Name", "Contact No", "DOB");
+
                 ExportToCSVFile(dataTable, "BalsabhaChildRegistration");
             }
             if (Flag == 2)
             {
                 objMain.ReportDownload("Balsabha Report", "LSE Attendance Detail", Convert.ToString(Session["username"]));
+
+                dataTableMaskingHelper.DecryptAndMaskDataTable(dataTable, true, "Child Name", "Father Name", "Contact No", "DOB");
+
                 ExportToCSVFile(dataTable, "LSEAttendanceDetail");
             }
             if (Flag == 3)
             {
                 objMain.ReportDownload("Balsabha Report", "LSE Attendance Detail", Convert.ToString(Session["username"]));
+
+                dataTableMaskingHelper.DecryptAndMaskDataTable(dataTable, true, "Child Name", "Father Name", "Contact No", "DOB");
+
                 ExportToCSVFile(dataTable, "LSEAssessmentDetail");
             }
         }
@@ -7526,6 +7531,9 @@ public partial class frmMobileTargetReport : System.Web.UI.Page
         };
         DataTable dataTable = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "rptBalsaba", cmdParameters);
 
+        if (Flag == 4)
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dataTable, "User Name");
+
         ViewState["dt"] = dataTable;
         if (dataTable.Rows.Count > 0)
         {
@@ -7543,8 +7551,6 @@ public partial class frmMobileTargetReport : System.Web.UI.Page
         }
         GV_DynamicGrid2.DataSource = null;
         GV_DynamicGrid2.DataBind();
-
-
     }
     public void getSACLastMonthReport(Int32 Flag)
     {
@@ -7955,10 +7961,9 @@ public partial class frmMobileTargetReport : System.Web.UI.Page
 
         SqlParameter[] cmdParameters = new SqlParameter[]
         {
-
             new SqlParameter("@schoolCode", conditions1 + Con),
-        new SqlParameter("@Con", conditions1),
-        new SqlParameter("@schoolCodeAprove", schoolCodeAprove + Con),
+            new SqlParameter("@Con", conditions1),
+            new SqlParameter("@schoolCodeAprove", schoolCodeAprove + Con),
             new SqlParameter("@Fyear", ddlYear.SelectedItem.Text),
         };
         dtMain = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptActivitySACReportLastMonthAndCurrent2019]", cmdParameters);
@@ -9537,6 +9542,7 @@ public partial class frmMobileTargetReport : System.Web.UI.Page
 
         if (Flag == 2)
         {
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dataTable, "Employee Name");
 
             lblTotalCount.Text = dataTable.Rows.Count.ToString();
             ViewState["dt"] = dataTable;
@@ -9546,7 +9552,6 @@ public partial class frmMobileTargetReport : System.Web.UI.Page
             }
             else
             {
-
                 GV_DynamicGrid2.DataSource = dataTable;
                 GV_DynamicGrid2.DataBind();
 
@@ -9555,9 +9560,6 @@ public partial class frmMobileTargetReport : System.Web.UI.Page
             GV_DynamicGrid2.DataSource = null;
             GV_DynamicGrid2.DataBind();
         }
-
-
-
     }
     public void getreportRowDataBaseline(Int32 Flag)
     {
@@ -9718,16 +9720,18 @@ public partial class frmMobileTargetReport : System.Web.UI.Page
         {
             conditions += " and ActivityDate between('" + afromDate + "') and '" + aToDate + "'  ";
         }
+
         SqlParameter[] cmdParameters = new SqlParameter[]
         {
             new SqlParameter("@con", conditions),
-                    new SqlParameter("@Flag", Flag),
-                 new SqlParameter("@mYear",  ddlYear.SelectedValue),
+            new SqlParameter("@Flag", Flag),
+            new SqlParameter("@mYear",  ddlYear.SelectedValue),
         };
         DataTable dataTable = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptActivitySchoolRawData]", cmdParameters);
 
         if (Flag == 1)
         {
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dataTable, "Name of SMC President", "Classrooms");
 
             lblTotalCount.Text = dataTable.Rows.Count.ToString();
             ViewState["dt"] = dataTable;
@@ -9737,17 +9741,17 @@ public partial class frmMobileTargetReport : System.Web.UI.Page
             }
             else
             {
-
                 GV_DynamicGrid2.DataSource = dataTable;
                 GV_DynamicGrid2.DataBind();
-
                 return;
             }
             GV_DynamicGrid2.DataSource = null;
             GV_DynamicGrid2.DataBind();
         }
+
         if (Flag == 2)
         {
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dataTable, "Muhalla GSS", "Muhalla MM");
 
             lblTotalCount.Text = dataTable.Rows.Count.ToString();
             ViewState["dt"] = dataTable;
@@ -9769,7 +9773,6 @@ public partial class frmMobileTargetReport : System.Web.UI.Page
 
         if (Flag == 4)
         {
-
             lblTotalCount.Text = dataTable.Rows.Count.ToString();
             ViewState["dt"] = dataTable;
             if (dataTable.Rows.Count > 100)
@@ -9778,7 +9781,6 @@ public partial class frmMobileTargetReport : System.Web.UI.Page
             }
             else
             {
-
                 GV_DynamicGrid2.DataSource = dataTable;
                 GV_DynamicGrid2.DataBind();
 
@@ -9787,7 +9789,6 @@ public partial class frmMobileTargetReport : System.Web.UI.Page
             GV_DynamicGrid2.DataSource = null;
             GV_DynamicGrid2.DataBind();
         }
-
     }
 
     public void getreportRowData(Int32 Flag)
@@ -9990,14 +9991,14 @@ public partial class frmMobileTargetReport : System.Web.UI.Page
         SqlParameter[] cmdParameters = new SqlParameter[]
         {
             new SqlParameter("@con", conditions),
-                    new SqlParameter("@Flag", Flag),
-                    new SqlParameter("@mYear",  ddlYear.SelectedValue),
-
+            new SqlParameter("@Flag", Flag),
+            new SqlParameter("@mYear",  ddlYear.SelectedValue),
         };
         DataTable dataTable = GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptActivitySchoolRawData2023]", cmdParameters);
 
         if (Flag == 1)
         {
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dataTable, "Name of SMC President", "Classrooms");
 
             lblTotalCount.Text = dataTable.Rows.Count.ToString();
             ViewState["dt"] = dataTable;
@@ -10019,28 +10020,22 @@ public partial class frmMobileTargetReport : System.Web.UI.Page
             GV_DynamicGrid2.DataSource = null;
             GV_DynamicGrid2.DataBind();
         }
+
         if (Flag == 2)
         {
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dataTable, "Muhalla GSS", "Muhalla MM");
 
             lblTotalCount.Text = dataTable.Rows.Count.ToString();
             ViewState["dt"] = dataTable;
             if (dataTable.Rows.Count > 0)
             {
-                //ExporttoExcelNew(dataTable, "VillageActivityRawData");
-                ExportToCSVFile(dataTable, "VillageActivityRawData");
+                 ExportToCSVFile(dataTable, "VillageActivityRawData");
                 objMain.ReportDownload("Activity-Village Raw Data", "Activity Report", Convert.ToString(Session["username"]));
-
-                ///          ExportReportQuestion();
-
-                // ExportToCSVFile(dataTable, "VillageActivityRawData");
-
             }
             else
             {
-
                 GV_DynamicGrid2.DataSource = dataTable;
                 GV_DynamicGrid2.DataBind();
-
                 return;
             }
             GV_DynamicGrid2.DataSource = null;
@@ -10049,7 +10044,6 @@ public partial class frmMobileTargetReport : System.Web.UI.Page
 
         if (Flag == 3)
         {
-
             lblTotalCount.Text = dataTable.Rows.Count.ToString();
             ViewState["dt"] = dataTable;
             if (dataTable.Rows.Count > 0)
@@ -10069,6 +10063,7 @@ public partial class frmMobileTargetReport : System.Web.UI.Page
         }
         if (Flag == 5)
         {
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dataTable, "Latitude", "LatLong");
 
             lblTotalCount.Text = dataTable.Rows.Count.ToString();
             ViewState["dt"] = dataTable;
@@ -10089,6 +10084,7 @@ public partial class frmMobileTargetReport : System.Web.UI.Page
         }
         if (Flag == 6)
         {
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dataTable, "Muhalla GSS");
 
             lblTotalCount.Text = dataTable.Rows.Count.ToString();
             ViewState["dt"] = dataTable;
@@ -10111,7 +10107,7 @@ public partial class frmMobileTargetReport : System.Web.UI.Page
         }
         if (Flag == 7)
         {
-
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dataTable, "Muhalla MM");
             lblTotalCount.Text = dataTable.Rows.Count.ToString();
             ViewState["dt"] = dataTable;
             if (dataTable.Rows.Count > 0)
@@ -10134,6 +10130,7 @@ public partial class frmMobileTargetReport : System.Web.UI.Page
         }
         if (Flag == 8)
         {
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dataTable, "Member Name", "Mobile");
 
             lblTotalCount.Text = dataTable.Rows.Count.ToString();
             ViewState["dt"] = dataTable;
@@ -10143,7 +10140,6 @@ public partial class frmMobileTargetReport : System.Web.UI.Page
             }
             else
             {
-
                 GV_DynamicGrid2.DataSource = dataTable;
                 GV_DynamicGrid2.DataBind();
 
@@ -10154,6 +10150,7 @@ public partial class frmMobileTargetReport : System.Web.UI.Page
         }
         if (Flag == 9)
         {
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dataTable, "Member Name", "Mobile");
 
             lblTotalCount.Text = dataTable.Rows.Count.ToString();
             ViewState["dt"] = dataTable;
@@ -10163,7 +10160,6 @@ public partial class frmMobileTargetReport : System.Web.UI.Page
             }
             else
             {
-
                 GV_DynamicGrid2.DataSource = dataTable;
                 GV_DynamicGrid2.DataBind();
 
@@ -10536,10 +10532,10 @@ public partial class frmMobileTargetReport : System.Web.UI.Page
             conditions1 = conditions1 + " and  mst5Village.VillageCode in(" + ddlVillage + ") ";
         }
 
-
-
-
         dtMain = objMain.rptActivitySIPSummaryReport(conditions1 + Con, conditions1);
+
+
+
         ViewState["dt"] = dtMain;
         if (dtMain.Rows.Count > 0)
         {
@@ -11227,13 +11223,8 @@ public partial class frmMobileTargetReport : System.Web.UI.Page
         }
 
 
-
-
-        //dtMain = objMain.rptActivitySIPSummaryReport(conditions1 + Con, conditions1);
-
         SqlParameter[] cmdParameters = new SqlParameter[]
         {
-
             new SqlParameter("@Con", conditions1 + Con),
             new SqlParameter("@Flag", Flag),
         };
@@ -11241,15 +11232,6 @@ public partial class frmMobileTargetReport : System.Web.UI.Page
         ViewState["dt"] = dtMain;
         if (dtMain.Rows.Count > 0)
         {
-            //DataTable newDataTable = dtMain.Clone();
-            //DataTable dtn = dtMain.Clone();
-            //for (int i = 0; i < 3; i++)
-            //{
-            //    dtn.ImportRow(dtMain.Rows[i]);
-            //}
-
-            //GvSip.DataSource = dtMain;
-            //GvSip.DataBind();
             GvSip.Visible = false;
             string aprove = "";
             if (Convert.ToInt32(rblApprove.SelectedValue) == 1)
@@ -11265,17 +11247,12 @@ public partial class frmMobileTargetReport : System.Web.UI.Page
                 aprove = "IO";
             }
             GenerateExcelSAC(dtMain, aprove, Flag);
-
         }
         else
         {
             GV_DynamicGrid2.DataSource = null;
             GV_DynamicGrid2.DataBind();
         }
-
-
-
-
     }
 
 
@@ -16563,7 +16540,6 @@ public partial class frmMobileTargetReport : System.Web.UI.Page
         {
             if (dataTable.Rows.Count > 100)
             {
-
                 ExportToCSVFile(dataTable, "SACquarterStatus");
             }
             else
@@ -16576,8 +16552,6 @@ public partial class frmMobileTargetReport : System.Web.UI.Page
         }
         GV_DynamicGrid2.DataSource = null;
         GV_DynamicGrid2.DataBind();
-
-
     }
 
     public void AnnaualFCReport(Int32 Flag)
@@ -17874,30 +17848,25 @@ public partial class frmMobileTargetReport : System.Web.UI.Page
         SqlParameter[] cmdParameters = new SqlParameter[]
         {
             new SqlParameter("@con", conditions),
-                    new SqlParameter("@Flag", Flag),
-                    new SqlParameter("@mYear",  ddlYear.SelectedValue),
-
+            new SqlParameter("@Flag", Flag),
+            new SqlParameter("@mYear",  ddlYear.SelectedValue),
         };
         DataTable dataTable = GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptActivityVIllageRawDataPanchayat]", cmdParameters);
 
         if (Flag == 1)
         {
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dataTable, "Sarpanch/Pradhan Name", "Sarpanch/Pradhan Mobile Number", "Entry Done By Name");
 
             lblTotalCount.Text = dataTable.Rows.Count.ToString();
             ViewState["dt"] = dataTable;
             if (dataTable.Rows.Count > 0)
             {
-
-                /// objMain.ReportDownload("Activity-School Raw Data", "Activity Report", Convert.ToString(Session["username"]));
-
                 ExportToCSVFile(dataTable, "PanchayatMeetingReport");
             }
             else
             {
-
                 GV_DynamicGrid2.DataSource = dataTable;
                 GV_DynamicGrid2.DataBind();
-
                 return;
             }
             GV_DynamicGrid2.DataSource = null;
@@ -17905,23 +17874,16 @@ public partial class frmMobileTargetReport : System.Web.UI.Page
         }
         if (Flag == 2)
         {
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dataTable, "Mohalla", "Entry Done By Name");
 
             lblTotalCount.Text = dataTable.Rows.Count.ToString();
             ViewState["dt"] = dataTable;
             if (dataTable.Rows.Count > 0)
             {
-                //ExporttoExcelNew(dataTable, "VillageActivityRawData");
                 ExportToCSVFile(dataTable, "RatriChaupalReport");
-                //  objMain.ReportDownload("Activity-Village Raw Data", "Activity Report", Convert.ToString(Session["username"]));
-
-                ///          ExportReportQuestion();
-
-                // ExportToCSVFile(dataTable, "VillageActivityRawData");
-
             }
             else
             {
-
                 GV_DynamicGrid2.DataSource = dataTable;
                 GV_DynamicGrid2.DataBind();
 
@@ -17933,6 +17895,7 @@ public partial class frmMobileTargetReport : System.Web.UI.Page
 
         if (Flag == 3)
         {
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dataTable, "Entry Done By Name");
 
             lblTotalCount.Text = dataTable.Rows.Count.ToString();
             ViewState["dt"] = dataTable;
@@ -17942,7 +17905,6 @@ public partial class frmMobileTargetReport : System.Web.UI.Page
             }
             else
             {
-
                 GV_DynamicGrid2.DataSource = dataTable;
                 GV_DynamicGrid2.DataBind();
 
@@ -17951,7 +17913,5 @@ public partial class frmMobileTargetReport : System.Web.UI.Page
             GV_DynamicGrid2.DataSource = null;
             GV_DynamicGrid2.DataBind();
         }
-
-
     }
 }

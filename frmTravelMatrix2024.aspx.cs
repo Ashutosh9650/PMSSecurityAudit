@@ -24,6 +24,8 @@ public partial class frmTravelMatrix2024 : System.Web.UI.Page
     string flag = "";
     Password objPass = new Password();
     public DataTable dtUserDeatils;
+    DataTableMaskingHelper dataTableMaskingHelper = new DataTableMaskingHelper();
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -1911,38 +1913,23 @@ public partial class frmTravelMatrix2024 : System.Web.UI.Page
             if (Convert.ToInt32(ddlYear.SelectedValue) >= 2026)
             {
                 SqlParameter[] parm2 = new SqlParameter[]
-
-            {
-
+                {
                      new SqlParameter("@UserName", Convert.ToString(Session["FCcode"])),
                      new SqlParameter("@mMonth", ddlMonth.SelectedValue),
-                      new SqlParameter("@mYear",mYear),
-
-
-
-
-            };
-
+                     new SqlParameter("@mYear",mYear),
+                };
 
                 dtemployee = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "LoadEMpDetailsTravel", parm2);
-
+                dataTableMaskingHelper.DecryptAndMaskDataTable(dtemployee, "FristName", "Reporting Manager");
             }
             else
             {
                 SqlParameter[] parm2 = new SqlParameter[]
-
-                 {
-
+                {
                      new SqlParameter("@UserName", Convert.ToString(Session["FCcode"])),
                      new SqlParameter("@mMonth", ddlMonth.SelectedValue),
-                      new SqlParameter("@mYear",mYear),
-
-
-
-
-                 };
-
-
+                     new SqlParameter("@mYear",mYear),
+                };
                 dtemployee = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "LoadEMpDetailsTravel2025", parm2);
 
             }

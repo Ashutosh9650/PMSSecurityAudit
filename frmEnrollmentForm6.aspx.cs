@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PMS.Crypto.Core;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -19,14 +20,14 @@ public partial class frmEnrollmentForm6 : System.Web.UI.Page
     string flag = "";
     Password objPass = new Password();
     public DataTable dtUserDeatils;
+    SqlInjection sqlInjection = new SqlInjection();
+
     protected void Page_Load(object sender, EventArgs e)
     {
-
         if (!IsPostBack)
         {
             if (Convert.ToString(Session["username"]) != "")
             {
-
                 LoadYear();
                 LoadUserLeavel();
                 UserLevelFilter();
@@ -35,17 +36,14 @@ public partial class frmEnrollmentForm6 : System.Web.UI.Page
                 FillENrollment();
                 FillEduStauts();
                 ViewState["1"] = "ss";
-
-
             }
             else
             {
                 Response.Redirect("Login.aspx", false);
-
             }
-
         }
     }
+
     public int SaveDataSchool(string VillageCode, string SchoolCode, string SchoolCodeID, string Name, string Status, string Createdate, string CreateBy, string sysFlag, string DISECode, string SchoolLevel, string Govt_DiseCode, string Mangment)
     {
         int Icount = 0;
@@ -132,7 +130,21 @@ public partial class frmEnrollmentForm6 : System.Web.UI.Page
         string concatPvalstr = "";
         if (Session["UnquieId"].ToString().Length > 6)
         {
-            string[] Str = { ddlFC.SelectedValue, txtChildName.Text, txtFatherName.Text, txtmotherName.Text, dllClass.SelectedValue, txtSrno.Text, Convert.ToDateTime(txtBirth.Text).ToString("yyyy-MM-dd"), Convert.ToDateTime(txtDobDate.Text).ToString("yyyy-MM-dd"), ddlScat.SelectedValue, ddlGender.SelectedValue, txtSamgra.Text, txtHHNo.Text, ddlRemarks.SelectedValue, ddlEduationStatus.SelectedValue };
+            string unquieKey = Session["UnquieId"].ToString();
+
+            string encChildName = CryptoService.Encrypt(ChildName);
+            string encFathersName = CryptoService.Encrypt(FathersName);
+            string encMotherName = CryptoService.Encrypt(txtmotherName.Text);
+            string encChildDOB = CryptoService.Encrypt(ChildDOB);
+
+            string encSamgra = string.Empty;
+
+            if (!string.IsNullOrEmpty(txtSamgra.Text))
+            {
+                encSamgra = CryptoService.Encrypt(txtSamgra.Text);
+            }
+
+            string[] Str = { ddlFC.SelectedValue, encChildName, encFathersName, encMotherName, dllClass.SelectedValue, txtSrno.Text, Convert.ToDateTime(txtBirth.Text).ToString("yyyy-MM-dd"), encChildDOB, ddlScat.SelectedValue, ddlGender.SelectedValue, txtSamgra.Text, txtHHNo.Text, ddlRemarks.SelectedValue, ddlEduationStatus.SelectedValue };
 
             DataTable dt = ALLQueryinPage("", "", "", "", Session["UnquieId"].ToString(), "11");
             if (dt.Rows.Count > 0)
@@ -146,9 +158,9 @@ public partial class frmEnrollmentForm6 : System.Web.UI.Page
                         concatPvalstr = concatPvalstr + "," + dt.Rows[0][i].ToString();
                     }
                 }
-
             }
-            int Iocunt = SaveDataEnrolment(Session["UnquieId"].ToString(), ddlTbName.SelectedValue, ddlFC.SelectedValue, txtmotherName.Text, "", ddlVillage.SelectedValue, txtSrno.Text, ddlScat.SelectedValue, dllClass.SelectedValue, ddlYear.SelectedValue, ChildName, FathersName, ChildName, FathersName, Gender.ToString(), ddlSchool.SelectedValue, Convert.ToDateTime(Adminision).ToString("yyyy-MM-dd"), DoAv.ToString(), ChildDOB, Age.ToString(), AsDob.ToString("yyyy-MM-dd"), "1", DateTime.Now.ToString("yyyy-MM-dd"), Session["username"].ToString(), txtHHNo.Text, "2", txtSurveyVillage.Text, txtSamgra.Text, "11", "1", DateTime.Now.ToString("yyyy-MM-dd"), "0", DateTime.Now.ToString("yyyy-MM-dd"), ddlRemarks.SelectedValue, "U");
+
+            int Iocunt = SaveDataEnrolment(Session["UnquieId"].ToString(), ddlTbName.SelectedValue, ddlFC.SelectedValue, encMotherName, "", ddlVillage.SelectedValue, txtSrno.Text, ddlScat.SelectedValue, dllClass.SelectedValue, ddlYear.SelectedValue, encChildName, encFathersName, encChildName, encFathersName, Gender.ToString(), ddlSchool.SelectedValue, Convert.ToDateTime(Adminision).ToString("yyyy-MM-dd"), DoAv.ToString(), encChildDOB, Age.ToString(), AsDob.ToString("yyyy-MM-dd"), "1", DateTime.Now.ToString("yyyy-MM-dd"), Session["username"].ToString(), txtHHNo.Text, "2", txtSurveyVillage.Text, encSamgra, "11", "1", DateTime.Now.ToString("yyyy-MM-dd"), "0", DateTime.Now.ToString("yyyy-MM-dd"), ddlRemarks.SelectedValue, "U");
 
             int Iocunt1 = UpdateEnrolment(Session["UnquieId"].ToString(), Session["username"].ToString());
 
@@ -241,16 +253,26 @@ public partial class frmEnrollmentForm6 : System.Web.UI.Page
             }
 
             string UNICOde = objMain.Generate_RandomString(8);
-
-
             string UCOde = objComman.Generate_RandomString(8);
 
+            string encChildName = CryptoService.Encrypt(ChildName);
+            string encFathersName = CryptoService.Encrypt(FathersName);
+            string encMotherName = CryptoService.Encrypt(txtmotherName.Text);
+            string encChildDOB = CryptoService.Encrypt(ChildDOB);
 
-            int Iocunt = SaveDataEnrolment(UNICOde, ddlTbName.SelectedValue, ddlFC.SelectedValue, txtmotherName.Text, "", ddlVillage.SelectedValue, txtSrno.Text, ddlScat.SelectedValue, dllClass.SelectedValue, ddlYear.SelectedValue, ChildName, FathersName, ChildName, FathersName, Gender.ToString(), ddlSchool.SelectedValue, Convert.ToDateTime(Adminision).ToString("yyyy-MM-dd"), DoAv.ToString(), ChildDOB, Age.ToString(), AsDob.ToString("yyyy-MM-dd"), "1", DateTime.Now.ToString("yyyy-MM-dd"), Session["username"].ToString(), txtHHNo.Text, "2", txtSurveyVillage.Text, txtSamgra.Text, "11", "1", DateTime.Now.ToString("yyyy-MM-dd"), "0", DateTime.Now.ToString("yyyy-MM-dd"), ddlRemarks.SelectedValue, "I");
+            string encSamgra = string.Empty;
+
+            if (!string.IsNullOrEmpty(txtSamgra.Text))
+            {
+                encSamgra = CryptoService.Encrypt(txtSamgra.Text);
+            }
+
+
+            int Iocunt = SaveDataEnrolment(UNICOde, ddlTbName.SelectedValue, ddlFC.SelectedValue, encMotherName, "", ddlVillage.SelectedValue, txtSrno.Text, ddlScat.SelectedValue, dllClass.SelectedValue, ddlYear.SelectedValue, encChildName, encFathersName, encChildName, encFathersName, Gender.ToString(), ddlSchool.SelectedValue, Convert.ToDateTime(Adminision).ToString("yyyy-MM-dd"), DoAv.ToString(), encChildDOB, Age.ToString(), AsDob.ToString("yyyy-MM-dd"), "1", DateTime.Now.ToString("yyyy-MM-dd"), Session["username"].ToString(), txtHHNo.Text, "2", txtSurveyVillage.Text, encSamgra, "11", "1", DateTime.Now.ToString("yyyy-MM-dd"), "0", DateTime.Now.ToString("yyyy-MM-dd"), ddlRemarks.SelectedValue, "I");
 
 
 
-            int Iocunt1 = objMain.SaveDataD2d(UCOde, UNICOde, ddlVillage.SelectedValue, ssNo.ToString(), ddlScat.SelectedValue, ChildName, FathersName, Gender.ToString(), DoAv.ToString(), Convert.ToDateTime(ChildDOB).ToString("yyyy-MM-dd"), Age.ToString(), ddlSchool.SelectedValue, ddlEnroll.SelectedValue, txtHHNo.Text.Trim(), dllClass.SelectedValue, "3", "4", AsDob.ToString("yyyy-MM-dd"), DateTime.Now.ToString("yyyy-MM-dd"), Session["username"].ToString(), AsDob.ToString("yyyy-MM-dd"), UNICOde, "3", "1");
+            int Iocunt1 = objMain.SaveDataD2d(UCOde, UNICOde, ddlVillage.SelectedValue, ssNo.ToString(), ddlScat.SelectedValue, encChildName, encFathersName, Gender.ToString(), DoAv.ToString(), encChildDOB, Age.ToString(), ddlSchool.SelectedValue, ddlEnroll.SelectedValue, txtHHNo.Text.Trim(), dllClass.SelectedValue, "3", "4", AsDob.ToString("yyyy-MM-dd"), DateTime.Now.ToString("yyyy-MM-dd"), Session["username"].ToString(), AsDob.ToString("yyyy-MM-dd"), UNICOde, "3", "1");
 
 
 
@@ -2148,6 +2170,29 @@ public partial class frmEnrollmentForm6 : System.Web.UI.Page
 
         DataTable dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[LoadOnlineEnrollment2020]", parm1);
 
+        if (dt != null && dt.Rows.Count > 0)
+        {
+            foreach (DataRow row in dt.Rows)
+            {
+                string encryptionKey = row["UniqueChildCode"].ToString();
+
+                if (dt.Columns.Contains("ChildName") && row["ChildName"] != DBNull.Value)
+                    row["ChildName"] = sqlInjection.DecryptMatchingWithSessionMasking(row["ChildName"].ToString(), "ChildName");
+
+                if (dt.Columns.Contains("FathersName") && row["FathersName"] != DBNull.Value)
+                    row["FathersName"] = sqlInjection.DecryptMatchingWithSessionMasking(row["FathersName"].ToString(), "FathersName");
+
+                if (dt.Columns.Contains("DOB") && row["DOB"] != DBNull.Value)
+                {
+                    string encryptedDOB = row["DOB"].ToString();
+                    string decryptedDOB = sqlInjection.DecryptMatchingWithSessionMasking(encryptedDOB, "DOB", false);
+
+                    row["DOB"] = decryptedDOB;
+
+                    sqlInjection.ProcessRowAgeAndDob(row, decryptedDOB);
+                }
+            }
+        }
 
 
         if (dt.Rows.Count > 0)

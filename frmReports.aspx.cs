@@ -16,6 +16,8 @@ public partial class frmReports : System.Web.UI.Page
     string flag = "";
     Password objPass = new Password();
     public DataTable dtUserDeatils;
+    DataTableMaskingHelper dataTableMaskingHelper = new DataTableMaskingHelper();
+
     protected void Page_Load(object sender, EventArgs e)
     {
         lblTotalCount.Text = "";
@@ -429,13 +431,15 @@ public partial class frmReports : System.Web.UI.Page
         //    subject = ddlsubject.SelectedItem.Text;
         //}
         SqlParameter[] parm = new SqlParameter[]
-            {
-       new SqlParameter("@condition",  conditions),
-       new SqlParameter("@subject",  subject),
-        new SqlParameter("@flag",2),
-
-                 };
+        {
+            new SqlParameter("@condition",  conditions),
+            new SqlParameter("@subject",  subject),
+            new SqlParameter("@flag",2),
+        };
         DataTable dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[Get_CLT_Report_Data]", parm);
+
+        dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Student Name", "Class");
+
         ViewState["dt"] = dt;
         lblTotalCount.Text = dt.Rows.Count.ToString();
         GV_DynamicGrid.DataSource = null;
@@ -779,6 +783,18 @@ public partial class frmReports : System.Web.UI.Page
 
 
         DataTable dt = objMain.ReportMobileActivityStatus(conditions, ddlYear.SelectedValue.ToString());
+
+        if (Convert.ToInt32(ddlYear.SelectedValue) == 2017 || Convert.ToInt32(ddlYear.SelectedValue) == 2018)
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "House", "ChildName", "Father Name", "CurrentAge");
+        else if (Convert.ToInt32(ddlYear.SelectedValue) == 2019)
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Mauhalla", "House", "Child Name", "Father Name", "DOB", "SamgraID/GovtID", "Age");
+        else if (Convert.ToInt32(ddlYear.SelectedValue) == 2020)
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Mauhalla", "House", "Child Name", "Father Name", "DOB", "SamgraID/GovtID", "Mobile No", "Age", "Latitude", "Longitude", "Class");
+        else if (Convert.ToInt32(ddlYear.SelectedValue) == 2021)
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Mauhalla", "House", "Child Name", "Father Name", "DOB", "SamgraID/GovtID", "Mobile No", "Alternate Mobile Number", "Alternate mobile Owner Name", "Latitude", "Longitude", "Class");
+        else if (Convert.ToInt32(ddlYear.SelectedValue) == 2022)
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Mauhalla", "House", "Child Name", "Father Name", "DOB", "SamgraID/GovtID", "Mobile No", "Alternate Mobile Number", "Alternate mobile Owner Name", "Age");
+
         ViewState["ReportMobileActivityStatus"] = dt;
 
         GV_DynamicGrid.DataSource = null;
@@ -2284,13 +2300,19 @@ public partial class frmReports : System.Web.UI.Page
         }
 
         SqlParameter[] parm = new SqlParameter[]
-            {
-       new SqlParameter("@condition",  conditions),
-       new SqlParameter("@subject",  "0"),
-        new SqlParameter("@flag",flag),
+        {
+            new SqlParameter("@condition",  conditions),
+            new SqlParameter("@subject",  "0"),
+            new SqlParameter("@flag",flag),
+        };
 
-                 };
         DataTable dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "Get_CLT_Report_Data", parm);
+
+        if (flag == 3)
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Name of Sarpanch", "Mobile No. Sarpanch");
+        else if (flag == 4)
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Principal Name", "Principal Contact", "Teacher Name", "Teacher Contact");
+
         ViewState["villageschool"] = dt;
         lblTotalCount.Text = dt.Rows.Count.ToString();
         if (dt.Rows.Count > 0)

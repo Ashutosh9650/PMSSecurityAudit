@@ -17,7 +17,7 @@ public partial class frmAnnualReportNew : System.Web.UI.Page
     public bool vADD = false;
     public bool vVerify = false;
     public bool vDelete = false;
-
+    DataTableMaskingHelper dataTableMaskingHelper = new DataTableMaskingHelper();
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -5503,34 +5503,22 @@ public partial class frmAnnualReportNew : System.Web.UI.Page
         SqlParameter[] cmdParameters = new SqlParameter[]
         {
             new SqlParameter("@con", conditions),
-
-
         };
         DataTable dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptApproveStausPlan]", cmdParameters);
-        // DataTable dt = objMain.LoadAnnaulPlanRowData(conditions, Flag);
 
-
-
-
-
-
+        dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Employee Name");
 
         ViewState["SAC"] = dt;
         if (dt.Rows.Count > 0)
         {
             ExportToCSVFile(dt, "Approval Process Report");
-
         }
         else
         {
             GV_DynamicGrid.DataSource = null;
             GV_DynamicGrid.DataBind();
         }
-
-
-
-
-    }
+  }
 
     public void LoadAnnualSummary2023(int Flag)
     {
@@ -5649,11 +5637,10 @@ public partial class frmAnnualReportNew : System.Web.UI.Page
 
 
         SqlParameter[] cmdParameters = new SqlParameter[]
-    {
+        {
             new SqlParameter("@Con", conditions1),
-               new SqlParameter("@Con1", conditions),
-
-    };
+            new SqlParameter("@Con1", conditions),
+        };
         DataSet dt = SqlHelper.GetDataSet(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptAnnalualPlan2023Summary]", cmdParameters);
         // DataTable dt = objMain.LoadAnnaulPlanRowData(conditions, Flag);
 
@@ -6187,12 +6174,10 @@ public partial class frmAnnualReportNew : System.Web.UI.Page
         SqlParameter[] cmdParameters = new SqlParameter[]
         {
             new SqlParameter("@DistCode", conditions),
-                    new SqlParameter("@Flag", ddlGroup.SelectedValue)
+            new SqlParameter("@Flag", ddlGroup.SelectedValue)
         };
 
         DataTable dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptAnnualSummaryCluserWise]", cmdParameters);
-
-
 
         ViewState["D2dUser"] = dt;
 
@@ -6201,11 +6186,8 @@ public partial class frmAnnualReportNew : System.Web.UI.Page
         GV_DynamicGrid.DataBind();
 
         ViewState["1"] = 100;
-
-
-
-
     }
+
     public void LoadAnnualDataSummaryNew2021HHH(int Flag)
     {
 
@@ -6315,7 +6297,7 @@ public partial class frmAnnualReportNew : System.Web.UI.Page
         {
             new SqlParameter("@Con", conditions),
             new SqlParameter("@ConD", cond),
-                    new SqlParameter("@Group", ddlGroup.SelectedValue)
+            new SqlParameter("@Group", ddlGroup.SelectedValue)
         };
 
         DataTable dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptAnnualSummaryReport2021]", cmdParameters);
@@ -6469,8 +6451,8 @@ public partial class frmAnnualReportNew : System.Web.UI.Page
         {
             new SqlParameter("@Con", conditions),
             new SqlParameter("@ConD", cond),
-                    new SqlParameter("@Group", ddlGroup.SelectedValue),
-                        new SqlParameter("@Fyear", ddlYear.SelectedValue)
+            new SqlParameter("@Group", ddlGroup.SelectedValue),
+            new SqlParameter("@Fyear", ddlYear.SelectedValue)
         };
 
         DataTable dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptAnnualSummaryReport2023]", cmdParameters);
@@ -6505,9 +6487,6 @@ public partial class frmAnnualReportNew : System.Web.UI.Page
             GV_DynamicGrid.DataSource = dt;
             GV_DynamicGrid.DataBind();
         }
-
-
-
     }
     public void LoadAnnualDataSummaryNew(int Flag)
     {
@@ -7134,19 +7113,18 @@ public partial class frmAnnualReportNew : System.Web.UI.Page
             conditions += " and mst5Village.VillageCode in(" + ddlVillage + ") ";
         }
 
-
-
-
         SqlParameter[] cmdParameters = new SqlParameter[]
         {
             new SqlParameter("@Condition",conditions),
-         new SqlParameter("@Fyear",ddlYear.SelectedValue),
-
+            new SqlParameter("@Fyear",ddlYear.SelectedValue),
         };
         DataTable dt = null;
 
 
         dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptEnrollTargetD2dDetials]", cmdParameters);
+
+        dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Child Name", "Father Name", "Mother Name", "DOB");
+
         ViewState["D2dUser"] = dt;
 
         GV_DynamicGrid.Visible = true;

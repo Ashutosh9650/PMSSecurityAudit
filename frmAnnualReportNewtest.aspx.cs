@@ -17,7 +17,7 @@ public partial class frmAnnualReportNewtest : System.Web.UI.Page
     public bool vADD = false;
     public bool vVerify = false;
     public bool vDelete = false;
-
+    DataTableMaskingHelper dataTableMaskingHelper = new DataTableMaskingHelper();
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -1274,11 +1274,8 @@ public partial class frmAnnualReportNewtest : System.Web.UI.Page
         SqlParameter[] cmdParameters = new SqlParameter[]
         {
             new SqlParameter("@Con", conditions),
-             new SqlParameter("@Con1", conditions1),
-         new SqlParameter("@Dist",ddlDistrictNew ),
-
-
-
+            new SqlParameter("@Con1", conditions1),
+            new SqlParameter("@Dist",ddlDistrictNew ),
         };
 
         DataSet dt = null;
@@ -1291,16 +1288,9 @@ public partial class frmAnnualReportNewtest : System.Web.UI.Page
             dt = SqlHelper.GetDataSet(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptAnnaualPlanDataSummryDownloadFinal20252026]", cmdParameters);
         }
         else
-
         {
             dt = SqlHelper.GetDataSet(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptAnnaualPlanDataSummryDownloadFinal2024]", cmdParameters);
         }
-        // DataTable dt = objMain.LoadAnnaulPlanRowData(conditions, Flag);
-
-
-
-
-
 
 
         ViewState["SAC"] = dt;
@@ -1319,11 +1309,7 @@ public partial class frmAnnualReportNewtest : System.Web.UI.Page
                 objMain.ReportDownload("Annual Plan Target Sheet", "Annual Plan", Convert.ToString(Session["username"]));
                 MultipuExeclTrack2024();
             }
-
         }
-
-
-
     }
     protected void LnkAnnualPlan_OnClick(object sender, EventArgs e)
     {
@@ -5482,35 +5468,24 @@ public partial class frmAnnualReportNewtest : System.Web.UI.Page
 
         }
 
-
-
-
         SqlParameter[] cmdParameters = new SqlParameter[]
         {
             new SqlParameter("@con", conditions),
-
-
         };
         DataTable dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptApproveStausMasterPlan]", cmdParameters);
-        // DataTable dt = objMain.LoadAnnaulPlanRowData(conditions, Flag);
 
+        dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Employee Name");
 
         ViewState["SAC"] = dt;
         if (dt.Rows.Count > 0)
         {
-            //  objMain.ReportDownload("Approval Process Report", "Annual Plan", Convert.ToString(Session["username"]));
             ExportToCSVFile(dt, "Master Approval Process Report");
-
         }
         else
         {
             GV_DynamicGrid.DataSource = null;
             GV_DynamicGrid.DataBind();
         }
-
-
-
-
     }
     public void LoadAnnualDataDetailOD(int Flag)
     {
@@ -6157,18 +6132,13 @@ public partial class frmAnnualReportNewtest : System.Web.UI.Page
 
         }
 
-
-
-
         SqlParameter[] cmdParameters = new SqlParameter[]
         {
             new SqlParameter("@con", conditions),
-
-
         };
         DataTable dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptApproveStausPlan]", cmdParameters);
-        // DataTable dt = objMain.LoadAnnaulPlanRowData(conditions, Flag);
 
+        dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Employee Name");
 
         ViewState["SAC"] = dt;
         if (dt.Rows.Count > 0)
@@ -6182,10 +6152,6 @@ public partial class frmAnnualReportNewtest : System.Web.UI.Page
             GV_DynamicGrid.DataSource = null;
             GV_DynamicGrid.DataBind();
         }
-
-
-
-
     }
     public void LoadAnnualSummary2024(int Flag)
     {
@@ -6300,14 +6266,10 @@ public partial class frmAnnualReportNewtest : System.Web.UI.Page
             conditions1 += " and mstCluster.Blockcode in(" + ddlBlock + ") ";
         }
 
-
-
-
         SqlParameter[] cmdParameters = new SqlParameter[]
         {
             new SqlParameter("@Con", conditions1),
-               new SqlParameter("@Con1", conditions),
-
+            new SqlParameter("@Con1", conditions),
         };
         DataSet dt = null;
 
@@ -6320,15 +6282,9 @@ public partial class frmAnnualReportNewtest : System.Web.UI.Page
             dt = SqlHelper.GetDataSet(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptAnnalualPlan2025Summary]", cmdParameters);
         }
         else
-
         {
             dt = SqlHelper.GetDataSet(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptAnnalualPlan2024Summary]", cmdParameters);
         }
-
-
-
-
-
 
 
         ViewState["SAC"] = dt;
@@ -6347,7 +6303,6 @@ public partial class frmAnnualReportNewtest : System.Web.UI.Page
             }
         }
         else
-
         {
             if (dt.Tables[0].Rows.Count > 0 || dt.Tables[1].Rows.Count > 0)
             {
@@ -6360,11 +6315,6 @@ public partial class frmAnnualReportNewtest : System.Web.UI.Page
                 GV_DynamicGrid.DataBind();
             }
         }
-
-
-
-
-
     }
 
     public void LoadAnnualSummary2023(int Flag)
@@ -7301,6 +7251,9 @@ public partial class frmAnnualReportNewtest : System.Web.UI.Page
         if (Convert.ToInt32(ddlYear.SelectedValue) >= 2025)
         {
             dt = SqlHelper.GetDataSet(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptClusterAnaulSummaryNewAlte2025]", cmdParameters);
+
+
+
             Session["SACAlter"] = dt;
             if (dt.Tables[0].Rows.Count > 0)
             {
@@ -7312,7 +7265,6 @@ public partial class frmAnnualReportNewtest : System.Web.UI.Page
             GV_DynamicGrid.DataBind();
         }
         else
-
         {
             dt = SqlHelper.GetDataSet(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptClusterAnaulSummaryNewAlte2024]", cmdParameters);
             Session["SACAlter"] = dt;
@@ -9112,6 +9064,7 @@ public partial class frmAnnualReportNewtest : System.Web.UI.Page
         {
             conditions += " and V.VillageCode in(" + ddlVillage + ") ";
         }
+
         DataTable dt = null;
         if (Convert.ToInt32(ddlYear.SelectedValue) >= 2026)
         {
@@ -9126,10 +9079,9 @@ public partial class frmAnnualReportNewtest : System.Web.UI.Page
             dt = objMain.LoadMasterDataNew(conditions, 6);
         }
 
+        dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Teacher Name", "Teacher Mobile Number", "School Donor Name");
+
         ViewState["D2dUser"] = dt;
-
-
-
 
         GV_DynamicGrid.Visible = true;
         if (dt.Rows.Count > 0)
@@ -9141,10 +9093,6 @@ public partial class frmAnnualReportNewtest : System.Web.UI.Page
             GV_DynamicGrid.DataSource = null;
             GV_DynamicGrid.DataBind();
         }
-
-
-
-
     }
 
     public void LoadEnrollData(int Flag)
@@ -9284,13 +9232,15 @@ public partial class frmAnnualReportNewtest : System.Web.UI.Page
         SqlParameter[] cmdParameters = new SqlParameter[]
         {
             new SqlParameter("@Condition",conditions),
-         new SqlParameter("@Fyear",ddlYear.SelectedValue),
-
+            new SqlParameter("@Fyear",ddlYear.SelectedValue),
         };
         DataTable dt = null;
 
 
         dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptEnrollTargetD2dDetials]", cmdParameters);
+
+        dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Child Name", "Father Name", "Mother Name", "DOB");
+
         ViewState["D2dUser"] = dt;
 
         GV_DynamicGrid.Visible = true;
@@ -9304,9 +9254,5 @@ public partial class frmAnnualReportNewtest : System.Web.UI.Page
             GV_DynamicGrid.DataSource = null;
             GV_DynamicGrid.DataBind();
         }
-
-
-
-
     }
 }

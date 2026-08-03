@@ -17,7 +17,7 @@ public partial class frmGISApprovalReport : System.Web.UI.Page
     public bool vADD = false;
     public bool vVerify = false;
     public bool vDelete = false;
-
+    DataTableMaskingHelper dataTableMaskingHelper = new DataTableMaskingHelper();
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -8974,13 +8974,15 @@ public partial class frmGISApprovalReport : System.Web.UI.Page
         SqlParameter[] cmdParameters = new SqlParameter[]
         {
             new SqlParameter("@Condition",conditions),
-         new SqlParameter("@Fyear",ddlYear.SelectedValue),
-
+            new SqlParameter("@Fyear",ddlYear.SelectedValue),
         };
         DataTable dt = null;
 
 
         dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptEnrollTargetD2dDetials]", cmdParameters);
+
+        dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Child Name", "Father Name", "Mother Name", "DOB");
+
         ViewState["D2dUser"] = dt;
 
         GV_DynamicGrid.Visible = true;
@@ -8994,9 +8996,5 @@ public partial class frmGISApprovalReport : System.Web.UI.Page
             GV_DynamicGrid.DataSource = null;
             GV_DynamicGrid.DataBind();
         }
-
-
-
-
     }
 }

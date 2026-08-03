@@ -108,6 +108,15 @@ public partial class SiteNewMaster : System.Web.UI.MasterPage
 
     protected void btn_logout_Click(object sender, EventArgs e)
     {
+        try
+        {
+            RoleMaskingConfig.Instance.ClearSessionConfig();
+        }
+        catch (Exception maskingEx)
+        {
+            System.Diagnostics.Debug.WriteLine("Error clearing masking config: " + maskingEx.Message);
+        }
+
         Response.Cache.SetCacheability(HttpCacheability.NoCache);
         Response.Cache.SetExpires(DateTime.Now.AddSeconds(-1));
         Response.Cache.SetNoStore();

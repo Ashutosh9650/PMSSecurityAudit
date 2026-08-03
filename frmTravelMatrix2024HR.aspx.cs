@@ -32,6 +32,8 @@ public partial class frmTravelMatrix2024HR : System.Web.UI.Page
     string flag = "";
     Password objPass = new Password();
     public DataTable dtUserDeatils;
+    DataTableMaskingHelper dataTableMaskingHelper = new DataTableMaskingHelper();
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -1241,56 +1243,27 @@ public partial class frmTravelMatrix2024HR : System.Web.UI.Page
             if (Convert.ToInt32(ddlYear.SelectedValue) >= 2026)
             {
                 SqlParameter[] parm2 = new SqlParameter[]
-
-            {
-
+                {
                      new SqlParameter("@UserName", Username),
                      new SqlParameter("@mMonth", ddlMonth.SelectedValue),
-                      new SqlParameter("@mYear",mYear),
-
-
-
-
-            };
-
-
+                     new SqlParameter("@mYear",mYear),
+                };
                 dtemployee = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "LoadEMpDetailsTravel", parm2);
+                dataTableMaskingHelper.DecryptAndMaskDataTable(dtemployee, "FristName", "Reporting Manager");
 
             }
             else
             {
                 SqlParameter[] parm2 = new SqlParameter[]
-
-                 {
-
+                {
                      new SqlParameter("@UserName", Username),
                      new SqlParameter("@mMonth", ddlMonth.SelectedValue),
-                      new SqlParameter("@mYear",mYear),
-
-
-
-
-                 };
-
-
+                     new SqlParameter("@mYear",mYear),
+                };
                 dtemployee = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "LoadEMpDetailsTravel2025", parm2);
-
             }
 
-            // SqlParameter[] parm2 = new SqlParameter[]
-            //{
-
-            //  new SqlParameter("@UserName", Username),
-            //  new SqlParameter("@mMonth", ddlMonth.SelectedValue),
-            //   new SqlParameter("@mYear",mYear),
-
-
-            //};
-
-
-            // DataTable dtemployee = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "LoadEMpDetailsTravel", parm2);
-
-
+            
             if (dtemployee.Rows.Count > 0)
             {
 

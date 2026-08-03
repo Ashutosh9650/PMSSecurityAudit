@@ -17,6 +17,8 @@ public partial class SurveyExpansion : System.Web.UI.Page
     public bool vADD = false;
     public bool vVerify = false;
     public bool vDelete = false;
+    SqlInjection sqlInjection = new SqlInjection();
+    DataTableMaskingHelper dataTableMaskingHelper = new DataTableMaskingHelper();
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -1212,9 +1214,11 @@ public partial class SurveyExpansion : System.Web.UI.Page
         {
             dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptBalikaAndInfluencer]", cmdParameters);
         }
+
+        dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Probable Team Balika Name", "Contact Number", "Influencer Name", "Influencer Contact Number");
+
         if (dt.Rows.Count > 0)
         {
-
             if (Flag == 1)
             {
                 ExportToCSVFile(dt, "Team Balika Identification");
@@ -1223,12 +1227,7 @@ public partial class SurveyExpansion : System.Web.UI.Page
             {
                 ExportToCSVFile(dt, "Village Influencer Detail");
             }
-
         }
-
-
-
-
     }
 
     public void VillageSummaryAlter(int Flag)
@@ -3519,21 +3518,20 @@ public partial class SurveyExpansion : System.Web.UI.Page
         if (Convert.ToInt32(ddlYear.SelectedValue) >= 2024)
         {
             dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptSurveyExpansionRaj]", cmdParameters);
+
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Child Name", "Date of Birth", "SamagraId", "Mohalla", "HH No.", "Mother Name", "Father Name", "Children guardian Name", "Mobile Number", "Grandfather Name", "LandMark", "Age (as on 1st April)");
         }
         else
         {
             dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptSurveyExpansion]", cmdParameters);
+
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Child Name", "Date of Birth", "Mohalla", "HH No.", "Mother Name", "Father Name", "Children guardian Name", "Mobile Number", "Grandfather Name", "LandMark", "Age (as on 1st April)");
         }
+
         if (dt.Rows.Count > 0)
         {
-
             ExportToCSVFile(dt, "ChildDetail");
-
         }
-
-
-
-
     }
 
     public void LoadChildEnrollment(int Flag)
@@ -3663,9 +3661,8 @@ public partial class SurveyExpansion : System.Web.UI.Page
         SqlParameter[] cmdParameters = new SqlParameter[]
         {
             new SqlParameter("@Con",conditions),
-
-
         };
+
         DataTable dt = null;
 
         if (Convert.ToInt32(ddlYear.SelectedValue) >= 2024)
@@ -3677,20 +3674,8 @@ public partial class SurveyExpansion : System.Web.UI.Page
             dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptHouseHold]", cmdParameters);
         }
 
-        if (dt.Rows.Count > 0)
-        {
-            // objMain.ReportDownload("Door to Door Survey", "Door to Door Survey", Convert.ToString(Session["username"]));
-
-            ExportToCSVFile(dt, "HouseholdDetail");
-
-
-        }
-
-
-
-
+        dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Mohalla", "HH No.", "Mother Name", "Father Name", "Children guardian Name", "Mobile Number", "Grandfather Name", "LandMark", "Latitude", "Longitude");
     }
-
 
 
     public void LoadHouseHoldFamily(int Flag)
@@ -3820,9 +3805,8 @@ public partial class SurveyExpansion : System.Web.UI.Page
         SqlParameter[] cmdParameters = new SqlParameter[]
         {
             new SqlParameter("@Con",conditions),
-
-
         };
+
         DataTable dt = null;
 
         if (Convert.ToInt32(ddlYear.SelectedValue) >= 2024)
@@ -3830,19 +3814,7 @@ public partial class SurveyExpansion : System.Web.UI.Page
             dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptHouseHoldFamily]", cmdParameters);
         }
 
-
-        if (dt.Rows.Count > 0)
-        {
-            // objMain.ReportDownload("Door to Door Survey", "Door to Door Survey", Convert.ToString(Session["username"]));
-
-            ExportToCSVFile(dt, "HouseholdFamilyDetail");
-
-
-        }
-
-
-
-
+        dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Name", "Age", "Dob", "Mobile", "Latitude", "Longitude", "Mohalla", "HHNo", "Mother Name", "FatherName", "MotherName", "FatherName");
     }
 
     public static DataSet GetDataSet(string connString, CommandType cmdType, string cmdText, params SqlParameter[] cmdParameters)

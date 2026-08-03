@@ -8,6 +8,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using PMS.Crypto.Core;
 
 public partial class Frm_UserRegistration : System.Web.UI.Page
 {
@@ -63,27 +64,20 @@ public partial class Frm_UserRegistration : System.Web.UI.Page
     }
     protected void btnDelete_Click(object sender, EventArgs e)
     {
-
         int icount = objMain.DeleteUserActivity(txtuname.Text, 2);
         if (icount > 0)
         {
             ScriptManager.RegisterStartupScript(Page, GetType(), "Message", "<SCRIPT LANGUAGE='javascript'>alert('Delete Successfully')</script>", false);
-
         }
-
-
     }
+
     protected void OOD2Dtargetmet_Click(object sender, EventArgs e)
     {
         LinkButton bt = (LinkButton)sender;
         GridViewRow gvr = (GridViewRow)bt.NamingContainer;
         string values = (gvr.FindControl("lblCategory") as LinkButton).Text;
-
-
-        //}
-
-
     }
+
     protected void btnlnk_Click(object sender, EventArgs e)
     {
         string Msg = "";
@@ -92,25 +86,21 @@ public partial class Frm_UserRegistration : System.Web.UI.Page
         {
             iActivity = 2;
             Msg = "DeActivate";
-
         }
         else
         {
             iActivity = 1;
             Msg = "Activate";
-
         }
-
-
 
         Int32 Icoutn = 0;
         SqlParameter[] cmdParameters = new SqlParameter[]
         {
-            new SqlParameter("@level", txtuname.Text),
-            new SqlParameter("@ActiveStatus ", iActivity),
+           new SqlParameter("@level", txtuname.Text),
+           new SqlParameter("@ActiveStatus ", iActivity),
            new SqlParameter("@ActivemodifyBy ", Session["username"].ToString())
-
         };
+
         Icoutn = SqlHelper.ExecuteNonQuery(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "Sp__GetUseMaterDelete", cmdParameters);
 
         if (Icoutn > 0)
@@ -1257,6 +1247,7 @@ public partial class Frm_UserRegistration : System.Web.UI.Page
         }
         return ALlTestBoxValue;
     }
+
     protected void btn_Save_Click(object sender, EventArgs e)
     {
         string RVal = SetTextBoxFocusSelect(this.Page);
@@ -1342,9 +1333,6 @@ public partial class Frm_UserRegistration : System.Web.UI.Page
         {
             CreateDataTableUserDetails();
 
-
-
-
             foreach (ListItem item in lstDistrict.Items)
             {
                 if (item.Selected)
@@ -1355,7 +1343,6 @@ public partial class Frm_UserRegistration : System.Web.UI.Page
                     Item1["UserName"] = txtuname.Text.Trim();
 
                     Item1["DistrictCode"] = item.Value;
-
                 }
             }
 
@@ -1363,11 +1350,10 @@ public partial class Frm_UserRegistration : System.Web.UI.Page
             DataRow[] dr = dt.Select("DistrictCode='" + dtUserDeatils.Rows[0]["districtcode"].ToString() + "'");
             if (dr.Length > 0)
             {
-                //statecode = dr[0]["statecode"].ToString();
                 districtcode = dr[0]["DistrictCode"].ToString();
             }
-
         }
+
         Int32 UserType = 1;
         Int32 SerialNo = 0;
         if (ddllevel.SelectedIndex > 0)
@@ -1385,6 +1371,7 @@ public partial class Frm_UserRegistration : System.Web.UI.Page
                 statecode = ddlstate.SelectedValue.ToString();
             }
         }
+
         if (ddldistrict.SelectedIndex > 0)
         {
             districtcode = ddldistrict.SelectedValue.ToString();
@@ -1415,12 +1402,6 @@ public partial class Frm_UserRegistration : System.Web.UI.Page
             cpw = txtcpassword.Text;
         }
 
-        //if (ddlBaseDist.SelectedIndex > 0)
-        //{
-
-        //    districtcode = ddlBaseDist.SelectedValue.ToString();
-        //}
-
         if (rblExternal.Checked == true)
         {
             if (ViewState["Save"].ToString() == "Save")
@@ -1440,8 +1421,6 @@ public partial class Frm_UserRegistration : System.Web.UI.Page
 
         }
 
-
-
         bool checkpsw = false;
         string msgg = "";
 
@@ -1450,6 +1429,7 @@ public partial class Frm_UserRegistration : System.Web.UI.Page
         {
             checkpsw = Password.CheckPasswordAgainstPolicy(uname, pw);
         }
+
         if (checkpsw)
         {
             if (txtpw.Text.Trim() != "")
@@ -1457,22 +1437,17 @@ public partial class Frm_UserRegistration : System.Web.UI.Page
                 pw = Password.CreatePasswordHash(txtpw.Text);
             }
         }
-        if (ViewState["Save"].ToString() == "Save")
-        {
 
-        }
+        #region Mobile Secret Key
+        string secretKey = CryptoService.GenerateSecretKey();
+        string encryptedSecretKey = CryptoService.Encrypt(secretKey);
 
-
-        //if (chkvillage.SelectedIndex != -1)
-        //{
-        //    villagecode = GetCheckBoxListSelection(chkvillage);
-        //}
+        string andriodEncrypted = CryptoService.Encrypt(txtAndroidID.Text.Trim());
+        #endregion
 
 
         SqlParameter[] parm = new SqlParameter[]
-    {
-
-
+        {
             new SqlParameter("@userlevel", userlevel),
             new SqlParameter("@statecode", statecode),
             new SqlParameter("@district", districtcode),
@@ -1481,74 +1456,64 @@ public partial class Frm_UserRegistration : System.Web.UI.Page
             new SqlParameter("@uname", uname),
             new SqlParameter("@pw", pw),
             new SqlParameter("@staffid", staffid),
-             new SqlParameter("@flag", ViewState["Flag"].ToString()),
-             new SqlParameter("@uid",ViewState["id"].ToString()),
-              new SqlParameter("@UserType", UserType),
-               new SqlParameter("@SerialNo", SerialNo),
-                new SqlParameter("@fristName",FristName ),
-                 new SqlParameter("@LastName", LastName),
-                   new SqlParameter("@UserOnline", chkOnline.Checked),
-                     new SqlParameter("@UserOffline", chkOffline.Checked),
-                         new SqlParameter("@IMEINo", txtImi.Text),
-                           new SqlParameter("@CreateBy",  Session["username"].ToString()),
-                             new SqlParameter("@BaseDist",  ddlBaseDist.SelectedValue),
-                                new SqlParameter("@AndroidID", txtAndroidID.Text.Trim()),
+            new SqlParameter("@flag", ViewState["Flag"].ToString()),
+            new SqlParameter("@uid",ViewState["id"].ToString()),
+            new SqlParameter("@UserType", UserType),
+            new SqlParameter("@SerialNo", SerialNo),
+            new SqlParameter("@fristName",FristName ),
+            new SqlParameter("@LastName", LastName),
+            new SqlParameter("@UserOnline", chkOnline.Checked),
+            new SqlParameter("@UserOffline", chkOffline.Checked),
+            new SqlParameter("@IMEINo", txtImi.Text),
+            new SqlParameter("@CreateBy",  Session["username"].ToString()),
+            new SqlParameter("@BaseDist",  ddlBaseDist.SelectedValue),
+            //new SqlParameter("@AndroidID", txtAndroidID.Text.Trim()),
+            new SqlParameter("@AndroidID", andriodEncrypted),
+            new SqlParameter("@MobileSecretKey", encryptedSecretKey)
+        };
 
-      };
         int result = Convert.ToInt32(SqlHelper.ExecuteScaler(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "sp_insert_update_usermaster", parm));
+
         if (ViewState["id"].ToString() == null || ViewState["id"].ToString() == "")
         {
             ViewState["id"] = result.ToString();
         }
+        
         if (dtUserDeatils != null)
         {
             if (dtUserDeatils.Rows.Count > 0)
             {
                 SqlParameter[] parm1 = new SqlParameter[]
-                 {
+                {
+                    new SqlParameter("@UserName",  dtUserDeatils.Rows[0]["UserName"].ToString()),
+                    new SqlParameter("@DistrictCode",  dtUserDeatils.Rows[0]["DistrictCode"].ToString()),
+                    new SqlParameter("@Flag", 1),
+                };
 
-
-                            new SqlParameter("@UserName",  dtUserDeatils.Rows[0]["UserName"].ToString()),
-                            new SqlParameter("@DistrictCode",  dtUserDeatils.Rows[0]["DistrictCode"].ToString()),
-                              new SqlParameter("@Flag", 1),
-
-                   };
                 int result1 = Convert.ToInt32(SqlHelper.ExecuteScaler(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "InsertUsermultipleDist", parm1));
+
                 for (int r = 0; r < dtUserDeatils.Rows.Count; r++)
                 {
                     SqlParameter[] parm2 = new SqlParameter[]
-                         {
+                    {
+                        new SqlParameter("@UserName", dtUserDeatils.Rows[r]["UserName"].ToString()),
+                        new SqlParameter("@DistrictCode", dtUserDeatils.Rows[r]["DistrictCode"].ToString()),
+                        new SqlParameter("@Flag", 2),
+                    };
 
-
-                                    new SqlParameter("@UserName", dtUserDeatils.Rows[r]["UserName"].ToString()),
-                                    new SqlParameter("@DistrictCode", dtUserDeatils.Rows[r]["DistrictCode"].ToString()),
-                                      new SqlParameter("@Flag", 2),
-
-                           };
                     int result4 = Convert.ToInt32(SqlHelper.ExecuteScaler(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "InsertUsermultipleDist", parm2));
-
                 }
-
-
             }
         }
-        //if (result > 0)
-        //{
+
         ScriptManager.RegisterStartupScript(Page, GetType(), "Message", "<SCRIPT LANGUAGE='javascript'>alert('Saved Successfully')</script>", false);
 
         fillleftgrid();
-        //txtpw.Text = "";
-        //txtuname.Text = "";
-        //ddlblbock.SelectedIndex = -1;
-        //ddlstate.SelectedIndex = -1;
 
-        //}
         if (ViewState["Save"].ToString() == "Save")
         {
             ViewState["Save"] = "Update";
         }
-
-
     }
     protected void Txtuser_TextChanged(object sender, EventArgs e)
     {

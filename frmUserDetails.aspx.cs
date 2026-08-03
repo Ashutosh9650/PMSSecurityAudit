@@ -17,6 +17,8 @@ public partial class frmUserDetails : System.Web.UI.Page
     string flag = "";
     Password objPass = new Password();
     public DataTable dtUserDeatils;
+    DataTableMaskingHelper dataTableMaskingHelper = new DataTableMaskingHelper();
+
     protected void Page_Load(object sender, EventArgs e)
     {
         lblTotalCount.Text = "";
@@ -1305,13 +1307,15 @@ public partial class frmUserDetails : System.Web.UI.Page
         //    subject = ddlsubject.SelectedItem.Text;
         //}
         SqlParameter[] parm = new SqlParameter[]
-            {
-       new SqlParameter("@condition",  conditions),
-       new SqlParameter("@subject",  subject),
-        new SqlParameter("@flag",2),
-
-                 };
+        {
+            new SqlParameter("@condition",  conditions),
+            new SqlParameter("@subject",  subject),
+            new SqlParameter("@flag",2),
+        };
         DataTable dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[Get_CLT_Report_Data]", parm);
+
+        dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Student Name", "Class");
+
         ViewState["dt"] = dt;
         lblTotalCount.Text = dt.Rows.Count.ToString();
         GV_DynamicGrid.DataSource = null;
@@ -1974,6 +1978,16 @@ public partial class frmUserDetails : System.Web.UI.Page
             }
         }
         DataTable dt = objMain.LoadMasterDataNew(conditions, Flag);
+
+        if (Flag == 1)
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "TB Name", "Father Name", "Mother Name", "Date of Birth", "Contact No", "Alternate Mobile Number", "Name of Employee");
+        else if (Flag == 0)
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Teacher Name", "Teacher Mobile Number", "School Donor Name");
+        else if (Flag == 3)
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "TBName");
+        else if (Flag == 9)
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Employee Name", "Email", "Contact No");
+
         ViewState["D2dUser"] = dt;
 
         GV_DynamicGrid.DataSource = null;
@@ -2255,26 +2269,23 @@ public partial class frmUserDetails : System.Web.UI.Page
             string FristCon = conditions + conditionsCr;
 
             DataTable dt = objMain.ReportD2dAllReport(FristCon, 1);
+
             if (dt.Rows.Count > 0)
             {
+                dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Mauhalla", "House", "ChildName", "FathersName", "Mother Name", "Grandfather Name", "Contact Number", "Date of Birth", "Guardian Name", "Surveyor Name", "Latitude", "Longitude", "Age");
+
                 gvD2d.Visible = true;
                 ViewState["D2dAllData"] = dt;
                 lblTotalCount.Text = (dt.Rows.Count).ToString();
                 if (dt.Rows.Count > 10000)
                 {
-
                     ExportToCSVFile(dt, "D2DRawData");
-                    //  btnCSV_Click(LinkButton5, null);
                 }
                 else
                 {
-
                     gvD2d.DataSource = dt;
                     gvD2d.DataBind();
                 }
-
-
-
             }
             else
             {
@@ -2316,6 +2327,8 @@ public partial class frmUserDetails : System.Web.UI.Page
             DataTable dt = objMain.ReportD2dAllReport(FristCon, 2);
             if (dt.Rows.Count > 0)
             {
+                dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Mauhalla", "House", "ChildName", "FathersName", "Mother Name", "Grandfather Name", "Contact Number", "Date of Birth", "Age");
+
                 gvD2d.Visible = true;
                 ViewState["OutD2d"] = dt;
                 lblTotalCount.Text = (dt.Rows.Count).ToString();
@@ -2533,6 +2546,9 @@ public partial class frmUserDetails : System.Web.UI.Page
             conditions += "  and I_Fyear = '" + ddlYear.SelectedItem.Text + "' ";
         }
         DataTable dt = objMain.ReportD2dAllReport(conditions, 3);
+
+        dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "HHNo", "ChildName", "FatherName", "Age", "Migration_Place", "Permanent_Add");
+
         ViewState["D2dUser"] = dt;
 
         GV_DynamicGrid.DataSource = null;
@@ -4276,6 +4292,19 @@ public partial class frmUserDetails : System.Web.UI.Page
 
 
         DataTable dt = objMain.ReportMobileActivityStatus(conditions, ddlYear.SelectedValue.ToString());
+
+        if (Convert.ToInt32(ddlYear.SelectedValue) == 2017 || Convert.ToInt32(ddlYear.SelectedValue) == 2018)
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "House", "ChildName", "Father Name", "CurrentAge");
+        else if (Convert.ToInt32(ddlYear.SelectedValue) == 2019)
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Mauhalla", "House", "Child Name", "Father Name", "DOB", "SamgraID/GovtID", "Age");
+        else if (Convert.ToInt32(ddlYear.SelectedValue) == 2020)
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Mauhalla", "House", "Child Name", "Father Name", "DOB", "SamgraID/GovtID", "Mobile No", "Age", "Latitude", "Longitude", "Class");
+        else if (Convert.ToInt32(ddlYear.SelectedValue) == 2021)
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Mauhalla", "House", "Child Name", "Father Name", "DOB", "SamgraID/GovtID", "Mobile No", "Alternate Mobile Number", "Alternate mobile Owner Name", "Latitude", "Longitude", "Class");
+        else if (Convert.ToInt32(ddlYear.SelectedValue) == 2022)
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Mauhalla", "House", "Child Name", "Father Name", "DOB", "SamgraID/GovtID", "Mobile No", "Alternate Mobile Number", "Alternate mobile Owner Name", "Age");
+
+
         ViewState["ReportMobileActivityStatus"] = dt;
 
         GV_DynamicGrid.DataSource = null;

@@ -17,6 +17,8 @@ public partial class frmReportD2dSurvey : System.Web.UI.Page
     public bool vADD = false;
     public bool vVerify = false;
     public bool vDelete = false;
+    DataTableMaskingHelper dataTableMaskingHelper = new DataTableMaskingHelper();
+
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -1567,41 +1569,34 @@ public partial class frmReportD2dSurvey : System.Web.UI.Page
 
             SqlParameter[] cmdParameters = new SqlParameter[]
             {
-            new SqlParameter("@Con",conditions),
-            new SqlParameter("@Fyear",ddlYear.SelectedValue),
-
-
+                new SqlParameter("@Con",conditions),
+                new SqlParameter("@Fyear",ddlYear.SelectedValue),
             };
 
-
-
             dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptDtdSurvey2026]", cmdParameters);
+
+            if (Convert.ToInt32(ddlYear.SelectedValue) == 2026)
+                dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Mohalla", "House", "Mobile No.", "Mother Name", "Child Name", "Father Name", "DOB", "Age", "Migration", "Latitude", "Longitude");
+            else
+                dataTableMaskingHelper.DecryptAndMaskDataTable(dt, true, "Mohalla", "House", "Mobile No.", "Mother Name", "Child Name", "Father Name", "DOB", "Age", "Migration", "Latitude", "Longitude");
         }
         else
         {
             SqlParameter[] cmdParameters = new SqlParameter[]
             {
-            new SqlParameter("@Con",conditions),
-
-
+                new SqlParameter("@Con",conditions),
             };
 
-
-
             dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptDtdSurvey]", cmdParameters);
+
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, true, "Mohalla", "House", "Mobile No.", "Mother Name", "Child Name", "Father Name", "DOB", "Latitude", "Longitude");
         }
+
         if (dt.Rows.Count > 0)
         {
             objMain.ReportDownload("Door to Door Survey", "Door to Door Survey", Convert.ToString(Session["username"]));
-
             ExportToCSVFile(dt, "DoortoDoorSurvey");
-
-
         }
-
-
-
-
     }
 
 
@@ -2128,16 +2123,10 @@ public partial class frmReportD2dSurvey : System.Web.UI.Page
 
         if (dt.Tables[0].Rows.Count > 0)
         {
-
+            //dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "FristName");
 
             MultipuExeclTrackFinal2023(dt);
-
-
         }
-
-
-
-
     }
 
 

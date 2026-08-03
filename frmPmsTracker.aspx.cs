@@ -17,6 +17,7 @@ public partial class frmPmsTracker : System.Web.UI.Page
     public bool vADD = false;
     public bool vVerify = false;
     public bool vDelete = false;
+    DataTableMaskingHelper dataTableMaskingHelper = new DataTableMaskingHelper();
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -1139,14 +1140,13 @@ public partial class frmPmsTracker : System.Web.UI.Page
         {
             dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "rptEnrollCVReportAprove", cmdParameters);
         }
+
         if (dt.Rows.Count > 0)
         {
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Enr_Child Name", "CV_Child Name", "Enr_MotherName", "CV_MotherName", "Enr_Father Name", "CV_Father Name", "Enr_DOB", "CV_DOB");
+
             ExportToCSVFile(dt, "CourseCorrectionDetail");
         }
-
-
-
-
     }
 
 
@@ -1776,13 +1776,15 @@ public partial class frmPmsTracker : System.Web.UI.Page
         SqlParameter[] cmdParameters = new SqlParameter[]
         {
             new SqlParameter("@condtion",conditions),
-                new SqlParameter("@Year",ddlYear.SelectedValue),
-
+            new SqlParameter("@Year",ddlYear.SelectedValue),
         };
+
         DataTable dt = null;
 
 
         dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[ReportEnrollDeatilsmatachingContact]", cmdParameters);
+
+        dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "HHNo", "Enrolment Child Name", "MotherName", "Father Name", "DOB", "Contact DOB", "Contact Child Name", "Contact Father Name", "Samagra ID", "D2D Child Name", "D2D MotherName", "D2D Father Name", "Latitude", "Longitude");
 
         if (dt.Rows.Count > 0)
         {
@@ -1815,10 +1817,6 @@ public partial class frmPmsTracker : System.Web.UI.Page
                 ExportToCSVFile(dt, "DiscrepanciesfromContacttoEnrolment");
             }
         }
-
-
-
-
     }
 
     public void LoadChildEnrollmentFuzzy(int Flag)
@@ -1965,13 +1963,26 @@ public partial class frmPmsTracker : System.Web.UI.Page
         SqlParameter[] cmdParameters = new SqlParameter[]
         {
             new SqlParameter("@condtion",conditions),
-                new SqlParameter("@Year",ddlYear.SelectedValue),
-
+            new SqlParameter("@Year",ddlYear.SelectedValue),
         };
+
         DataTable dt = null;
 
-
         dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[ReportEnrollDeatilsNewFrom2021Fuzzmataching]", cmdParameters);
+
+        dataTableMaskingHelper.DecryptAndMaskDataTable(dt, true, "HHNo", "Enrolment Child Name", "D2D Child Name", "MotherName", "D2D MotherName", "Father Name", "D2D Father Name", "DOB", "Contact DOB", "Contact Child Name", "Contact Father Name", "Samagra ID", "Latitude", "Longitude");
+
+
+        if (dt.Columns.Contains("EnrolmentDate"))
+        {
+            dt.Columns.Remove("EnrolmentDate");
+        }
+        if (dt.Columns.Contains("UniqueChildCode"))
+        {
+            dt.Columns.Remove("UniqueChildCode");
+        }
+
+
 
         if (dt.Rows.Count > 0)
         {
@@ -1982,10 +1993,7 @@ public partial class frmPmsTracker : System.Web.UI.Page
                 {
                     if (item.Selected)
                     {
-
                         Dname += "'" + item.Text + "'" + ",";
-
-
                     }
                 }
 
@@ -2004,11 +2012,8 @@ public partial class frmPmsTracker : System.Web.UI.Page
                 ExportToCSVFile(dt, "EnrollmentFuzzyMatching");
             }
         }
-
-
-
-
     }
+
     public void LoadChildEnrollment(int Flag)
     {
         string conditions = "";
@@ -2155,13 +2160,33 @@ public partial class frmPmsTracker : System.Web.UI.Page
         SqlParameter[] cmdParameters = new SqlParameter[]
         {
             new SqlParameter("@condtion",conditions),
-                new SqlParameter("@Year",ddlYear.SelectedValue),
-
+            new SqlParameter("@Year",ddlYear.SelectedValue),
         };
         DataTable dt = null;
 
         dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[ReportEnrollDeatilsNewFrom2021]", cmdParameters);
 
+        if (Convert.ToInt32(ddlYear.SelectedValue) == 2026)
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Enrolment Child Name", "MotherName", "Father Name", "DOB", "Contact DOB", "Contact Child Name", "Contact Father Name", "Samagra ID", "HHNo", "D2D Child Name", "D2D Mother Name", "D2D Father Name", "Latitude", "Longitude", "AgeAson");
+        else if (Convert.ToInt32(ddlYear.SelectedValue) == 2025)
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, true, "Enrolment Child Name", "MotherName", "Father Name", "DOB", "Contact DOB", "Contact Child Name", "Contact Father Name", "Samagra ID", "HHNo", "D2D Child Name", "D2D Mother Name", "D2D Father Name", "Latitude", "Longitude");
+        else if (Convert.ToInt32(ddlYear.SelectedValue) == 2024)
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, true, "Enrolment Child Name", "MotherName", "Father Name", "DOB", "Contact DOB", "Contact Child Name", "Contact Father Name", "Samagra ID", "HHNo", "D2D Child Name", "D2D Mother Name", "D2D Father Name", "Latitude", "Longitude");
+        else if (Convert.ToInt32(ddlYear.SelectedValue) == 2023)
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, true, "Enrolment Child Name", "MotherName", "Father Name", "DOB", "Contact Child Name", "Contact Father Name", "Samagra ID", "HHNo", "D2D Child Name", "D2D Mother Name", "D2D Father Name", "Latitude", "Longitude");
+        else if (Convert.ToInt32(ddlYear.SelectedValue) == 2022)
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, true, "Enrolment Child Name", "MotherName", "Father Name", "DOB", "Contact Child Name", "Contact Father Name", "Samagra ID", "HHNo", "D2D Child Name", "D2D Mother Name", "D2D Father Name", "Latitude", "Longitude");
+        else if (Convert.ToInt32(ddlYear.SelectedValue) == 2021)
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, true, "Enrolment Child Name", "MotherName", "Father Name", "DOB", "Contact Child Name", "Contact Father Name", "Samagra ID", "HHNo", "D2D Child Name", "D2D Mother Name", "D2D Father Name");
+        else
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, true, "Enrolment Child Name", "MotherName", "Father Name", "DOB", "Contact Child Name", "Contact Father Name", "Samagra ID", "HHNo", "D2D Child Name", "D2D Mother Name", "D2D Father Name");
+
+
+        if (dt.Columns.Contains("EnrolmentDate"))
+        {
+            dt.Columns.Remove("EnrolmentDate");
+        }
+    
         if (dt.Rows.Count > 0)
         {
             objMain.ReportDownload("Enrolment Details", "Enrolment trackers", Convert.ToString(Session["username"]));
@@ -2172,10 +2197,7 @@ public partial class frmPmsTracker : System.Web.UI.Page
                 {
                     if (item.Selected)
                     {
-
                         Dname += "'" + item.Text + "'" + ",";
-
-
                     }
                 }
 
@@ -2194,169 +2216,6 @@ public partial class frmPmsTracker : System.Web.UI.Page
                 ExportToCSVFile(dt, "EnrollmentDetails");
             }
         }
-        //}
-        //if (Convert.ToInt32(ddlYear.SelectedValue) >= 2023)
-        //{
-        //    // dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[ReportEnrollDeatilsNewFrom2021]", cmdParameters);
-
-        //    dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[ReportEnrollDeatilsNewFrom2023]", cmdParameters);
-        //}
-        //else
-        //{
-        //    dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[ReportEnrollDeatilsNewFrom2021]", cmdParameters);
-        //}
-
-        //else
-        //{
-        //     conditions = "";
-        //     ddlBlock = "";
-        //     ddlDistrict = "";
-        //     ddlPhan = "";
-        //     ddlVillage = "";
-        //     ddlStatecode = "";
-        //    foreach (ListItem item in ChkState.Items)
-        //    {
-        //        if (item.Selected)
-        //        {
-
-        //            ddlStatecode += "'" + item.Text.ToUpper() + "'" + ",";
-        //        }
-        //    }
-
-        //    if (ddlStatecode.Length > 0)
-        //    {
-        //        ddlStatecode = ddlStatecode.Substring(0, ddlStatecode.LastIndexOf(","));
-        //    }
-        //    foreach (ListItem item in chkDistrict.Items)
-        //    {
-        //        if (item.Selected)
-        //        {
-
-        //            ddlDistrict += "'" + item.Text.ToUpper() + "'" + ",";
-
-
-        //        }
-        //    }
-
-        //    if (ddlDistrict.Length > 0)
-        //    {
-        //        ddlDistrict = ddlDistrict.Substring(0, ddlDistrict.LastIndexOf(","));
-        //    }
-        //    foreach (ListItem item in chkBlock.Items)
-        //    {
-        //        if (item.Selected)
-        //        {
-
-        //            ddlBlock += "'" + item.Text.ToUpper() + "'" + ",";
-
-
-        //        }
-        //    }
-
-        //    if (ddlBlock.Length > 0)
-        //    {
-        //        ddlBlock = ddlBlock.Substring(0, ddlBlock.LastIndexOf(","));
-        //    }
-
-        //    foreach (ListItem item in ddlPanchayat.Items)
-        //    {
-        //        if (item.Selected)
-        //        {
-
-        //            ddlPhan += "'" + item.Text.ToUpper() + "'" + ",";
-
-
-        //        }
-        //    }
-
-        //    if (ddlPhan.Length > 0)
-        //    {
-        //        ddlPhan = ddlPhan.Substring(0, ddlPhan.LastIndexOf(","));
-        //    }
-        //    foreach (ListItem item in chkVillage.Items)
-        //    {
-        //        if (item.Selected)
-        //        {
-
-        //            ddlVillage += "'" + item.Value + "'" + ",";
-
-
-        //        }
-        //    }
-
-        //    if (ddlVillage.Length > 0)
-        //    {
-        //        ddlVillage = ddlVillage.Substring(0, ddlVillage.LastIndexOf(","));
-        //    }
-
-
-        //    string sFileDir = Server.MapPath(Comman.GetImagePath("EnrolmentDetailsPath") + "/";
-        //    string path = sFileDir + "EnrolmentDetails" + ddlYear.SelectedItem.Text + ".csv";
-        //    string FileName = "EnrolmentDetails" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".csv";
-        //    string path1 = sFileDir + FileName;
-        //    string CSVFNAME = "EnrolmentDetails" + DateTime.Now.ToString("yyyyMMddHHmmss");
-
-        //    string inputFilePath = path;
-
-        //    #region Filter and Position
-        //    string filterValue1 = ddlYear.SelectedItem.Text; // Replace with your filter value
-        //    string filterValue2 = ddlStatecode; // Replace with another filter value
-        //    string filterValue3 = ddlDistrict;
-        //    string filterValue4 = ddlBlock;
-        //    string filterValue5 = ddlPhan;
-        //    string filterValue6 = "";
-        //    if (ddlGender.SelectedItem.Text.ToString() == "----All----")
-        //    {
-        //        filterValue6 = "";
-        //    }
-        //    else
-        //    {
-        //        filterValue6 = ddlGender.SelectedItem.Text;
-        //    }
-        //    int columnToFilter1 = 0; // Replace with the index of the column you want to filter
-        //    int columnToFilter2 = 0;
-        //    int columnToFilter3 = 2;
-        //    int columnToFilter4 = 6;
-        //    int columnToFilter5 = 10;
-        //    int columnToFilter6 = 29;
-        //    #endregion Filter and Position
-        //    FilterAndCreateCSV(inputFilePath, filterValue1, filterValue2, filterValue3, filterValue4, filterValue5, filterValue6, columnToFilter1, columnToFilter2, columnToFilter3, columnToFilter4, columnToFilter5, columnToFilter6, path1);
-
-        //    FileStream fs = null;
-        //    string foldername = Server.MapPath(Comman.GetImagePath("EnrolmentDetailsPath") + "/" + FileName + "");
-        //    string fullPath = Request.MapPath("~/EnrolmentDetails/" + FileName + "" + ".zip");
-        //    using (ZipFile zip = new ZipFile())
-        //    {
-        //        zip.UseZip64WhenSaving = Zip64Option.Always;
-        //        zip.AddFile(foldername, "");
-        //        zip.Save(Server.MapPath(Comman.GetImagePath("EnrolmentDetailsPath") + "/" + FileName + "" + ".zip"));
-        //    }
-
-        //    HttpResponse Response = HttpContext.Current.Response; Response.Clear(); Response.ClearHeaders(); Response.Charset = "UTF-8";
-        //    fs = File.Open(fullPath, FileMode.Open);
-        //    byte[] bytBytes = new byte[(fs.Length)];
-        //    fs.Read(bytBytes, 0, (int)fs.Length);
-        //    fs.Close();
-        //    Response.AddHeader("Content-disposition", "attachment; filename=" + FileName + ".zip");
-        //    Response.ContentType = "application/octet-stream";
-        //    Response.BinaryWrite(bytBytes);
-        //    if (File.Exists(path1))
-        //    {
-        //        System.IO.File.Delete(path1);
-        //    }
-        //    if (File.Exists(fullPath))
-        //    {
-        //        System.IO.File.Delete(fullPath);
-        //    }
-        //    Response.Flush();
-        //    Response.End();
-        //}
-
-
-
-
-
-
     }
     static void FilterAndCreateCSV(string inputFilePath, string filterValue1, string filterValue2, string filterValue3, string filterValue4, string filterValue5, string filterValue6, int columnToFilter1, int columnToFilter2, int columnToFilter3, int columnToFilter4, int columnToFilter5, int columnToFilter6, string outputFilePath)
     {
@@ -2649,21 +2508,24 @@ public partial class frmPmsTracker : System.Web.UI.Page
         SqlParameter[] cmdParameters = new SqlParameter[]
         {
             new SqlParameter("@condtion",conditions),
-
         };
+
         DataTable dt = null;
 
-
         dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "ReportEnrollDeatilsNewFromException", cmdParameters);
+       
 
         if (dt.Rows.Count > 0)
         {
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, true, "HHNo", "ChildName", "Father Name", "DOB");
+
+            if (dt.Columns.Contains("EnrolmentDate"))
+            {
+                dt.Columns.Remove("EnrolmentDate");
+            }
+
             ExportToCSVFile(dt, "ExceptionReport");
         }
-
-
-
-
     }
 
 
