@@ -1335,7 +1335,7 @@ public partial class frmGovtReport : System.Web.UI.Page
 
         dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptGovTargetandAchD2dDetials]", cmdParameters);
 
-        dataTableMaskingHelper.DecryptAndMaskDataTable(dt, true, "Child Name", "Father Name", "Samagra ID");
+        dataTableMaskingHelper.DecryptAndMaskDataTable(dt, true, "Mauhalla", "House", "Child Name", "Father Name", "Samagra ID", "D2D Age", "D2D Age-Current Year", "DOB", "Class of Enrolment");
 
         if (dt.Columns.Contains("DOB"))
         {

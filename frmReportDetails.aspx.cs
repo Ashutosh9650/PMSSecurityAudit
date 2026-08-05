@@ -6082,26 +6082,19 @@ public partial class frmReportDetails : System.Web.UI.Page
             conditions += " and mst5Village.VillageCode in(" + ddlVillage + ") ";
         }
 
-
-
-
         //  DataTable dt = objMain.rptRetentionIndividual(conditions);
 
         SqlParameter[] cmdParameters = new SqlParameter[]
         {
             new SqlParameter("@Con",conditions),
-
-
-                        new SqlParameter("@Myear",ddlYear.SelectedValue),
-
-
+            new SqlParameter("@Myear",ddlYear.SelectedValue),
         };
         DataTable dt = null;
 
 
         dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "rptRetentionIndividualNewwithCV", cmdParameters);
 
-        dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Child Name", "Father Name", "DOB");
+        dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "HHNo", "Child Name", "Father Name", "Class", "DOB", "Age", "Latitude", "Longitute");
 
         ViewState["RetentionIndividual"] = dt;
 
@@ -6124,11 +6117,6 @@ public partial class frmReportDetails : System.Web.UI.Page
             GV_DynamicGrid.DataSource = dt;
             GV_DynamicGrid.DataBind();
         }
-
-
-
-
-
     }
     public void ReportMobileActivityStatus(int Flag)
     {

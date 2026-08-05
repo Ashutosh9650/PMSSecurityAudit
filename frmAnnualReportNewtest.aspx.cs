@@ -6145,7 +6145,6 @@ public partial class frmAnnualReportNewtest : System.Web.UI.Page
         {
             objMain.ReportDownload("Approval Process Report", "Annual Plan", Convert.ToString(Session["username"]));
             ExportToCSVFile(dt, "Approval Process Report");
-
         }
         else
         {
@@ -9052,9 +9051,7 @@ public partial class frmAnnualReportNewtest : System.Web.UI.Page
 
         if (ddlBlock.Length > 0)
         {
-
             conditions += " and V.BlockCode in(" + ddlBlock + ") ";
-
         }
         if (ddlPhan.Length > 0)
         {
@@ -9079,7 +9076,7 @@ public partial class frmAnnualReportNewtest : System.Web.UI.Page
             dt = objMain.LoadMasterDataNew(conditions, 6);
         }
 
-        dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Teacher Name", "Teacher Mobile Number", "School Donor Name");
+        dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Teacher Name", "Teacher Mobile Number", "Class", "School Latitude Longitude", "School Donor Name", "Latitude", "Longitute");
 
         ViewState["D2dUser"] = dt;
 
