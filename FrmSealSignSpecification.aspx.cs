@@ -13,6 +13,7 @@ public partial class FrmSealSignSpecification : System.Web.UI.Page
     string conditions = "";
     string statecode = string.Empty, Clustercode = string.Empty, Distcode = string.Empty, blockcode = string.Empty, villagecode = string.Empty, dbname = "", FormName = string.Empty;
     int RowNumber = 0;
+    SqlInjection sqlInjection = new SqlInjection();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -578,11 +579,56 @@ public partial class FrmSealSignSpecification : System.Web.UI.Page
 
         string strQry = "     select UniqueChildCode as de,DOBNew,	CChildName,	FatherName, IsD2dContact from rptTblOSSCDeatils with(nolock) where UniqueChildCode='" + UniqueIDRight + "' and  IsD2dContact =1  ";
         DataTable dtV = objMain.LoadData(strQry);
+        if (dtV != null && dtV.Rows.Count > 0)
+        {
+            foreach (DataRow row in dtV.Rows)
+            {
+                string encryptionKey = row["UniqueChildCode"].ToString();
+
+                if (dtV.Columns.Contains("ChildName") && row["ChildName"] != DBNull.Value)
+                    row["ChildName"] = sqlInjection.DecryptMatchingWithSessionMasking(row["ChildName"].ToString(), "ChildName");
+
+                if (dtV.Columns.Contains("FathersName") && row["FathersName"] != DBNull.Value)
+                    row["FathersName"] = sqlInjection.DecryptMatchingWithSessionMasking(row["FathersName"].ToString(), "FathersName");
+
+                if (dtV.Columns.Contains("DOB") && row["DOB"] != DBNull.Value)
+                {
+                    string encryptedDOB = row["DOB"].ToString();
+                    string decryptedDOB = sqlInjection.DecryptMatchingWithSessionMasking(encryptedDOB, "DOB", false);
+
+                    row["DOB"] = decryptedDOB;
+
+                    sqlInjection.ProcessRowAgeAndDob(row, decryptedDOB);
+                }
+            }
+        }
         if (dtV.Rows.Count > 0)
         {
             string strQry1 = "     select DOB,	ChildName,	FatherName from tblENrolment with(nolock) where UniqueChildCode='" + UniqueIDLeft + "'   ";
             DataTable dtV1 = objMain.LoadData(strQry1);
+            if (dtV1 != null && dtV1.Rows.Count > 0)
+            {
+                foreach (DataRow row in dtV1.Rows)
+                {
+                    string encryptionKey = row["UniqueChildCode"].ToString();
 
+                    if (dtV1.Columns.Contains("ChildName") && row["ChildName"] != DBNull.Value)
+                        row["ChildName"] = sqlInjection.DecryptMatchingWithSessionMasking(row["ChildName"].ToString(), "ChildName");
+
+                    if (dtV1.Columns.Contains("FathersName") && row["FathersName"] != DBNull.Value)
+                        row["FathersName"] = sqlInjection.DecryptMatchingWithSessionMasking(row["FathersName"].ToString(), "FathersName");
+
+                    if (dtV1.Columns.Contains("DOB") && row["DOB"] != DBNull.Value)
+                    {
+                        string encryptedDOB = row["DOB"].ToString();
+                        string decryptedDOB = sqlInjection.DecryptMatchingWithSessionMasking(encryptedDOB, "DOB", false);
+
+                        row["DOB"] = decryptedDOB;
+
+                        sqlInjection.ProcessRowAgeAndDob(row, decryptedDOB);
+                    }
+                }
+            }
             string msg = "";
             Label5.Text = "";
             Label4.Text = "";
@@ -1276,7 +1322,29 @@ public partial class FrmSealSignSpecification : System.Web.UI.Page
             string FristCon = "";
             FristCon = FristCon + " m.EnrollmentUniqueCode='" + lblUniqueCode.Text + "' and mst5Village.Fyear='" + ddlYear.SelectedItem.Text + "'";
             DataTable dt2 = EnrollmentRightGrid(FristCon, Flag);
+            if (dt2 != null && dt2.Rows.Count > 0)
+            {
+                foreach (DataRow rows in dt2.Rows)
+                {
+                    string encryptionKey = rows["UniqueChildCode"].ToString();
 
+                    if (dt2.Columns.Contains("ChildName") && rows["ChildName"] != DBNull.Value)
+                        rows["ChildName"] = sqlInjection.DecryptMatchingWithSessionMasking(rows["ChildName"].ToString(), "ChildName");
+
+                    if (dt2.Columns.Contains("FathersName") && rows["FathersName"] != DBNull.Value)
+                        rows["FathersName"] = sqlInjection.DecryptMatchingWithSessionMasking(rows["FathersName"].ToString(), "FathersName");
+
+                    if (dt2.Columns.Contains("DOB") && rows["DOB"] != DBNull.Value)
+                    {
+                        string encryptedDOB = rows["DOB"].ToString();
+                        string decryptedDOB = sqlInjection.DecryptMatchingWithSessionMasking(encryptedDOB, "DOB", false);
+
+                        rows["DOB"] = decryptedDOB;
+
+                        sqlInjection.ProcessRowAgeAndDob(rows, decryptedDOB);
+                    }
+                }
+            }
             if (dt2.Rows.Count > 0)
             {
 
@@ -1769,8 +1837,71 @@ new SqlParameter("@condtion", Frist)
             Flag = 2;
         }
         DataTable dt = OutD2dEnrollmentLeftGrid(FristCon1, Flag);
+        if (dt != null && dt.Rows.Count > 0)
+        {
+            foreach (DataRow row in dt.Rows)
+            {
+                string encryptionKey = row["UniqueChildCode"].ToString();
+
+                if (dt.Columns.Contains("ChildName") && row["ChildName"] != DBNull.Value)
+                    row["ChildName"] = sqlInjection.DecryptMatchingWithSessionMasking(row["ChildName"].ToString(), "ChildName");
+
+                if (dt.Columns.Contains("FathersName") && row["FathersName"] != DBNull.Value)
+                    row["FathersName"] = sqlInjection.DecryptMatchingWithSessionMasking(row["FathersName"].ToString(), "FathersName");
+
+                if (dt.Columns.Contains("DOB") && row["DOB"] != DBNull.Value)
+                {
+                    string encryptedDOB = row["DOB"].ToString();
+                    string decryptedDOB = sqlInjection.DecryptMatchingWithSessionMasking(encryptedDOB, "DOB", false);
+
+                    row["DOB"] = decryptedDOB;
+
+                    sqlInjection.ProcessRowAgeAndDob(row, decryptedDOB);
+                }
+            }
+        }
         DataTable dtManual = OutD2dEnrollmentLeftGridManualMatching(FristCon1, Flag);
+        if (dtManual != null && dtManual.Rows.Count > 0)
+        {
+            foreach (DataRow row in dtManual.Rows)
+            {
+                string encryptionKey = row["UniqueChildCode"].ToString();
+
+                if (dtManual.Columns.Contains("ChildName") && row["ChildName"] != DBNull.Value)
+                    row["ChildName"] = sqlInjection.DecryptMatchingWithSessionMasking(row["ChildName"].ToString(), "ChildName");
+
+                if (dtManual.Columns.Contains("FathersName") && row["FathersName"] != DBNull.Value)
+                    row["FathersName"] = sqlInjection.DecryptMatchingWithSessionMasking(row["FathersName"].ToString(), "FathersName");
+
+                if (dtManual.Columns.Contains("DOB") && row["DOB"] != DBNull.Value)
+                {
+                    string encryptedDOB = row["DOB"].ToString();
+                    string decryptedDOB = sqlInjection.DecryptMatchingWithSessionMasking(encryptedDOB, "DOB", false);
+
+                    row["DOB"] = decryptedDOB;
+
+                    sqlInjection.ProcessRowAgeAndDob(row, decryptedDOB);
+                }
+            }
+        }
         DataTable dt2 = EnrollmentRightGrid_20200613(FristConNew);
+        if (dt2 != null && dt2.Rows.Count > 0)
+        {
+            foreach (DataRow row in dt2.Rows)
+            {
+                string encryptionKey = row["UniqueChildCode"].ToString();
+
+                if (dt2.Columns.Contains("ChildName") && row["ChildName"] != DBNull.Value)
+                    row["ChildName"] = sqlInjection.DecryptMatchingWithSessionMasking(row["ChildName"].ToString(), "ChildName");
+
+                if (dt2.Columns.Contains("FathersName") && row["FathersName"] != DBNull.Value)
+                    row["FathersName"] = sqlInjection.DecryptMatchingWithSessionMasking(row["FathersName"].ToString(), "FathersName");
+                if (dt2.Columns.Contains("Mauhalla") && row["Mauhalla"] != DBNull.Value)
+                    row["Mauhalla"] = sqlInjection.DecryptMatchingWithSessionMasking(row["Mauhalla"].ToString(), "Mauhalla");
+
+
+            }
+        }
         if (dt.Rows.Count > 0 || dtManual.Rows.Count > 0)
         {
             gvReport.Visible = true;

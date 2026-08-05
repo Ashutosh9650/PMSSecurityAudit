@@ -24,6 +24,7 @@ public partial class FrmSealSign : System.Web.UI.Page
 
     string flag = "";
     Password objPass = new Password();
+    SqlInjection sqlInjection = new SqlInjection();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -495,6 +496,39 @@ public partial class FrmSealSign : System.Web.UI.Page
 
 
         DataTable dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[SP_GET_Seal_Sign_New_08_06]", parm1);
+        if (dt != null && dt.Rows.Count > 0)
+        {
+            foreach (DataRow row in dt.Rows)
+            {
+                string encryptionKey = row["UniqueChildCode"].ToString();
+
+                if (dt.Columns.Contains("ChildName") && row["ChildName"] != DBNull.Value)
+                    row["ChildName"] = sqlInjection.DecryptMatchingWithSessionMasking(row["ChildName"].ToString(), "ChildName");
+
+                if (dt.Columns.Contains("FathersName") && row["FathersName"] != DBNull.Value)
+                    row["FathersName"] = sqlInjection.DecryptMatchingWithSessionMasking(row["FathersName"].ToString(), "FathersName");
+
+                if (dt.Columns.Contains("DOB") && row["DOB"] != DBNull.Value)
+                {
+                    string encryptedDOB = row["DOB"].ToString();
+                    string decryptedDOB = sqlInjection.DecryptMatchingWithSessionMasking(encryptedDOB, "DOB", false);
+
+                    row["DOB"] = decryptedDOB;
+
+                    sqlInjection.ProcessRowAgeAndDob(row, decryptedDOB);
+                }
+
+                if (dt.Columns.Contains("DOBAvailable") && row["DOBAvailable"] != DBNull.Value)
+                {
+                    string encryptedDOB = row["DOBAvailable"].ToString();
+                    string decryptedDOBAvailable = sqlInjection.DecryptMatchingWithSessionMasking(encryptedDOB, "DOBAvailable", false);
+
+                    row["DOBAvailable"] = decryptedDOBAvailable;
+
+                    sqlInjection.ProcessRowAgeAndDob(row, decryptedDOBAvailable);
+                }
+            }
+        }
         if (dt.Rows.Count > 0)
         {
             GVSealSign.DataSource = dt;
@@ -634,6 +668,47 @@ public partial class FrmSealSign : System.Web.UI.Page
 
 
         DataSet ds = SqlHelper.GetDataSet(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[SP_GET_Seal_Sign_New_08_06]", parm1);
+        if (ds != null && ds.Tables.Count > 0)
+        {
+            foreach (DataTable dt in ds.Tables)
+            {
+                if (dt.Rows.Count == 0)
+                    continue;
+
+                foreach (DataRow row in dt.Rows)
+                {
+                    string encryptionKey = dt.Columns.Contains("UniqueChildCode")
+                        ? row["UniqueChildCode"].ToString()
+                        : string.Empty;
+
+                    if (dt.Columns.Contains("ChildName") && row["ChildName"] != DBNull.Value)
+                    {
+                        row["ChildName"] = sqlInjection.DecryptMatchingWithSessionMasking(
+                            row["ChildName"].ToString(),
+                            "ChildName");
+                    }
+
+                    if (dt.Columns.Contains("FathersName") && row["FathersName"] != DBNull.Value)
+                    {
+                        row["FathersName"] = sqlInjection.DecryptMatchingWithSessionMasking(
+                            row["FathersName"].ToString(),
+                            "FathersName");
+                    }
+
+                    if (dt.Columns.Contains("DOB") && row["DOB"] != DBNull.Value)
+                    {
+                        string decryptedDOB = sqlInjection.DecryptMatchingWithSessionMasking(
+                            row["DOB"].ToString(),
+                            "DOB",
+                            false);
+
+                        row["DOB"] = decryptedDOB;
+
+                        sqlInjection.ProcessRowAgeAndDob(row, decryptedDOB);
+                    }
+                }
+            }
+        }
         string filename = path + "SealSign" + "_" + FC.Substring(0, 7) + "_" + DateTime.Now.ToString("dd_MM_yyyy_hh_mm_ss") + ".pdf";
         //string filename = "SealSign" + "_" + FC.Substring(0, 7) + "_" + DateTime.Now.ToString("dd_MM_yyyy_hh_mm_ss") + ".pdf";
         BaseFont bf = BaseFont.CreateFont(Environment.GetEnvironmentVariable("windir") + @"\fonts\Kruti Dev 010 Regular.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
@@ -742,6 +817,38 @@ public partial class FrmSealSign : System.Web.UI.Page
 
 
         DataSet ds = SqlHelper.GetDataSet(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[SP_GET_Seal_Sign_New_08_06]", parm1);
+        if (ds != null && ds.Tables.Count > 0)
+        {
+            foreach (DataTable table in ds.Tables)
+            {
+                if (table.Rows.Count == 0)
+                    continue;
+
+                foreach (DataRow row in table.Rows)
+                {
+                    if (table.Columns.Contains("ChildName") && row["ChildName"] != DBNull.Value)
+                    {
+                        row["ChildName"] = sqlInjection.DecryptMatchingWithSessionMasking(
+                            row["ChildName"].ToString(), "ChildName");
+                    }
+
+                    if (table.Columns.Contains("FathersName") && row["FathersName"] != DBNull.Value)
+                    {
+                        row["FathersName"] = sqlInjection.DecryptMatchingWithSessionMasking(
+                            row["FathersName"].ToString(), "FathersName");
+                    }
+
+                    if (table.Columns.Contains("DOB") && row["DOB"] != DBNull.Value)
+                    {
+                        string decryptedDOB = sqlInjection.DecryptMatchingWithSessionMasking(
+                            row["DOB"].ToString(), "DOB", false);
+
+                        row["DOB"] = decryptedDOB;
+                        sqlInjection.ProcessRowAgeAndDob(row, decryptedDOB);
+                    }
+                }
+            }
+        }
         DataTable dt = ds.Tables[0];
         DataTable dt1 = ds.Tables[1];
         DataRow[] d = dt.Select("Class=1");
@@ -912,6 +1019,38 @@ public partial class FrmSealSign : System.Web.UI.Page
                  new SqlParameter("@Flag",  3),
             };
         DataSet ds = GetDataSetNew(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[SP_GET_Seal_Sign_New_08_06]", parm1);
+        if (ds != null && ds.Tables.Count > 0)
+        {
+            foreach (DataTable table in ds.Tables)
+            {
+                if (table.Rows.Count == 0)
+                    continue;
+
+                foreach (DataRow row in table.Rows)
+                {
+                    if (table.Columns.Contains("ChildName") && row["ChildName"] != DBNull.Value)
+                    {
+                        row["ChildName"] = sqlInjection.DecryptMatchingWithSessionMasking(
+                            row["ChildName"].ToString(), "ChildName");
+                    }
+
+                    if (table.Columns.Contains("FathersName") && row["FathersName"] != DBNull.Value)
+                    {
+                        row["FathersName"] = sqlInjection.DecryptMatchingWithSessionMasking(
+                            row["FathersName"].ToString(), "FathersName");
+                    }
+
+                    if (table.Columns.Contains("DOB") && row["DOB"] != DBNull.Value)
+                    {
+                        string decryptedDOB = sqlInjection.DecryptMatchingWithSessionMasking(
+                            row["DOB"].ToString(), "DOB", false);
+
+                        row["DOB"] = decryptedDOB;
+                        sqlInjection.ProcessRowAgeAndDob(row, decryptedDOB);
+                    }
+                }
+            }
+        }
         DataTable dt = ds.Tables[0];
         DataTable dt1 = ds.Tables[1];
         DataRow[] d = dt.Select("Class=1");
@@ -1120,6 +1259,38 @@ ansitional//EN"">");
 
         string[] a = DiseCode.Split('_');
         DataSet ds = GetDataSetNew(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[SP_GET_Seal_Sign_New_08_06]", parm1);
+        if (ds != null && ds.Tables.Count > 0)
+        {
+            foreach (DataTable table in ds.Tables)
+            {
+                if (table.Rows.Count == 0)
+                    continue;
+
+                foreach (DataRow row in table.Rows)
+                {
+                    if (table.Columns.Contains("ChildName") && row["ChildName"] != DBNull.Value)
+                    {
+                        row["ChildName"] = sqlInjection.DecryptMatchingWithSessionMasking(
+                            row["ChildName"].ToString(), "ChildName");
+                    }
+
+                    if (table.Columns.Contains("FathersName") && row["FathersName"] != DBNull.Value)
+                    {
+                        row["FathersName"] = sqlInjection.DecryptMatchingWithSessionMasking(
+                            row["FathersName"].ToString(), "FathersName");
+                    }
+
+                    if (table.Columns.Contains("DOB") && row["DOB"] != DBNull.Value)
+                    {
+                        string decryptedDOB = sqlInjection.DecryptMatchingWithSessionMasking(
+                            row["DOB"].ToString(), "DOB", false);
+
+                        row["DOB"] = decryptedDOB;
+                        sqlInjection.ProcessRowAgeAndDob(row, decryptedDOB);
+                    }
+                }
+            }
+        }
 
         DataTable dtFcName = objComman.Select_All_Data("MstUser", "UserName +' ('+ FristName +')' as UserName", " DistrictCode ='" + ddlDistrict.SelectedValue + "' and  VillageCode='" + ClusterCode + "' and len(VillageCode)>2 and UserLevel=24 and ActiveStatus=1", "", "");
         DataTable dt = ds.Tables[0];
@@ -1332,6 +1503,38 @@ ansitional//EN"">");
 
 
         DataSet ds = SqlHelper.GetDataSet(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[SP_GET_Seal_Sign_New_08_06]", parm1);
+        if (ds != null && ds.Tables.Count > 0)
+        {
+            foreach (DataTable table in ds.Tables)
+            {
+                if (table.Rows.Count == 0)
+                    continue;
+
+                foreach (DataRow row in table.Rows)
+                {
+                    if (table.Columns.Contains("ChildName") && row["ChildName"] != DBNull.Value)
+                    {
+                        row["ChildName"] = sqlInjection.DecryptMatchingWithSessionMasking(
+                            row["ChildName"].ToString(), "ChildName");
+                    }
+
+                    if (table.Columns.Contains("FathersName") && row["FathersName"] != DBNull.Value)
+                    {
+                        row["FathersName"] = sqlInjection.DecryptMatchingWithSessionMasking(
+                            row["FathersName"].ToString(), "FathersName");
+                    }
+
+                    if (table.Columns.Contains("DOB") && row["DOB"] != DBNull.Value)
+                    {
+                        string decryptedDOB = sqlInjection.DecryptMatchingWithSessionMasking(
+                            row["DOB"].ToString(), "DOB", false);
+
+                        row["DOB"] = decryptedDOB;
+                        sqlInjection.ProcessRowAgeAndDob(row, decryptedDOB);
+                    }
+                }
+            }
+        }
         DataTable dt = ds.Tables[0];
         DataTable dt1 = ds.Tables[1];
         DataRow[] d = dt.Select("Class=1");
@@ -1516,6 +1719,30 @@ ansitional//EN"">");
         if (Convert.ToInt32(values) > 0)
         {
             dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptPMSTrackingDetails]", cmdParameters);
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                foreach (DataRow row in dt.Rows)
+                {
+                    string encryptionKey = row["UniqueChildCode"].ToString();
+
+                    if (dt.Columns.Contains("ChildName") && row["ChildName"] != DBNull.Value)
+                        row["ChildName"] = sqlInjection.DecryptMatchingWithSessionMasking(row["ChildName"].ToString(), "ChildName");
+
+                    if (dt.Columns.Contains("FathersName") && row["FathersName"] != DBNull.Value)
+                        row["FathersName"] = sqlInjection.DecryptMatchingWithSessionMasking(row["FathersName"].ToString(), "FathersName");
+
+                    if (dt.Columns.Contains("DOB") && row["DOB"] != DBNull.Value)
+                    {
+                        string encryptedDOB = row["DOB"].ToString();
+                        string decryptedDOB = sqlInjection.DecryptMatchingWithSessionMasking(encryptedDOB, "DOB", false);
+
+                        row["DOB"] = decryptedDOB;
+
+                        sqlInjection.ProcessRowAgeAndDob(row, decryptedDOB);
+                    }
+                }
+            }
+
             PopUpGrid.DataSource = dt;
             PopUpGrid.DataBind();
             MpexdrPopUp.Show();

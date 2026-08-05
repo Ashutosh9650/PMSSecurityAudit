@@ -12,6 +12,7 @@ public partial class FrmSealSignRemoveDuplicate : System.Web.UI.Page
     string conditions = "";
     string statecode = string.Empty, Clustercode = string.Empty, Distcode = string.Empty, blockcode = string.Empty, villagecode = string.Empty, dbname = "", FormName = string.Empty;
     int RowNumber = 0;
+    SqlInjection sqlInjection = new SqlInjection();
     protected void Page_Load(object sender, EventArgs e)
     {
 
@@ -327,6 +328,20 @@ public partial class FrmSealSignRemoveDuplicate : System.Web.UI.Page
             string FristCon = "";
             FristCon = FristCon + " ms.EnrollmentUniqueCode='" + lblUniqueCode.Text + "' ";
             DataTable dt2 = objMain.EnrollmentRemoveRightGrid(FristCon);
+            if (dt2 != null && dt2.Rows.Count > 0)
+            {
+                foreach (DataRow rows in dt2.Rows)
+                {
+                    string encryptionKey = rows["UniqueChildCode"].ToString();
+
+                    if (dt2.Columns.Contains("ChildName") && rows["ChildName"] != DBNull.Value)
+                        rows["ChildName"] = sqlInjection.DecryptMatchingWithSessionMasking(rows["ChildName"].ToString(), "ChildName");
+
+                    if (dt2.Columns.Contains("FathersName") && rows["FathersName"] != DBNull.Value)
+                        rows["FathersName"] = sqlInjection.DecryptMatchingWithSessionMasking(rows["FathersName"].ToString(), "FathersName");
+
+                }
+            }
             if (dt2.Rows.Count > 0)
             {
 
@@ -390,6 +405,20 @@ public partial class FrmSealSignRemoveDuplicate : System.Web.UI.Page
         string FristCon = "";
         FristCon = FristCon + " ms.EnrollmentUniqueCode='" + lblUniqueCode.Text + "' ";
         DataTable dt2 = objMain.EnrollmentRemoveRightGrid(FristCon);
+        if (dt2 != null && dt2.Rows.Count > 0)
+        {
+            foreach (DataRow rows in dt2.Rows)
+            {
+                string encryptionKey = rows["UniqueChildCode"].ToString();
+
+                if (dt2.Columns.Contains("ChildName") && rows["ChildName"] != DBNull.Value)
+                    rows["ChildName"] = sqlInjection.DecryptMatchingWithSessionMasking(rows["ChildName"].ToString(), "ChildName");
+
+                if (dt2.Columns.Contains("FathersName") && rows["FathersName"] != DBNull.Value)
+                    rows["FathersName"] = sqlInjection.DecryptMatchingWithSessionMasking(rows["FathersName"].ToString(), "FathersName");
+
+            }
+        }
         if (dt2.Rows.Count > 0)
         {
             gvD2d.Visible = true;
@@ -617,6 +646,30 @@ public partial class FrmSealSignRemoveDuplicate : System.Web.UI.Page
 
         string FristCon = FilterCondition();
         DataTable dt = objMain.OutD2dEnrollmentRemoveLeftGrid(FristCon);
+        foreach (DataRow row in dt.Rows)
+        {
+            string encryptionKey = row["UniqueChildCode"].ToString();
+
+            if (dt.Columns.Contains("ChildName") && row["ChildName"] != DBNull.Value)
+                row["ChildName"] = sqlInjection.DecryptMatchingWithSessionMasking(row["ChildName"].ToString(), "ChildName");
+
+            if (dt.Columns.Contains("FathersName") && row["FathersName"] != DBNull.Value)
+                row["FathersName"] = sqlInjection.DecryptMatchingWithSessionMasking(row["FathersName"].ToString(), "FathersName");
+            if (dt.Columns.Contains("MotherName") && row["MotherName"] != DBNull.Value)
+                row["MotherName"] = sqlInjection.DecryptMatchingWithSessionMasking(row["MotherName"].ToString(), "MotherName");
+            if (dt.Columns.Contains("SamgraID") && row["SamgraID"] != DBNull.Value)
+                row["SamgraID"] = sqlInjection.DecryptMatchingWithSessionMasking(row["SamgraID"].ToString(), "SamgraID");
+
+            if (dt.Columns.Contains("DOB") && row["DOB"] != DBNull.Value)
+            {
+                string encryptedDOB = row["DOB"].ToString();
+                string decryptedDOB = sqlInjection.DecryptMatchingWithSessionMasking(encryptedDOB, "DOB", false);
+
+                row["DOB"] = decryptedDOB;
+
+                sqlInjection.ProcessRowAgeAndDob(row, decryptedDOB);
+            }
+        }
         if (dt.Rows.Count > 0)
         {
             gvReport.Visible = true;
