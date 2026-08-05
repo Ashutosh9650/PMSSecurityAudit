@@ -659,7 +659,7 @@ public class ExportdataWebservice : System.Web.Services.WebService
                 tablename = "tblActivityUpdate_Village";
                 break;
             case 11:
-                tablename = "tblDTD ";
+                tablename = "tblDTD";
                 break;
 
             case 12:
