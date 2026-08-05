@@ -13092,35 +13092,16 @@ public class ExportdataWebservice : System.Web.Services.WebService
         {
             DataSet dtExportData = new DataSet();
             int UserID = 0;
-            string mobileSecretKey = string.Empty;
 
             string checkpass = objPass.CreatePasswordHashSecurityAudit(Password);
 
             DataTable dtUser = DBTask.GetUserLoginAuthenticateFC(UserName, checkpass, IMEINo);
 
-
             if (dtUser.Rows.Count > 0)
             {
                 UserID = Convert.ToInt32(dtUser.Rows[0]["UserID"].ToString());
 
-                if (dtUser.Columns.Contains("MobileSecretKey") && dtUser.Rows[0]["MobileSecretKey"] != DBNull.Value)
-                {
-                    mobileSecretKey = dtUser.Rows[0]["MobileSecretKey"].ToString();
-                }
-
-                var responseObj = new
-                {
-                    Table = new[]
-                    {
-                        new
-                        {
-                            RetValue = 1,
-                            MobileSecretKey = mobileSecretKey
-                        }
-                    }
-                };
-
-                sReturn = JsonConvert.SerializeObject(responseObj);
+                sReturn = "{\"Table\":[{\"RetValue\":1}]}";
             }
             else
             {
