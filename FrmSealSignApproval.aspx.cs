@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PMS.Crypto.Core;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -19,6 +20,7 @@ public partial class FrmSealSignApproval : System.Web.UI.Page
     string conditions = "";
     string flag = "";
     Password objPass = new Password();
+    SqlInjection sqlInjection = new SqlInjection();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -591,6 +593,29 @@ public partial class FrmSealSignApproval : System.Web.UI.Page
 
 
         DataTable dt = GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[SP_GET_Seal_Sign]", parm1);
+        if (dt != null && dt.Rows.Count > 0)
+        {
+            foreach (DataRow row in dt.Rows)
+            {
+                string encryptionKey = row["UniqueChildCode"].ToString();
+
+                if (dt.Columns.Contains("ChildName") && row["ChildName"] != DBNull.Value)
+                    row["ChildName"] = sqlInjection.DecryptMatchingWithSessionMasking(row["ChildName"].ToString(), "ChildName");
+
+                if (dt.Columns.Contains("FathersName") && row["FathersName"] != DBNull.Value)
+                    row["FathersName"] = sqlInjection.DecryptMatchingWithSessionMasking(row["FathersName"].ToString(), "FathersName");
+
+                if (dt.Columns.Contains("DOB") && row["DOB"] != DBNull.Value)
+                {
+                    string encryptedDOB = row["DOB"].ToString();
+                    string decryptedDOB = sqlInjection.DecryptMatchingWithSessionMasking(encryptedDOB, "DOB", false);
+
+                    row["DOB"] = decryptedDOB;
+
+                    sqlInjection.ProcessRowAgeAndDob(row, decryptedDOB);
+                }
+            }
+        }
 
         String[] arColoumn = { "SchoolName", "SealFormImage", "SealSign_DiseCode" };
         DataTable dtNew = dt.DefaultView.ToTable(true, arColoumn);
@@ -1360,7 +1385,33 @@ public partial class FrmSealSignApproval : System.Web.UI.Page
     {
         string strQry = " Select [UniqueChildCode],VillagenameOther,mothername,SamgraID,ChildCode,mstSchool.name,tblEnrolment.[VillageCode],EnrolmentDate as SurvayDate,Class,AsOnDate,[Serial],[HouseNo],[Category],[ChildName] as ChildName,[FatherName] as FathersName,[Gender],[DOBAvailable],[DOB],[AgeAson],Type as EduationStatus,tblEnrolment.[SchoolCode],[EnrollCategory], mst5Village.PanchayatCode,mst5Village.BlockCode,mst5Village.DistrictCode,tblEnrolment.Status FROM (mst5Village INNER JOIN tblEnrolment ON mst5Village.VillageCode = tblEnrolment.VillageCode) left JOIN mstSchool ON tblEnrolment.SchoolCode = mstSchool.SchoolCode where UniqueChildCode='" + Session["UnquieId"].ToString() + "' ";
         DataTable dt = objMain.LoadData(strQry);
+        if (dt != null && dt.Rows.Count > 0)
+        {
+            foreach (DataRow row in dt.Rows)
+            {
+                string encryptionKey = row["UniqueChildCode"].ToString();
 
+                if (dt.Columns.Contains("ChildName") && row["ChildName"] != DBNull.Value)
+                    row["ChildName"] = sqlInjection.DecryptMatchingWithSessionMasking(row["ChildName"].ToString(), "ChildName");
+
+                if (dt.Columns.Contains("FathersName") && row["FathersName"] != DBNull.Value)
+                    row["FathersName"] = sqlInjection.DecryptMatchingWithSessionMasking(row["FathersName"].ToString(), "FathersName");
+                if (dt.Columns.Contains("mothername") && row["mothername"] != DBNull.Value)
+                    row["mothername"] = sqlInjection.DecryptMatchingWithSessionMasking(row["mothername"].ToString(), "mothername");
+
+                if (dt.Columns.Contains("DOB") && row["DOB"] != DBNull.Value)
+                {
+                    string encryptedDOB = row["DOB"].ToString();
+                    string decryptedDOB = sqlInjection.DecryptMatchingWithSessionMasking(encryptedDOB, "DOB", false);
+
+                    row["DOB"] = decryptedDOB;
+
+                    sqlInjection.ProcessRowAgeAndDob(row, decryptedDOB);
+                }
+                if (dt.Columns.Contains("SamgraID") && row["SamgraID"] != DBNull.Value)
+                    row["SamgraID"] = sqlInjection.DecryptMatchingWithSessionMasking(row["SamgraID"].ToString(), "SamgraID");
+            }
+        }
 
         if (dt.Rows.Count > 0)
         {
@@ -1612,6 +1663,16 @@ public partial class FrmSealSignApproval : System.Web.UI.Page
         string HHNo = txtHHNo.Text.Trim();
         string ChildName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(txtChildName.Text.Trim());
         string FathersName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(txtFatherName.Text.Trim());
+        string unquieKey = Session["UnquieId"].ToString();
+        string encChildName = String.Empty, encFathersName = String.Empty, encChildDOB = String.Empty, encSamgra = String.Empty, encmothername = String.Empty; ;
+        if (Session["UnquieId"].ToString().Length > 6)
+        {
+            encChildName = CryptoService.Encrypt(ChildName);
+            encFathersName = CryptoService.Encrypt(FathersName);
+            encSamgra = CryptoService.Encrypt(txtSamgra.Text);
+            encmothername = CryptoService.Encrypt(txtMonthName.Text);
+
+        }
         string strSerial = txtSrno.Text.Trim();
 
         string dllClasss = dllClass.SelectedValue;
@@ -1652,6 +1713,7 @@ public partial class FrmSealSignApproval : System.Web.UI.Page
 
         string[] c = txtDobDate.Text.Split('/');
         string ChildDOB = c[2] + '-' + c[1] + '-' + c[0];
+        encChildDOB = CryptoService.Encrypt(ChildDOB);
 
         string DOB1 = DOBStudent.ToString();
         string[] words = DOB1.Split('/');
@@ -1715,10 +1777,12 @@ public partial class FrmSealSignApproval : System.Web.UI.Page
 
             SqlParameter[] cmdParameters = new SqlParameter[]
    {
-                            new SqlParameter("@MotherName", txtMonthName.Text),
+                            //new SqlParameter("@MotherName", txtMonthName.Text),
 
-                            new SqlParameter("@SamgraID", txtSamgra.Text),
+                            //new SqlParameter("@SamgraID", txtSamgra.Text),
+                              new SqlParameter("@MotherName", encmothername),
 
+                            new SqlParameter("@SamgraID", encSamgra),
                             new SqlParameter("@Category",
                                 Convert.ToInt32(ddlScat.SelectedValue)),
 
@@ -1727,9 +1791,12 @@ public partial class FrmSealSignApproval : System.Web.UI.Page
 
                             new SqlParameter("@Serial", strSerial),
 
-                            new SqlParameter("@ChildName", ChildName),
+                            //new SqlParameter("@ChildName", ChildName),
 
-                            new SqlParameter("@FatherName", FathersName),
+                            //new SqlParameter("@FatherName", FathersName),
+                              new SqlParameter("@ChildName", encChildName),
+
+                            new SqlParameter("@FatherName", encFathersName),
 
                             new SqlParameter("@Gender",
                                 Convert.ToInt32(Gender)),
@@ -1740,8 +1807,10 @@ public partial class FrmSealSignApproval : System.Web.UI.Page
                             new SqlParameter("@DOBAvailable",
                                 Convert.ToBoolean(DoAv)),
 
-                            new SqlParameter("@DOB",
-                                Convert.ToDateTime(ChildDOB)),
+                            //new SqlParameter("@DOB",
+                            //    Convert.ToDateTime(ChildDOB)),
+                           new SqlParameter("@DOB",
+                                Convert.ToDateTime(encChildDOB)),
 
                             new SqlParameter("@AgeAson",
                                 Convert.ToInt32(Age)),
@@ -1778,17 +1847,24 @@ public partial class FrmSealSignApproval : System.Web.UI.Page
     new SqlParameter("@SocialCategory",
         Convert.ToInt32(ddlScat.SelectedValue)),
 
-    new SqlParameter("@ChildName",
-        ChildName),
+    //new SqlParameter("@ChildName",
+    //    ChildName),
+
+    //new SqlParameter("@FathersName",
+    //    FathersName),
+     new SqlParameter("@ChildName",
+        encChildName),
 
     new SqlParameter("@FathersName",
-        FathersName),
+        encFathersName),
 
     new SqlParameter("@Gender",
         Convert.ToInt32(Gender)),
 
-    new SqlParameter("@DOB",
-        Convert.ToDateTime(ChildDOB)),
+    //new SqlParameter("@DOB",
+    //    Convert.ToDateTime(ChildDOB)),
+     new SqlParameter("@DOB",
+        Convert.ToDateTime(encChildDOB)),
 
     new SqlParameter("@AgeAson",
         Convert.ToInt32(Age)),
@@ -1865,6 +1941,29 @@ public partial class FrmSealSignApproval : System.Web.UI.Page
 
 
                     DataTable dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[SP_GET_Seal_Sign]", parm1);
+                    if (dt != null && dt.Rows.Count > 0)
+                    {
+                        foreach (DataRow row in dt.Rows)
+                        {
+                            string encryptionKey = row["UniqueChildCode"].ToString();
+
+                            if (dt.Columns.Contains("ChildName") && row["ChildName"] != DBNull.Value)
+                                row["ChildName"] = sqlInjection.DecryptMatchingWithSessionMasking(row["ChildName"].ToString(), "ChildName");
+
+                            if (dt.Columns.Contains("FathersName") && row["FathersName"] != DBNull.Value)
+                                row["FathersName"] = sqlInjection.DecryptMatchingWithSessionMasking(row["FathersName"].ToString(), "FathersName");
+
+                            if (dt.Columns.Contains("DOB") && row["DOB"] != DBNull.Value)
+                            {
+                                string encryptedDOB = row["DOB"].ToString();
+                                string decryptedDOB = sqlInjection.DecryptMatchingWithSessionMasking(encryptedDOB, "DOB", false);
+
+                                row["DOB"] = decryptedDOB;
+
+                                sqlInjection.ProcessRowAgeAndDob(row, decryptedDOB);
+                            }
+                        }
+                    }
                     GVSealSign.DataSource = dt;
                     GVSealSign.DataBind();
                     //  LoadData();
