@@ -10080,7 +10080,7 @@ public partial class frmGKpChildReg : System.Web.UI.Page
         {
             dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "rptGKPchildAttention2023New", cmdParameters);
 
-            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Child Name", "Father Name");
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Child Name", "Father Name", "Class", "Latitude", "Longitude");
         }
         else
         {
@@ -10090,7 +10090,7 @@ public partial class frmGKpChildReg : System.Web.UI.Page
             {
                 objMain.ReportDownload("GKP Child Attendence", "GKP Report", Convert.ToString(Session["username"]));
 
-                dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Child Name", "Father Name");
+                dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Child Name", "Father Name", "Class", "Latitude", "Longitude");
 
                 ExportToCSVFile(dt, "GKPChildAttendance");
             }

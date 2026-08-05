@@ -2474,7 +2474,7 @@ public partial class frmDonorReportTB : System.Web.UI.Page
             }
             else
             {
-                dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "TB Name");
+                dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "TB Name", "TB Contact", "Alternet Mobile Number");
 
                 ExportToCSVFile(dt, "FCTBClusterMeetingAttendance");
             }
@@ -2737,7 +2737,7 @@ public partial class frmDonorReportTB : System.Web.UI.Page
         DataTable dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptTBaward]", cmdParameters);
         if (dt.Rows.Count > 0)
         {
-            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "TB Contact");
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "TB Name", "TB Contact");
 
             if (flag == 1)
             {

@@ -6087,7 +6087,7 @@ public partial class frmMobileTargetReport : System.Web.UI.Page
             {
                 // objMain.ReportDownload("Balsabha Report", "Balsabha- Child Registration", Convert.ToString(Session["username"]));
 
-                dataTableMaskingHelper.DecryptAndMaskDataTable(dataTable, true, "Child Name", "Father Name", "Contact No", "DOB");
+                dataTableMaskingHelper.DecryptAndMaskDataTable(dataTable, true, "Child Name", "Father Name", "Contact No", "DOB", "Class");
 
                 ExportToCSVFile(dataTable, "KGBVChildRegistration");
             }

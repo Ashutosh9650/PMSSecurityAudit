@@ -1846,7 +1846,7 @@ public partial class frmGKpChildRegPlus : System.Web.UI.Page
         {
             objMain.ReportDownload("GKP Child Registration", "GKP Report", Convert.ToString(Session["username"]));
 
-            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Child Name", "Father Name");
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Child Name", "Father Name", "Class", "Latitude", "Longitude");
 
             ExportToCSVFile(dt, "ChildRegistration");
         }
@@ -1990,7 +1990,7 @@ public partial class frmGKpChildRegPlus : System.Web.UI.Page
             {
                 objMain.ReportDownload("GKP Summary", "GKP Report", Convert.ToString(Session["username"]));
 
-                dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Child Name", "Father Name");
+                dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Child Name", "Father Name", "Class", "Latitude", "Longitude");
 
                 ViewState["SAC"] = dt;
                 ExportToCSVFile(dt, "FormativeAssessmentReport");
@@ -8949,7 +8949,7 @@ public partial class frmGKpChildRegPlus : System.Web.UI.Page
             {
                 objMain.ReportDownload("GKP Assessment", "GKP Report", Convert.ToString(Session["username"]));
 
-                dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Child Name", "Father Name");
+                dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Child Name", "Father Name", "Class", "Latitude", "Longitude");
 
                 ExportToCSVFile(dt, "AssessmentReport");
             }
@@ -8962,7 +8962,7 @@ public partial class frmGKpChildRegPlus : System.Web.UI.Page
             {
                 objMain.ReportDownload("GKP Assessment", "GKP Report", Convert.ToString(Session["username"]));
 
-                dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Child Name", "Father Name");
+                dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Child Name", "Father Name", "Class", "Latitude", "Longitude");
 
                 ExportToCSVFile(dt, "AssessmentReport");
             }
@@ -10046,7 +10046,7 @@ public partial class frmGKpChildRegPlus : System.Web.UI.Page
             {
                 objMain.ReportDownload("GKP Child Attendence", "GKP Report", Convert.ToString(Session["username"]));
 
-                dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Child Name", "Father Name");
+                dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Child Name", "Father Name", "Class", "Latitude", "Longitude");
 
                 ExportToCSVFile(dt, "GKPChildAttendance");
             }
@@ -10059,7 +10059,7 @@ public partial class frmGKpChildRegPlus : System.Web.UI.Page
             {
                 objMain.ReportDownload("GKP Child Attendence", "GKP Report", Convert.ToString(Session["username"]));
 
-                dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Child Name", "Father Name");
+                dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Child Name", "Father Name", "Class", "Latitude", "Longitude");
 
                 ExportToCSVFile(dt, "GKPChildAttendance");
             }

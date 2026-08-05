@@ -7123,7 +7123,7 @@ public partial class frmAnnualReportNew : System.Web.UI.Page
 
         dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptEnrollTargetD2dDetials]", cmdParameters);
 
-        dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Child Name", "Father Name", "Mother Name", "DOB");
+        dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Mauhalla", "House", "Child Name", "Father Name", "Mother Name", "DOB", "Current Age", "Age");
 
         ViewState["D2dUser"] = dt;
 
@@ -7137,9 +7137,5 @@ public partial class frmAnnualReportNew : System.Web.UI.Page
             GV_DynamicGrid.DataSource = null;
             GV_DynamicGrid.DataBind();
         }
-
-
-
-
     }
 }

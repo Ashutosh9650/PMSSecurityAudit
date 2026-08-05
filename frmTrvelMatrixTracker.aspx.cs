@@ -3039,7 +3039,7 @@ public partial class frmTrvelMatrixTracker : System.Web.UI.Page
                     new SqlParameter("@MYear",ddlYear.SelectedValue),
                 };
                 dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptTravelDeatil2024ViewReport2026]", cmdParameters);
-                 
+
                 if (dt.Rows.Count > 0)
                 {
                     dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Emp Name");
@@ -3051,15 +3051,13 @@ public partial class frmTrvelMatrixTracker : System.Web.UI.Page
             if (Flag == 2)
             {
                 SqlParameter[] cmdParameters = new SqlParameter[]
-       {
-            new SqlParameter("@Con",conditions),
-                  new SqlParameter("@FYear",ddlYear.SelectedItem.Text),
-
-             new SqlParameter("@MYear",ddlYear.SelectedValue),
+                {
+                    new SqlParameter("@Con",conditions),
+                    new SqlParameter("@FYear",ddlYear.SelectedItem.Text),
+                    new SqlParameter("@MYear",ddlYear.SelectedValue),
                 };
                 dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptTravelDeatil2024PaymentHold2026]", cmdParameters);
 
-                //dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptTravelDeatil2024PaymentHold]", cmdParameters);
                 if (dt.Rows.Count > 0)
                 {
                     dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Emp Name");
@@ -3077,7 +3075,7 @@ public partial class frmTrvelMatrixTracker : System.Web.UI.Page
                     new SqlParameter("@MYear",ddlYear.SelectedValue),
                 };
                 dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptTravelDeatil2024ApprvalStaus2026]", cmdParameters);
-                
+
                 if (dt.Rows.Count > 0)
                 {
                     dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "FC Name", "Employee Name");
@@ -3092,11 +3090,11 @@ public partial class frmTrvelMatrixTracker : System.Web.UI.Page
                     new SqlParameter("@FYear",ddlYear.SelectedItem.Text),
                     new SqlParameter("@MYear",ddlYear.SelectedValue),
                 };
-                 
+
                 dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptTravelDeatil2024TADAclaim2026]", cmdParameters);
                 if (dt.Rows.Count > 0)
                 {
-                    dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "FC Name");
+                    dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Emp Name");
 
                     ExportToCSVFile(dt, "TADAClaimSummary");
                 }
@@ -3144,12 +3142,12 @@ public partial class frmTrvelMatrixTracker : System.Web.UI.Page
                     new SqlParameter("@FYear",ddlYear.SelectedItem.Text),
                     new SqlParameter("@MYear",ddlYear.SelectedValue),
                 };
-                 
+
                 dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptTravelDeatil2024PaymentReject2026]", cmdParameters);
 
                 if (dt.Rows.Count > 0)
                 {
-                    dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "FC Name");
+                    dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Emp Name");
 
                     ExportToCSVFile(dt, "RejectionDeatils");
                 }
@@ -3164,7 +3162,7 @@ public partial class frmTrvelMatrixTracker : System.Web.UI.Page
                 };
                 dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptTravelDeatilFinSummery2026]", cmdParameters);
 
-                
+
                 if (dt.Rows.Count > 0)
                 {
                     dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Employee Name");
@@ -3181,7 +3179,7 @@ public partial class frmTrvelMatrixTracker : System.Web.UI.Page
                     new SqlParameter("@FYear",ddlYear.SelectedItem.Text),
                     new SqlParameter("@MYear",ddlYear.SelectedValue),
                 };
-                 
+
                 dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptTravelannaulFinSummery2026]", cmdParameters);
                 if (dt.Rows.Count > 0)
                 {
@@ -12346,30 +12344,16 @@ public partial class frmTrvelMatrixTracker : System.Web.UI.Page
                 new SqlParameter("@condtion", conditions),
                 new SqlParameter("@condtion1", conditions1),
             };
-            
+
             dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptTblUserLoginNew2025]", cmdParameters);
         }
 
-        dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "FristName", "Frist Name");
 
         if (dt.Rows.Count > 0)
         {
-            if (dt.Rows.Count > 0)
-            {
-                LoadSV(dt);
-            }
-            else
-            {
-
-            }
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "FristName", "Frist Name");
+            LoadSV(dt);
         }
-        else
-        {
-            //LinkButton1.Visible = false;
-
-        }
-
-
     }
     public void LoadSV(DataTable dt)
     {

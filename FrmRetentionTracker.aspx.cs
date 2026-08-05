@@ -1188,7 +1188,7 @@ public partial class FrmRetentionTracker : System.Web.UI.Page
             {
                 objMain.ReportDownload("Course Correction Detail", "Retention trackers", Convert.ToString(Session["username"]));
 
-                dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Childname");
+                dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Childname", "Current_Class", "Revised_Class");
 
                 ExportToCSVFile(dt, "CourseCorrectionDetail");
             }
@@ -1204,11 +1204,6 @@ public partial class FrmRetentionTracker : System.Web.UI.Page
         GVChildTarget.Visible = false;
         GVChild.Visible = false;
         GV_DynamicGrid.Visible = false;
-
-
-
-
-
     }
 
     protected void Lnkpfkj_OnddClick(object sender, EventArgs e)
@@ -1219,11 +1214,6 @@ public partial class FrmRetentionTracker : System.Web.UI.Page
         GVChildTarget.Visible = false;
         GVChild.Visible = false;
         GV_DynamicGrid.Visible = false;
-
-
-
-
-
     }
     protected void Lnkpfkj_OnClick(object sender, EventArgs e)
     {
@@ -1233,11 +1223,6 @@ public partial class FrmRetentionTracker : System.Web.UI.Page
         GVChildTarget.Visible = false;
         GVChild.Visible = false;
         GV_DynamicGrid.Visible = false;
-
-
-
-
-
     }
 
     protected void Lnkpfkj33_OnClick(object sender, EventArgs e)
@@ -2199,11 +2184,10 @@ public partial class FrmRetentionTracker : System.Web.UI.Page
         if (Convert.ToInt32(ddlYear.SelectedValue) <= 2025)
         {
             SqlParameter[] cmdParameters = new SqlParameter[]
-        {
-            new SqlParameter("@Con",conditions),
+            {
+                new SqlParameter("@Con",conditions),
                 new SqlParameter("@Myear",ddlYear.SelectedValue),
-
-        };
+            };
 
 
             dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptRetentionIndividualNewwithCV]", cmdParameters);
@@ -2212,7 +2196,7 @@ public partial class FrmRetentionTracker : System.Web.UI.Page
             {
                 objMain.ReportDownload("Retention Individual", "Retention trackers", Convert.ToString(Session["username"]));
 
-                dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Child Name", "Father Name", "DOB");
+                dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "HHNo", "Child Name", "Father Name", "Class", "DOB", "Age", "Latitude", "Longitute");
 
                 ExportToCSVFile(dt, "RetentionIndividual ");
             }
