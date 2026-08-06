@@ -498,36 +498,36 @@ public partial class FrmSealSign : System.Web.UI.Page
         DataTable dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[SP_GET_Seal_Sign_New_08_06]", parm1);
         if (dt != null && dt.Rows.Count > 0)
         {
-            foreach (DataRow row in dt.Rows)
-            {
-                string encryptionKey = row["UniqueChildCode"].ToString();
+            //foreach (DataRow row in dt.Rows)
+            //{
+            //    string encryptionKey = row["UniqueChildCode"].ToString();
 
-                if (dt.Columns.Contains("ChildName") && row["ChildName"] != DBNull.Value)
-                    row["ChildName"] = sqlInjection.DecryptMatchingWithSessionMasking(row["ChildName"].ToString(), "ChildName");
+            //    if (dt.Columns.Contains("ChildName") && row["ChildName"] != DBNull.Value)
+            //        row["ChildName"] = sqlInjection.DecryptMatchingWithSessionMasking(row["ChildName"].ToString(), "ChildName");
 
-                if (dt.Columns.Contains("FathersName") && row["FathersName"] != DBNull.Value)
-                    row["FathersName"] = sqlInjection.DecryptMatchingWithSessionMasking(row["FathersName"].ToString(), "FathersName");
+            //    if (dt.Columns.Contains("FathersName") && row["FathersName"] != DBNull.Value)
+            //        row["FathersName"] = sqlInjection.DecryptMatchingWithSessionMasking(row["FathersName"].ToString(), "FathersName");
 
-                if (dt.Columns.Contains("DOB") && row["DOB"] != DBNull.Value)
-                {
-                    string encryptedDOB = row["DOB"].ToString();
-                    string decryptedDOB = sqlInjection.DecryptMatchingWithSessionMasking(encryptedDOB, "DOB", false);
+            //    if (dt.Columns.Contains("DOB") && row["DOB"] != DBNull.Value)
+            //    {
+            //        string encryptedDOB = row["DOB"].ToString();
+            //        string decryptedDOB = sqlInjection.DecryptMatchingWithSessionMasking(encryptedDOB, "DOB", false);
 
-                    row["DOB"] = decryptedDOB;
+            //        row["DOB"] = decryptedDOB;
 
-                    sqlInjection.ProcessRowAgeAndDob(row, decryptedDOB);
-                }
+            //        sqlInjection.ProcessRowAgeAndDob(row, decryptedDOB);
+            //    }
 
-                if (dt.Columns.Contains("DOBAvailable") && row["DOBAvailable"] != DBNull.Value)
-                {
-                    string encryptedDOB = row["DOBAvailable"].ToString();
-                    string decryptedDOBAvailable = sqlInjection.DecryptMatchingWithSessionMasking(encryptedDOB, "DOBAvailable", false);
+            //    if (dt.Columns.Contains("DOBAvailable") && row["DOBAvailable"] != DBNull.Value)
+            //    {
+            //        string encryptedDOB = row["DOBAvailable"].ToString();
+            //        string decryptedDOBAvailable = sqlInjection.DecryptMatchingWithSessionMasking(encryptedDOB, "DOBAvailable", false);
 
-                    row["DOBAvailable"] = decryptedDOBAvailable;
+            //        row["DOBAvailable"] = decryptedDOBAvailable;
 
-                    sqlInjection.ProcessRowAgeAndDob(row, decryptedDOBAvailable);
-                }
-            }
+            //        sqlInjection.ProcessRowAgeAndDob(row, decryptedDOBAvailable);
+            //    }
+            //}
         }
         if (dt.Rows.Count > 0)
         {
