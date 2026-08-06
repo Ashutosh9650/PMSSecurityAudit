@@ -1040,8 +1040,6 @@ public class ExportdataWebservice : System.Web.Services.WebService
         string sReturn = string.Empty;
         try
         {
-
-
             string checkpass = objPass.CreatePasswordHashSecurityAudit(Password);
 
             DataTable dtUser = DBTask.Get_Check_PasswordNewFC(UserName, checkpass, IMEINo);
@@ -1136,14 +1134,13 @@ public class ExportdataWebservice : System.Web.Services.WebService
         return sReturn;
     }
 
+
     [WebMethod]
     public string GetMasterDataTabletNew20190626D2d(string UserName, string Password, string IMEINo)
     {
         string sReturn = string.Empty;
         try
         {
-
-
             string checkpass = objPass.CreatePasswordHashSecurityAudit(Password);
 
             DataTable dtUser = DBTask.Get_Check_PasswordNewFC(UserName, checkpass, IMEINo);
@@ -1157,11 +1154,11 @@ public class ExportdataWebservice : System.Web.Services.WebService
                 return "0";
             }
 
+            HashSet<string> encryptedColumns = GetColumnsToDecrypt();
 
-            SqlParameter[] para = new SqlParameter[] {
-
-            new SqlParameter("@UserName",UserName),
-
+            SqlParameter[] para = new SqlParameter[]
+            {
+               new SqlParameter("@UserName",UserName),
             };
 
             try
@@ -1178,7 +1175,40 @@ public class ExportdataWebservice : System.Web.Services.WebService
                 {
                     DataTable dtNew = new DataTable();
                     dtNew = dt.Copy();
-                    dtNew.TableName = GetTableNameTablateNew2019D2d(index);
+
+                    string tableName = GetTableNameTablateNew2019D2d(index).Trim();
+                    dtNew.TableName = tableName;
+
+                    if (string.Equals(tableName.Trim(), "tblDTD", StringComparison.OrdinalIgnoreCase)) 
+                    {
+                        List<DataColumn> colsToDecrypt = new List<DataColumn>();
+                        foreach (DataColumn col in dtNew.Columns)
+                        {
+                            if (encryptedColumns.Contains(col.ColumnName.Trim()))
+                            {
+                                colsToDecrypt.Add(col);
+                            }
+                        }
+
+                        if (colsToDecrypt.Count > 0)
+                        {
+                            foreach (DataRow row in dtNew.Rows)
+                            {
+                                foreach (DataColumn col in colsToDecrypt)
+                                {
+                                    if (row[col] != DBNull.Value)
+                                    {
+                                        string encryptedValue = row[col].ToString();
+                                        if (!string.IsNullOrEmpty(encryptedValue))
+                                        {
+                                            row[col] = DecryptData(encryptedValue);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
                     sqldata.Tables.Add(dtNew);
                     index++;
                 }
@@ -1189,7 +1219,6 @@ public class ExportdataWebservice : System.Web.Services.WebService
                 sReturn = "9999";
             }
         }
-
         catch
         {
             sReturn = "0";
@@ -1606,14 +1635,10 @@ public class ExportdataWebservice : System.Web.Services.WebService
             }
 
 
-
-
-
-            SqlParameter[] para = new SqlParameter[] {
-
-            new SqlParameter("@UserName",UserName),
-              new SqlParameter("@Villagecode",Villagecode),
-
+            SqlParameter[] para = new SqlParameter[] 
+            {
+                new SqlParameter("@UserName",UserName),
+                new SqlParameter("@Villagecode",Villagecode),
             };
 
 
@@ -14069,8 +14094,6 @@ public class ExportdataWebservice : System.Web.Services.WebService
         string sReturn = string.Empty;
         try
         {
-
-
             string checkpass = objPass.CreatePasswordHashSecurityAudit(Password);
 
             DataTable dtUser = DBTask.Get_Check_PasswordNewFC(UserName, checkpass, IMEINo);
@@ -14084,11 +14107,11 @@ public class ExportdataWebservice : System.Web.Services.WebService
                 return "0";
             }
 
+            HashSet<string> encryptedColumns = GetColumnsToDecrypt();
 
-            SqlParameter[] para = new SqlParameter[] {
-
-            new SqlParameter("@UserName",UserName),
-
+            SqlParameter[] para = new SqlParameter[] 
+            {
+                new SqlParameter("@UserName",UserName),
             };
 
             try
@@ -14105,7 +14128,40 @@ public class ExportdataWebservice : System.Web.Services.WebService
                 {
                     DataTable dtNew = new DataTable();
                     dtNew = dt.Copy();
-                    dtNew.TableName = GetTableNametblContactTarget(index);
+
+                    string tableName = GetTableNametblContactTarget(index).Trim();
+                    dtNew.TableName = tableName;
+
+                    if (string.Equals(tableName.Trim(), "tblDTD", StringComparison.OrdinalIgnoreCase) || string.Equals(tableName.Trim(), "tblEnrolment", StringComparison.OrdinalIgnoreCase) || string.Equals(tableName.Trim(), "tblOOSC", StringComparison.OrdinalIgnoreCase))
+                    {
+                        List<DataColumn> colsToDecrypt = new List<DataColumn>();
+                        foreach (DataColumn col in dtNew.Columns)
+                        {
+                            if (encryptedColumns.Contains(col.ColumnName.Trim()))
+                            {
+                                colsToDecrypt.Add(col);
+                            }
+                        }
+
+                        if (colsToDecrypt.Count > 0)
+                        {
+                            foreach (DataRow row in dtNew.Rows)
+                            {
+                                foreach (DataColumn col in colsToDecrypt)
+                                {
+                                    if (row[col] != DBNull.Value)
+                                    {
+                                        string encryptedValue = row[col].ToString();
+                                        if (!string.IsNullOrEmpty(encryptedValue))
+                                        {
+                                            row[col] = DecryptData(encryptedValue);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
                     sqldata.Tables.Add(dtNew);
                     index++;
                 }
@@ -14132,7 +14188,6 @@ public class ExportdataWebservice : System.Web.Services.WebService
         try
         {
 
-
             DataTable dtUser = objComman.GetUserAuthenticate(UserName, Password);
 
             if (dtUser.Rows.Count > 0)
@@ -14145,17 +14200,13 @@ public class ExportdataWebservice : System.Web.Services.WebService
             }
 
 
+            HashSet<string> encryptedColumns = GetColumnsToDecrypt();
 
-
-
-            SqlParameter[] para = new SqlParameter[] {
-
-            new SqlParameter("@UserName",UserName),
+            SqlParameter[] para = new SqlParameter[] 
+            {
+              new SqlParameter("@UserName",UserName),
               new SqlParameter("@Villagecode",Villagecode),
-
             };
-
-
 
             try
             {
@@ -14171,7 +14222,40 @@ public class ExportdataWebservice : System.Web.Services.WebService
                 {
                     DataTable dtNew = new DataTable();
                     dtNew = dt.Copy();
-                    dtNew.TableName = GetTableNameTablateNewVillagewise2019(index);
+
+                    string tableName = GetTableNameTablateNewVillagewise2019(index).Trim();
+                    dtNew.TableName = tableName;
+
+                    if (string.Equals(tableName.Trim(), "tblDTD", StringComparison.OrdinalIgnoreCase) || string.Equals(tableName.Trim(), "tblEnrolment", StringComparison.OrdinalIgnoreCase) || string.Equals(tableName.Trim(), "tblOOSC", StringComparison.OrdinalIgnoreCase))
+                    {
+                        List<DataColumn> colsToDecrypt = new List<DataColumn>();
+                        foreach (DataColumn col in dtNew.Columns)
+                        {
+                            if (encryptedColumns.Contains(col.ColumnName.Trim()))
+                            {
+                                colsToDecrypt.Add(col);
+                            }
+                        }
+
+                        if (colsToDecrypt.Count > 0)
+                        {
+                            foreach (DataRow row in dtNew.Rows)
+                            {
+                                foreach (DataColumn col in colsToDecrypt)
+                                {
+                                    if (row[col] != DBNull.Value)
+                                    {
+                                        string encryptedValue = row[col].ToString();
+                                        if (!string.IsNullOrEmpty(encryptedValue))
+                                        {
+                                            row[col] = DecryptData(encryptedValue);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
                     sqldata.Tables.Add(dtNew);
                     index++;
                 }
@@ -14182,7 +14266,6 @@ public class ExportdataWebservice : System.Web.Services.WebService
                 sReturn = "9999";
             }
         }
-
         catch
         {
             sReturn = "0";
