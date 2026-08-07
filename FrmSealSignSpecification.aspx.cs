@@ -1841,7 +1841,7 @@ new SqlParameter("@condtion", Frist)
         {
             foreach (DataRow row in dt.Rows)
             {
-                string encryptionKey = row["UniqueChildCode"].ToString();
+                string encryptionKey = row["UniqueCode"].ToString();
 
                 if (dt.Columns.Contains("ChildName") && row["ChildName"] != DBNull.Value)
                     row["ChildName"] = sqlInjection.DecryptMatchingWithSessionMasking(row["ChildName"].ToString(), "ChildName");
@@ -1894,7 +1894,7 @@ new SqlParameter("@condtion", Frist)
         {
             foreach (DataRow row in dt2.Rows)
             {
-                string encryptionKey = row["UniqueChildCode"].ToString();
+                string encryptionKey = row["UniqueCode"].ToString();
 
                 if (dt2.Columns.Contains("ChildName") && row["ChildName"] != DBNull.Value)
                     row["ChildName"] = sqlInjection.DecryptMatchingWithSessionMasking(row["ChildName"].ToString(), "ChildName");
