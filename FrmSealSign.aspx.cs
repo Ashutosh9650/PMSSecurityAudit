@@ -1724,24 +1724,29 @@ ansitional//EN"">");
                 {
                     string encryptionKey = row["UniqueChildCode"].ToString();
 
-                    if (dt.Columns.Contains("ChildName") && row["ChildName"] != DBNull.Value)
-                        row["ChildName"] = sqlInjection.DecryptMatchingWithSessionMasking(row["ChildName"].ToString(), "ChildName");
+                    if (dt.Columns.Contains("Child Name") && row["Child Name"] != DBNull.Value)
+                        row["Child Name"] = sqlInjection.DecryptMatchingWithSessionMasking(row["Child Name"].ToString(), "Child Name");
 
-                    if (dt.Columns.Contains("FathersName") && row["FathersName"] != DBNull.Value)
-                        row["FathersName"] = sqlInjection.DecryptMatchingWithSessionMasking(row["FathersName"].ToString(), "FathersName");
+                    if (dt.Columns.Contains("Father Name") && row["Father Name"] != DBNull.Value)
+                        row["Father Name"] = sqlInjection.DecryptMatchingWithSessionMasking(row["Father Name"].ToString(), "Father Name");
 
-                    if (dt.Columns.Contains("DOB") && row["DOB"] != DBNull.Value)
+                    if (dt.Columns.Contains("Date of Birth") && row["Date of Birth"] != DBNull.Value)
                     {
-                        string encryptedDOB = row["DOB"].ToString();
+                        string encryptedDOB = row["Date of Birth"].ToString();
                         string decryptedDOB = sqlInjection.DecryptMatchingWithSessionMasking(encryptedDOB, "DOB", false);
 
-                        row["DOB"] = decryptedDOB;
+                        row["Date of Birth"] = decryptedDOB;
 
                         sqlInjection.ProcessRowAgeAndDob(row, decryptedDOB);
                     }
+                    if (dt.Columns.Contains("SamgraID") && row["SamgraID"] != DBNull.Value)
+                        row["SamgraID"] = sqlInjection.DecryptMatchingWithSessionMasking(row["SamgraID"].ToString(), "SamgraID");
                 }
             }
-
+            if (dt.Columns.Contains("UniqueChildCode"))
+            {
+                dt.Columns.Remove("UniqueChildCode");
+            }
             PopUpGrid.DataSource = dt;
             PopUpGrid.DataBind();
             MpexdrPopUp.Show();

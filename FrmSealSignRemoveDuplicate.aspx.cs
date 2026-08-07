@@ -66,7 +66,7 @@ public partial class FrmSealSignRemoveDuplicate : System.Web.UI.Page
         {
             LoadReport();
         }
-        catch
+        catch (Exception ex)
         {
 
             throw;
@@ -648,27 +648,27 @@ public partial class FrmSealSignRemoveDuplicate : System.Web.UI.Page
         DataTable dt = objMain.OutD2dEnrollmentRemoveLeftGrid(FristCon);
         foreach (DataRow row in dt.Rows)
         {
-            string encryptionKey = row["UniqueChildCode"].ToString();
+            string encryptionKey = row["Uniqueode"].ToString();
 
             if (dt.Columns.Contains("ChildName") && row["ChildName"] != DBNull.Value)
                 row["ChildName"] = sqlInjection.DecryptMatchingWithSessionMasking(row["ChildName"].ToString(), "ChildName");
 
             if (dt.Columns.Contains("FathersName") && row["FathersName"] != DBNull.Value)
                 row["FathersName"] = sqlInjection.DecryptMatchingWithSessionMasking(row["FathersName"].ToString(), "FathersName");
-            if (dt.Columns.Contains("MotherName") && row["MotherName"] != DBNull.Value)
-                row["MotherName"] = sqlInjection.DecryptMatchingWithSessionMasking(row["MotherName"].ToString(), "MotherName");
-            if (dt.Columns.Contains("SamgraID") && row["SamgraID"] != DBNull.Value)
-                row["SamgraID"] = sqlInjection.DecryptMatchingWithSessionMasking(row["SamgraID"].ToString(), "SamgraID");
+            //if (dt.Columns.Contains("MotherName") && row["MotherName"] != DBNull.Value)
+            //    row["MotherName"] = sqlInjection.DecryptMatchingWithSessionMasking(row["MotherName"].ToString(), "MotherName");
+            //if (dt.Columns.Contains("SamgraID") && row["SamgraID"] != DBNull.Value)
+            //    row["SamgraID"] = sqlInjection.DecryptMatchingWithSessionMasking(row["SamgraID"].ToString(), "SamgraID");
 
-            if (dt.Columns.Contains("DOB") && row["DOB"] != DBNull.Value)
-            {
-                string encryptedDOB = row["DOB"].ToString();
-                string decryptedDOB = sqlInjection.DecryptMatchingWithSessionMasking(encryptedDOB, "DOB", false);
+            //if (dt.Columns.Contains("DOB") && row["DOB"] != DBNull.Value)
+            //{
+            //    string encryptedDOB = row["DOB"].ToString();
+            //    string decryptedDOB = sqlInjection.DecryptMatchingWithSessionMasking(encryptedDOB, "DOB", false);
 
-                row["DOB"] = decryptedDOB;
+            //    row["DOB"] = decryptedDOB;
 
-                sqlInjection.ProcessRowAgeAndDob(row, decryptedDOB);
-            }
+            //    sqlInjection.ProcessRowAgeAndDob(row, decryptedDOB);
+            //}
         }
         if (dt.Rows.Count > 0)
         {
