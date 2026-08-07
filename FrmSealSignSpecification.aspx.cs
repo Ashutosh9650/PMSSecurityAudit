@@ -1457,10 +1457,10 @@ new SqlParameter("@Flag", Flag),
     public DataTable OutD2dEnrollmentLeftGridManualMatching(string Frist, Int32 Flag)
     {
         SqlParameter[] cmdParameters = new SqlParameter[]
-{
-new SqlParameter("@condtion", Frist),
-new SqlParameter("@Flag", Flag),
-};
+        {
+            new SqlParameter("@condtion", Frist),
+            new SqlParameter("@Flag", Flag),
+        };
         return SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptOutOfD2dandSealSignSpecificationLeftNew_Manual_matching]", cmdParameters);
     }
     public DataTable EnrollmentRightGrid(string Frist, Int32 Flag)
@@ -1865,13 +1865,18 @@ new SqlParameter("@condtion", Frist)
         {
             foreach (DataRow row in dtManual.Rows)
             {
-                string encryptionKey = row["UniqueChildCode"].ToString();
-
+                
                 if (dtManual.Columns.Contains("ChildName") && row["ChildName"] != DBNull.Value)
-                    row["ChildName"] = sqlInjection.DecryptMatchingWithSessionMasking(row["ChildName"].ToString(), "ChildName");
+                {
+                    string childName = sqlInjection.DecryptMatchingWithSessionMasking(row["ChildName"].ToString(), "ChildName");
+                    row["ChildName"] = sqlInjection.ToTitleCase(childName).ToUpper();
+                }
 
                 if (dtManual.Columns.Contains("FathersName") && row["FathersName"] != DBNull.Value)
-                    row["FathersName"] = sqlInjection.DecryptMatchingWithSessionMasking(row["FathersName"].ToString(), "FathersName");
+                {
+                    string fatherName = sqlInjection.DecryptMatchingWithSessionMasking(row["FathersName"].ToString(), "FathersName");
+                    row["FathersName"] = sqlInjection.ToTitleCase(fatherName).ToUpper();
+                }
 
                 if (dtManual.Columns.Contains("DOB") && row["DOB"] != DBNull.Value)
                 {

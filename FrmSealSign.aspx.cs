@@ -500,8 +500,7 @@ public partial class FrmSealSign : System.Web.UI.Page
         {
             foreach (DataRow row in dt.Rows)
             {
-                string encryptionKey = row["UniqueChildCode"].ToString();
-
+                
                 if (dt.Columns.Contains("ChildName") && row["ChildName"] != DBNull.Value)
                     row["ChildName"] = sqlInjection.DecryptMatchingWithSessionMasking(row["ChildName"].ToString(), "ChildName");
 

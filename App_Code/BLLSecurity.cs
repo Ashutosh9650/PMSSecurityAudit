@@ -1,5 +1,6 @@
 ﻿using PMS.Crypto.Core;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -328,6 +329,41 @@ public class SqlInjection : IHttpModule//CommonBLL,
         }
 
         return decryptedValue;
+    }
+
+    public string ToTitleCase(string inputString)
+    {
+        if (string.IsNullOrEmpty(inputString))
+        {
+            return string.Empty;
+        }
+
+        char[] chars = inputString.ToLower().ToCharArray();
+
+        chars[0] = char.ToUpper(chars[0]);
+
+        HashSet<char> delimiters = new HashSet<char>
+        {
+            ' ', ';', ':', '!', '?', ',', '.', '_', '-', '/', '&', '\'', '('
+        };
+
+        for (int i = 0; i < inputString.Length; i++)
+        {
+            char currentChar = inputString[i];
+
+            if (delimiters.Contains(currentChar))
+            {
+                if (i + 1 < inputString.Length)
+                {
+                    if (currentChar == '\'' && char.ToUpper(inputString[i + 1]) == 'S')
+                    {
+                        continue;
+                    }
+                    chars[i + 1] = char.ToUpper(chars[i + 1]);
+                }
+            }
+        }
+        return new string(chars);
     }
 }
  
