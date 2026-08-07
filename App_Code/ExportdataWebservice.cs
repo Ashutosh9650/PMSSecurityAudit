@@ -907,7 +907,7 @@ public class ExportdataWebservice : System.Web.Services.WebService
         switch (index)
         {
             case 0:
-                tablename = "tblDTD ";
+                tablename = "tblDTD";
                 break;
 
             case 1:
@@ -1192,6 +1192,8 @@ public class ExportdataWebservice : System.Web.Services.WebService
 
                         if (colsToDecrypt.Count > 0)
                         {
+                            string[] dateKeywords = new[] { "dob" };
+
                             foreach (DataRow row in dtNew.Rows)
                             {
                                 foreach (DataColumn col in colsToDecrypt)
@@ -1201,7 +1203,20 @@ public class ExportdataWebservice : System.Web.Services.WebService
                                         string encryptedValue = row[col].ToString();
                                         if (!string.IsNullOrEmpty(encryptedValue))
                                         {
-                                            row[col] = DecryptData(encryptedValue);
+                                            string decryptedValue = DecryptData(encryptedValue);
+
+                                            bool isDateColumn = dateKeywords.Any(key => col.ColumnName.Trim().IndexOf(key, StringComparison.OrdinalIgnoreCase) >= 0);
+
+                                            DateTime parsedDate;
+
+                                            if (isDateColumn && DateTime.TryParse(decryptedValue, out parsedDate)) 
+                                            {
+                                                row[col] = parsedDate.ToString("yyyy-MM-ddTHH:mm:ss");
+                                            }
+                                            else
+                                            {
+                                                row[col] = decryptedValue;
+                                            }
                                         }
                                     }
                                 }
@@ -14126,6 +14141,8 @@ public class ExportdataWebservice : System.Web.Services.WebService
 
                         if (colsToDecrypt.Count > 0)
                         {
+                            string[] dateKeywords = new string[] { "dob", "dateofbirth", "dobnew", "dobschool" };
+
                             foreach (DataRow row in dtNew.Rows)
                             {
                                 foreach (DataColumn col in colsToDecrypt)
@@ -14135,7 +14152,20 @@ public class ExportdataWebservice : System.Web.Services.WebService
                                         string encryptedValue = row[col].ToString();
                                         if (!string.IsNullOrEmpty(encryptedValue))
                                         {
-                                            row[col] = DecryptData(encryptedValue);
+                                            string decryptedValue = DecryptData(encryptedValue);
+
+                                            bool isDateColumn = dateKeywords.Any(key => col.ColumnName.Trim().IndexOf(key, StringComparison.OrdinalIgnoreCase) >= 0);
+
+                                            DateTime parsedDate;
+
+                                            if (isDateColumn && DateTime.TryParse(decryptedValue, out parsedDate))
+                                            {
+                                                row[col] = parsedDate.ToString("yyyy-MM-ddTHH:mm:ss");
+                                            }
+                                            else
+                                            {
+                                                row[col] = decryptedValue;
+                                            }
                                         }
                                     }
                                 }
@@ -14220,6 +14250,8 @@ public class ExportdataWebservice : System.Web.Services.WebService
 
                         if (colsToDecrypt.Count > 0)
                         {
+                            string[] dateKeywords = new string[] { "dob", "dateofbirth", "dobnew", "dobschool" };
+
                             foreach (DataRow row in dtNew.Rows)
                             {
                                 foreach (DataColumn col in colsToDecrypt)
@@ -14229,7 +14261,20 @@ public class ExportdataWebservice : System.Web.Services.WebService
                                         string encryptedValue = row[col].ToString();
                                         if (!string.IsNullOrEmpty(encryptedValue))
                                         {
-                                            row[col] = DecryptData(encryptedValue);
+                                            string decryptedValue = DecryptData(encryptedValue);
+
+                                            bool isDateColumn = dateKeywords.Any(key => col.ColumnName.Trim().IndexOf(key, StringComparison.OrdinalIgnoreCase) >= 0);
+
+                                            DateTime parsedDate;
+
+                                            if (isDateColumn && DateTime.TryParse(decryptedValue, out parsedDate))
+                                            {
+                                                row[col] = parsedDate.ToString("yyyy-MM-ddTHH:mm:ss");
+                                            }
+                                            else
+                                            {
+                                                row[col] = decryptedValue;
+                                            }
                                         }
                                     }
                                 }
