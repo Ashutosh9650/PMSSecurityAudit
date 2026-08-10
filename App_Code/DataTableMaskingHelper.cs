@@ -79,7 +79,8 @@ public class DataTableMaskingHelper
         bool isAgeCalculationRequired = calculateAge && (ageColIndex != -1 && enrolDateColIndex != -1);
 
         string[] processedAge = new string[rowCount];
-        
+
+        Dictionary<string, FieldMaskConfig> sessionMaskConfig = RoleMaskingConfig.Instance.GetConfigFromSession();
 
         // Parallel Processing
         Parallel.For(0, rowCount, i =>
@@ -97,7 +98,7 @@ public class DataTableMaskingHelper
                     string enc = val.ToString();
                     if (!string.IsNullOrEmpty(enc))
                     {
-                        string plain = sqlInjection.DecryptMatchingWithSessionMasking(enc, col.Name);
+                        string plain = sqlInjection.DecryptMatchingWithSessionMasking(enc, col.Name, true, sessionMaskConfig);
 
                         if (!string.IsNullOrEmpty(plain))
                         {

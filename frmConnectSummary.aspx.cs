@@ -3453,11 +3453,11 @@ public partial class frmConnectSummary : System.Web.UI.Page
             FileName = "Contact Status Report";
 
             if (Convert.ToInt32(ddlYear.SelectedValue) >= 2026)
-                dataTableMaskingHelper.DecryptAndMaskDataTable(dataTable, "Mohalla", "House", "Child Name", "Father Name", "DOB", "Contact DOB", "D2D Age-Current Year", "Child Name_SR", "Father Name_SR", "Mother Name_SR", "DOB_SR", "Respondent Relation with Child", "Mobile No", "Date of Birth", "Child SSSMID", "Family SSSMID");
+                dataTableMaskingHelper.DecryptAndMaskDataTable(dataTable, "Mohalla", "House", "Child Name", "Father Name", "DOB", "Contact DOB", /*"D2D Age-Current Year",*/ "Child Name_SR", "Father Name_SR", "Mother Name_SR", "DOB_SR", /*"Respondent Relation with Child",*/ "Mobile No", "Date of Birth", "Child SSSMID", "Family SSSMID");
             else if (Convert.ToInt32(ddlYear.SelectedValue) >= 2024)
-                dataTableMaskingHelper.DecryptAndMaskDataTable(dataTable, "Mohalla", "House", "Child Name", "Contact Child Name", "Father Name", "Contact Father Name", "DOB", "Contact DOB", "D2D Age-Current Year", "Respondent Relation with Child", "Mobile No", "Date of Birth", "Child SSSMID", "Family SSSMID");
+                dataTableMaskingHelper.DecryptAndMaskDataTable(dataTable, "Mohalla", "House", "Child Name", "Contact Child Name", "Father Name", "Contact Father Name", "DOB", "Contact DOB", /*"D2D Age-Current Year",*/ /*"Respondent Relation with Child",*/ "Mobile No", "Date of Birth", "Child SSSMID", "Family SSSMID");
             else
-                dataTableMaskingHelper.DecryptAndMaskDataTable(dataTable, "Mohalla", "House", "Child Name", "Father Name", "DOB", "D2D Age-Current Year", "Respondent Relation with Child", "Mobile No", "Date of Birth", "Child SSSMID", "Family SSSMID");
+                dataTableMaskingHelper.DecryptAndMaskDataTable(dataTable, "Mohalla", "House", "Child Name", "Father Name", "DOB", /*"D2D Age-Current Year",*/ /*"Respondent Relation with Child",*/ "Mobile No", "Date of Birth", "Child SSSMID", "Family SSSMID");
         }
 
         if (Flag == 2)
@@ -3622,12 +3622,18 @@ public partial class frmConnectSummary : System.Web.UI.Page
             FileName = "Contact Detail Report";
 
             if (Convert.ToInt32(ddlYear.SelectedValue) >= 2025)
-                dataTableMaskingHelper.DecryptAndMaskDataTable(dataTable, "Mohalla", "House", "Child Name", "Father Name", "D2D Age-Current Year", "Contact DOB", "Child Name_SR", "Father Name_SR", "Mother Name_SR", "DOB_SR", "Respondent Relation with Child", "Mobile No", "Date of Birth", "Migration Place", "Child SSSMID", "Family SSSMID", "Latitude", "Longitude");
+                dataTableMaskingHelper.DecryptAndMaskDataTable(dataTable, "Mohalla", "House", "Child Name", "Father Name", /*"D2D Age-Current Year",*/
+                    "Contact DOB", "Child Name_SR", "Father Name_SR", "Mother Name_SR", "DOB_SR", /*"Respondent Relation with Child",*/ 
+                    "Mobile No", "Date of Birth", /*"Migration Place",*/ "Child SSSMID", "Family SSSMID", "Latitude", "Longitude");
 
             else if (Convert.ToInt32(ddlYear.SelectedValue) >= 2024)
-                dataTableMaskingHelper.DecryptAndMaskDataTable(dataTable, "Mohalla", "House", "Child Name", "Father Name", "D2D Age-Current Year", "Contact DOB", "Child Name_SR", "Father Name_SR", "Mother Name_SR", "DOB_SR", "Respondent Relation with Child", "Mobile No", "Date of Birth", "Migration Place", "Child SSSMID", "Family SSSMID", "Latitude", "Longitude");
+                dataTableMaskingHelper.DecryptAndMaskDataTable(dataTable, "Mohalla", "House", "Child Name", "Father Name", /*"D2D Age-Current Year",*/ 
+                    "Contact DOB", "Child Name_SR", "Father Name_SR", "Mother Name_SR", "DOB_SR", /*"Respondent Relation with Child",*/ 
+                    "Mobile No", "Date of Birth", /*"Migration Place",*/ "Child SSSMID", "Family SSSMID", "Latitude", "Longitude");
             else
-                dataTableMaskingHelper.DecryptAndMaskDataTable(dataTable, "Mohalla", "House", "Child Name", "Father Name", "D2D Age-Current Year", "Child Name_SR", "Father Name_SR", "Mother Name_SR", "DOB_SR", "Respondent Relation with Child", "Mobile No", "Date of Birth", "Migration Place", "Child SSSMID", "Family SSSMID", "Latitude", "Longitude");
+                dataTableMaskingHelper.DecryptAndMaskDataTable(dataTable, "Mohalla", "House", "Child Name", "Father Name", /*"D2D Age-Current Year",*/ 
+                    "Child Name_SR", "Father Name_SR", "Mother Name_SR", "DOB_SR", /*"Respondent Relation with Child",*/
+                    "Mobile No", "Date of Birth", /*"Migration Place",*/ "Child SSSMID", "Family SSSMID", "Latitude", "Longitude");
         }
 
         if (Flag == 2)
@@ -9041,9 +9047,9 @@ public partial class frmConnectSummary : System.Web.UI.Page
         dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptEnrollTargetD2dDetials]", cmdParameters);
 
         if (Convert.ToInt32(ddlYear.SelectedValue) >= 2020)
-            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Mauhalla", "House", "Child Name", "Father Name", "Mother Name", "DOB", "Current Age", "Age");
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Mauhalla", "House", "Child Name", "Father Name", "Mother Name", "DOB"/*, "Current Age", "Age"*/);
         else if (Convert.ToInt32(ddlYear.SelectedValue) < 2020)
-            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Mauhalla", "House", "Child Name", "Father Name", "DOB", "Current Age", "Age");
+            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Mauhalla", "House", "Child Name", "Father Name", "DOB"/*, "Current Age", "Age"*/);
 
         ViewState["D2dUser"] = dt;
 

@@ -351,7 +351,7 @@ public class SqlInjection : IHttpModule//CommonBLL,
         }
     }
 
-    public string DecryptMatchingWithSessionMasking(string encryptedData, string fieldName, bool? applyOnField = true)
+    public string DecryptMatchingWithSessionMasking(string encryptedData, string fieldName, bool? applyOnField = true, Dictionary<string, FieldMaskConfig> preLoadedConfig = null)
     {
         if (string.IsNullOrEmpty(encryptedData))
             return encryptedData;
@@ -362,7 +362,7 @@ public class SqlInjection : IHttpModule//CommonBLL,
         // Check if this field should be masked using session config
         if (applyOnField.HasValue && applyOnField.Value)
         {
-            Tuple<bool, string> maskingDetails = RoleMaskingConfig.Instance.GetMaskingDetails(fieldName);
+            Tuple<bool, string> maskingDetails = RoleMaskingConfig.Instance.GetMaskingDetails(fieldName, preLoadedConfig);
 
             if (maskingDetails.Item1)
             {

@@ -14,7 +14,7 @@ public class FieldMaskConfig
 public class RoleMaskingConfig
 {
     private const string SESSION_KEY = "RoleMaskingConfig";
-
+    
     private static readonly object _syncLock = new object();
     private static RoleMaskingConfig _instance;
 
@@ -115,13 +115,18 @@ public class RoleMaskingConfig
         return new Dictionary<string, FieldMaskConfig>();
     }
 
-    public Tuple<bool, string> GetMaskingDetails(string fieldName)
+    
+    public Tuple<bool, string> GetMaskingDetails(string fieldName, Dictionary<string, FieldMaskConfig> config)
     {
         if (string.IsNullOrEmpty(fieldName))
             return Tuple.Create(false, "NAME");
 
-        var config = GetConfigFromSession();
-        if (config == null || config.Count == 0)
+        if (config == null)
+        {
+            config = RoleMaskingConfig.Instance.GetConfigFromSession();
+        }
+
+        if (config == null || config.Count == 0 || string.IsNullOrEmpty(fieldName)) 
             return Tuple.Create(false, "NAME");
 
          if (config.ContainsKey(fieldName))
@@ -163,12 +168,7 @@ public class RoleMaskingConfig
         return (idx >= 0 && idx < input.Length - 1) ? input.Substring(idx + 1) : input;
     }
 
-    public bool ShouldMaskFieldFromSession(string fieldName)
-    {
-        Tuple<bool, string> details = GetMaskingDetails(fieldName);
-        return details.Item1; 
-    }
-
+  
     public void ClearSessionConfig()
     {
         try
