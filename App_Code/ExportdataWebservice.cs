@@ -17869,7 +17869,10 @@ public class ExportdataWebservice : System.Web.Services.WebService
                 "ChildNameSchool",
                 "FatherNameSchool",
                 "MotherNameSchool",
-                "DobSchool"
+                "DobSchool",
+                "FamilySamagraId",
+                "Longitude",
+                "Latitude"
                 };
 
                 // ================================================================

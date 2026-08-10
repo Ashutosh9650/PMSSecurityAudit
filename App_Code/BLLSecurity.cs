@@ -170,6 +170,9 @@ public class SqlInjection : IHttpModule//CommonBLL,
             case "SAMAGRA":
                 return MaskId(plainText);
 
+            case "LOCATION":
+                return MaskLocation(plainText);
+
             case "NAME":
             default:
                 return MaskName(plainText);
@@ -177,6 +180,45 @@ public class SqlInjection : IHttpModule//CommonBLL,
     }
 
     #region Standard PII Masking Routines
+    private string MaskLocation(string plainText)
+    {
+        if (string.IsNullOrWhiteSpace(plainText)) return plainText;
+
+        plainText = plainText.Trim();
+
+        if (plainText.Contains(","))
+        {
+            string[] parts = plainText.Split(',');
+            if (parts.Length == 2)
+            {
+                return MaskSingleCoordinate(parts[0].Trim()) + ", " + MaskSingleCoordinate(parts[1].Trim());
+            }
+        }
+
+        return MaskSingleCoordinate(plainText);
+    }
+
+    private string MaskSingleCoordinate(string coord)
+    {
+        if (string.IsNullOrWhiteSpace(coord)) return coord;
+
+        int decimalIdx = coord.IndexOf('.');
+
+        if (decimalIdx > 0 && decimalIdx + 2 < coord.Length)
+        {
+            string visiblePart = coord.Substring(0, decimalIdx + 2);
+            int maskLength = coord.Length - visiblePart.Length;    
+            return visiblePart + new string('*', maskLength);   
+        }
+
+        if (coord.Length > 2)
+        {
+            return coord.Substring(0, 2) + new string('*', coord.Length - 2);
+        }
+
+        return coord;
+    }
+
     private string MaskName(string name)
     {
         string[] words = name.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
