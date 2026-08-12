@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
@@ -276,10 +277,47 @@ public class SqlInjection : IHttpModule//CommonBLL,
 
     private string MaskDob(string dobStr)
     {
-        if (dobStr.Length >= 10)
+        if (string.IsNullOrWhiteSpace(dobStr))
+            return dobStr;
+
+        dobStr = dobStr.Trim();
+
+ 
+        if (dobStr.StartsWith("XX/XX/", StringComparison.OrdinalIgnoreCase))
+            return dobStr;
+
+ 
+        string[] formats = new string[]
         {
-            return "XX/XX/" + dobStr.Substring(dobStr.Length - 4);
+        "dd/MM/yyyy", "dd-MM-yyyy", "d/M/yyyy", "d-M-yyyy",
+        "yyyy-MM-dd", "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd HH:mm:ss.fff", "yyyy-MM-ddTHH:mm:ss",
+        "dd/MM/yyyy HH:mm:ss", "dd-MM-yyyy HH:mm:ss",
+        "MM/dd/yyyy", "MMM d yyyy hh:mmtt", "MMM dd yyyy hh:mmtt"
+        };
+
+        DateTime dobDate;
+
+ 
+        if (DateTime.TryParseExact(dobStr, formats, CultureInfo.InvariantCulture, DateTimeStyles.None, out dobDate) ||
+            DateTime.TryParse(dobStr, CultureInfo.GetCultureInfo("en-IN"), DateTimeStyles.None, out dobDate) ||
+            DateTime.TryParse(dobStr, CultureInfo.InvariantCulture, DateTimeStyles.None, out dobDate))
+        {
+            if (dobDate.Year <= 1900)
+                return "XX/XX/XXXX";
+
+            return "XX/XX/" + dobDate.Year.ToString();
         }
+
+ 
+        Match match = Regex.Match(dobStr, @"(19|20)\d{2}");
+        if (match.Success)
+        {
+            if (match.Value == "1900")
+                return "XX/XX/XXXX";
+
+            return "XX/XX/" + match.Value;
+        }
+
         return "XX/XX/XXXX";
     }
 
