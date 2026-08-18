@@ -1710,10 +1710,10 @@ ansitional//EN"">");
         SqlParameter[] cmdParameters = new SqlParameter[]
         {
             new SqlParameter("@con",conditions),
-                new SqlParameter("@con1",Con),
-         new SqlParameter("@Flag","3"),
-
+            new SqlParameter("@con1",Con),
+            new SqlParameter("@Flag","3"),
         };
+
         DataTable dt = null;
         if (Convert.ToInt32(values) > 0)
         {
@@ -1722,7 +1722,6 @@ ansitional//EN"">");
             {
                 foreach (DataRow row in dt.Rows)
                 {
-                    string encryptionKey = row["UniqueChildCode"].ToString();
 
                     if (dt.Columns.Contains("Child Name") && row["Child Name"] != DBNull.Value)
                         row["Child Name"] = sqlInjection.DecryptMatchingWithSessionMasking(row["Child Name"].ToString(), "Child Name");
@@ -1735,18 +1734,20 @@ ansitional//EN"">");
                         string encryptedDOB = row["Date of Birth"].ToString();
                         string decryptedDOB = sqlInjection.DecryptMatchingWithSessionMasking(encryptedDOB, "DOB", false);
 
-                        row["Date of Birth"] = decryptedDOB;
-
-                        sqlInjection.ProcessRowAgeAndDob(row, decryptedDOB);
+                        sqlInjection.ProcessRowAgeAndDob(row, decryptedDOB, "Date of Birth");
                     }
-                    if (dt.Columns.Contains("SamgraID") && row["SamgraID"] != DBNull.Value)
-                        row["SamgraID"] = sqlInjection.DecryptMatchingWithSessionMasking(row["SamgraID"].ToString(), "SamgraID");
+
+                    if (dt.Columns.Contains("Samagra ID") && row["Samagra ID"] != DBNull.Value)
+                        row["Samagra ID"] = sqlInjection.DecryptMatchingWithSessionMasking(row["Samagra ID"].ToString(), "Samagra ID");
                 }
             }
-            if (dt.Columns.Contains("UniqueChildCode"))
-            {
-                dt.Columns.Remove("UniqueChildCode");
-            }
+
+            if (dt.Columns.Contains("DOB"))
+                dt.Columns.Remove("DOB");
+
+            if (dt.Columns.Contains("EnrolmentDate"))
+                dt.Columns.Remove("EnrolmentDate");
+
             PopUpGrid.DataSource = dt;
             PopUpGrid.DataBind();
             MpexdrPopUp.Show();

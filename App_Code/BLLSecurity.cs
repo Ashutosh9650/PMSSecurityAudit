@@ -143,7 +143,7 @@ public class SqlInjection : IHttpModule//CommonBLL,
     }
 
     private readonly byte[] key = Encoding.UTF8.GetBytes("EGKeyAESAdityaEG"); //replace with your own key
- 
+
     public string MaskSensitiveData(string plainText, string maskType = "NAME")
     {
         if (string.IsNullOrEmpty(plainText)) return plainText;
@@ -208,8 +208,8 @@ public class SqlInjection : IHttpModule//CommonBLL,
         if (decimalIdx > 0 && decimalIdx + 2 < coord.Length)
         {
             string visiblePart = coord.Substring(0, decimalIdx + 2);
-            int maskLength = coord.Length - visiblePart.Length;    
-            return visiblePart + new string('*', maskLength);   
+            int maskLength = coord.Length - visiblePart.Length;
+            return visiblePart + new string('*', maskLength);
         }
 
         if (coord.Length > 2)
@@ -282,11 +282,11 @@ public class SqlInjection : IHttpModule//CommonBLL,
 
         dobStr = dobStr.Trim();
 
- 
+
         if (dobStr.StartsWith("XX/XX/", StringComparison.OrdinalIgnoreCase))
             return dobStr;
 
- 
+
         string[] formats = new string[]
         {
         "dd/MM/yyyy", "dd-MM-yyyy", "d/M/yyyy", "d-M-yyyy",
@@ -297,7 +297,7 @@ public class SqlInjection : IHttpModule//CommonBLL,
 
         DateTime dobDate;
 
- 
+
         if (DateTime.TryParseExact(dobStr, formats, CultureInfo.InvariantCulture, DateTimeStyles.None, out dobDate) ||
             DateTime.TryParse(dobStr, CultureInfo.GetCultureInfo("en-IN"), DateTimeStyles.None, out dobDate) ||
             DateTime.TryParse(dobStr, CultureInfo.InvariantCulture, DateTimeStyles.None, out dobDate))
@@ -308,7 +308,7 @@ public class SqlInjection : IHttpModule//CommonBLL,
             return "XX/XX/" + dobDate.Year.ToString();
         }
 
- 
+
         Match match = Regex.Match(dobStr, @"(19|20)\d{2}");
         if (match.Success)
         {
@@ -344,19 +344,22 @@ public class SqlInjection : IHttpModule//CommonBLL,
         return years.ToString();
     }
 
-    public void ProcessRowAgeAndDob(DataRow row, string decryptedDOB)
+    public void ProcessRowAgeAndDob(DataRow row, string decryptedDOB, string fieldName = "")
     {
         DataTable dt = row.Table;
         DateTime dobDate;
 
-        if (!string.IsNullOrEmpty(decryptedDOB) &&
-            decryptedDOB != "01/01/1900" &&
-            decryptedDOB != "1900-01-01" &&
-            DateTime.TryParse(decryptedDOB, out dobDate))
+        if (!string.IsNullOrEmpty(decryptedDOB) && decryptedDOB != "01/01/1900" && decryptedDOB != "1900-01-01" && DateTime.TryParse(decryptedDOB, out dobDate))
         {
             if (dt.Columns.Contains("DOB"))
             {
                 string plainDobStr = dobDate.ToString("dd/MM/yyyy");
+
+                if (!string.IsNullOrEmpty(fieldName))
+                {
+                    var dob = MaskDob(decryptedDOB);
+                    row[fieldName] = dob;
+                }
             }
 
             if (dt.Columns.Contains("EnrolmentDate") && row["EnrolmentDate"] != DBNull.Value && dt.Columns.Contains("Age"))
@@ -446,4 +449,4 @@ public class SqlInjection : IHttpModule//CommonBLL,
         return new string(chars);
     }
 }
- 
+

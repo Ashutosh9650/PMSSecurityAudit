@@ -2,19 +2,21 @@
 using iTextSharp.text.html.simpleparser;
 using iTextSharp.text.pdf;
 using Newtonsoft.Json;
+using PMS.Crypto.Core;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Net.Mail;
 using System.Text;
+using System.Web;
 using System.Web.Script.Services;
 using System.Web.Services;
 using System.Xml;
-using PMS.Crypto.Core;
 
 
 /// <summary>
@@ -1064,9 +1066,14 @@ public class ExportdataWebservice : System.Web.Services.WebService
             {
                 DataSet dttabletdata = new DataSet();
 
+                Stopwatch swDb = Stopwatch.StartNew();
+
                 dttabletdata = SqlHelper.GetDataSet(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "Get_Masters_dataTablet20190725", para);
-                int totalRowCount = dttabletdata.Tables.Cast<DataTable>()
-                             .Sum(t => t.Rows.Count);
+
+                swDb.Stop();
+                long dbTimeMs = swDb.ElapsedMilliseconds;
+
+                int totalRowCount = dttabletdata.Tables.Cast<DataTable>().Sum(t => t.Rows.Count);
 
                 DataSet sqldata = new DataSet("MyData");
                 int index = 0;
@@ -1077,6 +1084,10 @@ public class ExportdataWebservice : System.Web.Services.WebService
                     dttabletdata.Tables[18].Rows[0]["TotalCount"] = totalRowCount;
                 }
 
+                Stopwatch swProcessing = new Stopwatch();
+                Stopwatch swDecrypt = Stopwatch.StartNew();
+
+                swProcessing.Start();
 
                 foreach (DataTable dt in dttabletdata.Tables)
                 {
@@ -1087,7 +1098,7 @@ public class ExportdataWebservice : System.Web.Services.WebService
                     dtNew.TableName = tableName;
 
                     if (string.Equals(tableName, "tblOOSC", StringComparison.OrdinalIgnoreCase) ||
-                        string.Equals(tableName, "tblDTD", StringComparison.OrdinalIgnoreCase)) 
+                        string.Equals(tableName, "tblDTD", StringComparison.OrdinalIgnoreCase))
                     {
                         List<DataColumn> colsToDecrypt = new List<DataColumn>();
                         foreach (DataColumn col in dtNew.Columns)
@@ -1100,6 +1111,9 @@ public class ExportdataWebservice : System.Web.Services.WebService
 
                         if (colsToDecrypt.Count > 0)
                         {
+                            swProcessing.Stop();
+                            swDecrypt.Start();
+
                             foreach (DataRow row in dtNew.Rows)
                             {
                                 foreach (DataColumn col in colsToDecrypt)
@@ -1114,13 +1128,29 @@ public class ExportdataWebservice : System.Web.Services.WebService
                                     }
                                 }
                             }
+
+                            swDecrypt.Stop();
+                            swProcessing.Start();
                         }
                     }
 
                     sqldata.Tables.Add(dtNew);
                     index++;
                 }
+
+
                 sReturn = JsonConvert.SerializeObject(sqldata);
+
+                swProcessing.Stop();
+
+                long decryptionTimeMs = swDecrypt.ElapsedMilliseconds;
+                long processingTimeMs = swProcessing.ElapsedMilliseconds;
+
+                long timeWithoutDecryptionMs = dbTimeMs + processingTimeMs;
+                long timeWithDecryptionMs = dbTimeMs + decryptionTimeMs + processingTimeMs;
+
+                LogApiPerformance("GetMasterDataTabletNew20190725", totalRowCount, dbTimeMs, decryptionTimeMs, processingTimeMs, timeWithoutDecryptionMs,
+                timeWithDecryptionMs);
             }
             catch
             {
@@ -1132,6 +1162,40 @@ public class ExportdataWebservice : System.Web.Services.WebService
             sReturn = "0";
         }
         return sReturn;
+    }
+
+    private void LogApiPerformance(string apiName, int totalRows, long dbTimeMs, long cryptoTimeMs, long processingTimeMs, long timeWithoutCryptoMs,
+        long timeWithCryptoMs)
+    {
+        try
+        {
+            string logDirPath = HttpContext.Current.Server.MapPath("~/App_Data/Logs");
+            if (!Directory.Exists(logDirPath))
+            {
+                Directory.CreateDirectory(logDirPath);
+            }
+
+            string logFilePath = Path.Combine(logDirPath, "UAT_ApiPerfLog_" + DateTime.Now.ToString("yyyyMMdd") + ".txt");
+
+            string logEntry = string.Format(
+                "[{0}] | API: {1} | Rows: {2} | DB Time: {3} ms | Crypto (Enc/Dec) Time: {4} ms | Processing Time: {5} ms | TIME WITHOUT CRYPTO: {6} ms | TIME WITH CRYPTO: {7} ms{8}",
+                DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"),
+                apiName,
+                totalRows,
+                dbTimeMs,
+                cryptoTimeMs,
+                processingTimeMs,
+                timeWithoutCryptoMs,
+                timeWithCryptoMs,
+                Environment.NewLine
+            );
+
+            File.AppendAllText(logFilePath, logEntry);
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine("API Log Write Error: " + ex.Message);
+        }
     }
 
 
@@ -1179,7 +1243,7 @@ public class ExportdataWebservice : System.Web.Services.WebService
                     string tableName = GetTableNameTablateNew2019D2d(index).Trim();
                     dtNew.TableName = tableName;
 
-                    if (string.Equals(tableName.Trim(), "tblDTD", StringComparison.OrdinalIgnoreCase)) 
+                    if (string.Equals(tableName.Trim(), "tblDTD", StringComparison.OrdinalIgnoreCase))
                     {
                         List<DataColumn> colsToDecrypt = new List<DataColumn>();
                         foreach (DataColumn col in dtNew.Columns)
@@ -1209,7 +1273,7 @@ public class ExportdataWebservice : System.Web.Services.WebService
 
                                             DateTime parsedDate;
 
-                                            if (isDateColumn && DateTime.TryParse(decryptedValue, out parsedDate)) 
+                                            if (isDateColumn && DateTime.TryParse(decryptedValue, out parsedDate))
                                             {
                                                 row[col] = parsedDate.ToString("yyyy-MM-ddTHH:mm:ss");
                                             }
@@ -1650,7 +1714,7 @@ public class ExportdataWebservice : System.Web.Services.WebService
             }
 
 
-            SqlParameter[] para = new SqlParameter[] 
+            SqlParameter[] para = new SqlParameter[]
             {
                 new SqlParameter("@UserName",UserName),
                 new SqlParameter("@Villagecode",Villagecode),
@@ -13660,7 +13724,6 @@ public class ExportdataWebservice : System.Web.Services.WebService
         try
         {
 
-
             string checkpass = objPass.CreatePasswordHashSecurityAudit(Password);
 
             DataTable dtUser = DBTask.Get_Check_PasswordNewFC(UserName, checkpass, IMEINo);
@@ -13676,11 +13739,13 @@ public class ExportdataWebservice : System.Web.Services.WebService
             }
 
 
-            SqlParameter[] para = new SqlParameter[] {
-
-            new SqlParameter("@UserName",UserName),
-
+            SqlParameter[] para = new SqlParameter[] 
+            {
+                new SqlParameter("@UserName",UserName),
             };
+
+
+            HashSet<string> encryptedColumns = GetColumnsToDecrypt();
 
             try
             {
@@ -13696,7 +13761,41 @@ public class ExportdataWebservice : System.Web.Services.WebService
                 {
                     DataTable dtNew = new DataTable();
                     dtNew = dt.Copy();
-                    dtNew.TableName = ReportPlanActivity(index);
+
+                    string tableName = ReportPlanActivity(index);
+                    dtNew.TableName = tableName;
+
+                    if (string.Equals(tableName, "tblOOSC", StringComparison.OrdinalIgnoreCase) || string.Equals(tableName, "tblDTD", StringComparison.OrdinalIgnoreCase))
+                    {
+                        List<DataColumn> colsToDecrypt = new List<DataColumn>();
+                        foreach (DataColumn col in dtNew.Columns)
+                        {
+                            if (encryptedColumns.Contains(col.ColumnName.Trim()))
+                            {
+                                colsToDecrypt.Add(col);
+                            }
+                        }
+
+                        if (colsToDecrypt.Count > 0)
+                        {
+                            foreach (DataRow row in dtNew.Rows)
+                            {
+                                foreach (DataColumn col in colsToDecrypt)
+                                {
+                                    if (row[col] != DBNull.Value)
+                                    {
+                                        string encryptedValue = row[col].ToString();
+                                        if (!string.IsNullOrEmpty(encryptedValue))
+                                        {
+                                            row[col] = DecryptData(encryptedValue);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+
                     sqldata.Tables.Add(dtNew);
                     index++;
                 }
@@ -13707,7 +13806,6 @@ public class ExportdataWebservice : System.Web.Services.WebService
                 sReturn = "9999";
             }
         }
-
         catch
         {
             sReturn = "0";
@@ -14038,13 +14136,18 @@ public class ExportdataWebservice : System.Web.Services.WebService
 
         return tablename;
     }
+
     [WebMethod]
     public string Get_tblEnrolment_Temp2024(string UserName)
     {
         DataSet dttabletdata = new DataSet();
-        SqlParameter[] para = new SqlParameter[] {
+        SqlParameter[] para = new SqlParameter[] 
+        {
             new SqlParameter("@UserName",UserName),
-            };
+        };
+
+        HashSet<string> encryptedColumns = GetColumnsToDecrypt();
+
         string sReturn = string.Empty;
         dttabletdata = SqlHelper.GetDataSet(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "SP_Web_Get_tblEnrolment_Temp2024", para);
         // DataSet sqldata = new DataSet("User");
@@ -14057,31 +14160,45 @@ public class ExportdataWebservice : System.Web.Services.WebService
         {
             DataTable dtNew = new DataTable();
             dtNew = dt.Copy();
-            dtNew.TableName = GetTableNameTablateEN(index);
+
+            string tableName = GetTableNameTablateEN(index);
+            dtNew.TableName = tableName;
+
+            if (string.Equals(tableName, "tblOOSC", StringComparison.OrdinalIgnoreCase) || string.Equals(tableName, "tblDTD", StringComparison.OrdinalIgnoreCase)) 
+            {
+                List<DataColumn> colsToDecrypt = new List<DataColumn>();
+                foreach (DataColumn col in dtNew.Columns)
+                {
+                    if (encryptedColumns.Contains(col.ColumnName.Trim()))
+                    {
+                        colsToDecrypt.Add(col);
+                    }
+                }
+
+                if (colsToDecrypt.Count > 0)
+                {
+                    foreach (DataRow row in dtNew.Rows)
+                    {
+                        foreach (DataColumn col in colsToDecrypt)
+                        {
+                            if (row[col] != DBNull.Value)
+                            {
+                                string encryptedValue = row[col].ToString();
+                                if (!string.IsNullOrEmpty(encryptedValue))
+                                {
+                                    row[col] = DecryptData(encryptedValue);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
             sqldata.Tables.Add(dtNew);
             index++;
         }
         sReturn = JsonConvert.SerializeObject(sqldata);
         return sReturn;
-
-        //foreach (DataTable dt in dttabletdata.Tables)
-        //{
-        //    DataTable dtNew = new DataTable();  
-        //    dtNew = dt.Copy();            
-        //    try
-        //    {
-        //        dtNew.Columns.RemoveAt(0);
-        //    }
-        //    catch 
-        //    {
-
-        //        throw;
-        //    }
-        //    dtNew.TableName = dt.Columns[0].ColumnName;        
-        //    sqldata.Tables.Add(dtNew);
-        //}
-        //sReturn = JsonConvert.SerializeObject(sqldata);
-        //return sReturn;
     }
 
     [WebMethod]
@@ -14105,7 +14222,7 @@ public class ExportdataWebservice : System.Web.Services.WebService
 
             HashSet<string> encryptedColumns = GetColumnsToDecrypt();
 
-            SqlParameter[] para = new SqlParameter[] 
+            SqlParameter[] para = new SqlParameter[]
             {
                 new SqlParameter("@UserName",UserName),
             };
@@ -14183,7 +14300,6 @@ public class ExportdataWebservice : System.Web.Services.WebService
                 sReturn = "9999";
             }
         }
-
         catch
         {
             sReturn = "0";
@@ -14213,7 +14329,7 @@ public class ExportdataWebservice : System.Web.Services.WebService
 
             HashSet<string> encryptedColumns = GetColumnsToDecrypt();
 
-            SqlParameter[] para = new SqlParameter[] 
+            SqlParameter[] para = new SqlParameter[]
             {
               new SqlParameter("@UserName",UserName),
               new SqlParameter("@Villagecode",Villagecode),
@@ -17878,25 +17994,56 @@ public class ExportdataWebservice : System.Web.Services.WebService
                 // ================================================================
                 // CALL THE COMMON ENCRYPTOR
                 // ================================================================
+
+                Stopwatch swEncrypt = Stopwatch.StartNew();
+
                 JsonCryptoHelper jsonCryptoHelper = new JsonCryptoHelper();
                 sData = jsonCryptoHelper.EncryptJsonFields(sData, fieldsToEncrypt);
+
+                swEncrypt.Stop();
+                long encryptionTimeMs = swEncrypt.ElapsedMilliseconds;
+
+                Stopwatch swProcessing = Stopwatch.StartNew();
 
                 sData = "{ \"rootNode\": {" + sData.Trim().TrimStart('{').TrimEnd('}') + "} }";
                 xdMyData = (XmlDocument)JsonConvert.DeserializeXmlNode(sData);
                 dsMyData.ReadXml(new XmlNodeReader(xdMyData));
 
+                long dbTimeMs = 0;
+                int totalRows = 0;
+
                 if (dsMyData.Tables.Count >= 1)
                 {
+                    totalRows = dsMyData.Tables["tblOOSC"].Rows.Count;
+
                     DataTable DttblActivityUpdate_School = objComman.CreateDataTable("tblOOSC2026");
                     DttblActivityUpdate_School = SetColumnsOrdinal(dsMyData.Tables["tblOOSC"], DttblActivityUpdate_School);
+
+                    swProcessing.Stop();
+                    Stopwatch swDb = Stopwatch.StartNew();
+
                     DataSet dsResult = new DataSet();
                     dsResult = objComman.Tablet_Post_Session_Insert_Update_tblOOSC2026(DttblActivityUpdate_School, UserID, sData);
+
+                    swDb.Stop();
+                    dbTimeMs = swDb.ElapsedMilliseconds;
+
+                    swProcessing.Start();
                     sReturn = JsonConvert.SerializeObject(dsResult);
                 }
                 else
                 {
                     sReturn = "{\"Table\":[{\"RetValue\":-10}]}";
                 }
+
+                swProcessing.Stop();
+                long processingTimeMs = swProcessing.ElapsedMilliseconds;
+
+                long timeWithoutEncryptionMs = dbTimeMs + processingTimeMs;
+                long timeWithEncryptionMs = dbTimeMs + encryptionTimeMs + processingTimeMs;
+
+                LogApiPerformance("TabletPostSession_tblOOSC2026", totalRows, dbTimeMs, encryptionTimeMs, processingTimeMs, timeWithoutEncryptionMs,
+                timeWithEncryptionMs);
             }
             else
             {

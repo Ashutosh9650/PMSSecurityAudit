@@ -3,10 +3,12 @@ using Ionic.Zip;
 using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Text;
 using System.Web;
+using System.Web.UI;
 using System.Web.UI.WebControls;
 
 public partial class frmConnectSummary : System.Web.UI.Page
@@ -8880,189 +8882,304 @@ public partial class frmConnectSummary : System.Web.UI.Page
     }
     public void LoadEnrollData(int Flag)
     {
-        string conditions = "";
-        string ddlBlock = "";
-        string ddlDistrict = "";
-        string ddlPhan = "";
-        string ddlVillage = "";
-        string ddlStatecode = "";
-        foreach (ListItem item in ChkState.Items)
+        try
         {
-            if (item.Selected)
+            Stopwatch swTotal = Stopwatch.StartNew();
+
+            string conditions = "";
+            string ddlBlock = "";
+            string ddlDistrict = "";
+            string ddlPhan = "";
+            string ddlVillage = "";
+            string ddlStatecode = "";
+            foreach (ListItem item in ChkState.Items)
             {
+                if (item.Selected)
+                {
 
-                ddlStatecode += "'" + item.Value + "'" + ",";
+                    ddlStatecode += "'" + item.Value + "'" + ",";
 
 
+                }
             }
-        }
 
-        if (ddlStatecode.Length > 0)
-        {
-            ddlStatecode = ddlStatecode.Substring(0, ddlStatecode.LastIndexOf(","));
-        }
-        foreach (ListItem item in chkDistrict.Items)
-        {
-            if (item.Selected)
-            {
-
-                ddlDistrict += "'" + item.Value + "'" + ",";
-
-
-            }
-        }
-
-        if (ddlDistrict.Length > 0)
-        {
-            ddlDistrict = ddlDistrict.Substring(0, ddlDistrict.LastIndexOf(","));
-        }
-        foreach (ListItem item in chkBlock.Items)
-        {
-            if (item.Selected)
-            {
-
-                ddlBlock += "'" + item.Value + "'" + ",";
-
-
-            }
-        }
-
-        if (ddlBlock.Length > 0)
-        {
-            ddlBlock = ddlBlock.Substring(0, ddlBlock.LastIndexOf(","));
-        }
-
-        //foreach (ListItem item in ddlPanchayat.Items)
-        //{
-        //    if (item.Selected)
-        //    {
-
-        //        ddlPhan += "'" + item.Value + "'" + ",";
-
-
-        //    }
-        //}
-
-        //if (ddlPhan.Length > 0)
-        //{
-        //    ddlPhan = ddlPhan.Substring(0, ddlPhan.LastIndexOf(","));
-        //}
-        //foreach (ListItem item in chkVillage.Items)
-        //{
-        //    if (item.Selected)
-        //    {
-
-        //        ddlVillage += "'" + item.Value + "'" + ",";
-
-
-        //    }
-        //}
-
-        //if (ddlVillage.Length > 0)
-        //{
-        //    ddlVillage = ddlVillage.Substring(0, ddlVillage.LastIndexOf(","));
-        //}
-
-
-
-        string condition = string.Empty;
-        if (Flag == 2)
-        {
             if (ddlStatecode.Length > 0)
             {
-                conditions += " and mst5Village.StateCode in(" + ddlStatecode + ") ";
-
+                ddlStatecode = ddlStatecode.Substring(0, ddlStatecode.LastIndexOf(","));
             }
-        }
-        else
-        {
-            if (ddlYear.SelectedIndex > 0)
+            foreach (ListItem item in chkDistrict.Items)
             {
-                conditions += "    and mst5Village.Fyear = '" + ddlYear.SelectedItem.Text + "' ";
+                if (item.Selected)
+                {
 
+                    ddlDistrict += "'" + item.Value + "'" + ",";
+
+
+                }
             }
-            if (ddlStatecode.Length > 0)
+
+            if (ddlDistrict.Length > 0)
             {
-                conditions += " and mst5Village.StateCode in(" + ddlStatecode + ") ";
-
+                ddlDistrict = ddlDistrict.Substring(0, ddlDistrict.LastIndexOf(","));
             }
-        }
+            foreach (ListItem item in chkBlock.Items)
+            {
+                if (item.Selected)
+                {
 
-        if (ddlDistrict.Length > 0)
-        {
-            conditions += " and mst5Village.DistrictCode in(" + ddlDistrict + ") ";
+                    ddlBlock += "'" + item.Value + "'" + ",";
 
-        }
 
-        if (ddlBlock.Length > 0)
-        {
+                }
+            }
 
-            conditions += " and mst5Village.BlockCode in(" + ddlBlock + ") ";
+            if (ddlBlock.Length > 0)
+            {
+                ddlBlock = ddlBlock.Substring(0, ddlBlock.LastIndexOf(","));
+            }
 
-        }
-        if (ddlPhan.Length > 0)
-        {
-            conditions += " and mst5Village.PanchayatCode in(" + ddlPhan + ") ";
-        }
-        if (ddlVillage.Length > 0)
-        {
-            conditions += " and mst5Village.VillageCode in(" + ddlVillage + ") ";
-        }
-        if (ddlGender.SelectedIndex > 0)
-        {
-            if (Convert.ToInt32(ddlYear.SelectedValue) >= 2020)
-                conditions += " and Gender ='" + ddlGender.SelectedItem.Text + "' ";
+
+            string condition = string.Empty;
+            if (Flag == 2)
+            {
+                if (ddlStatecode.Length > 0)
+                {
+                    conditions += " and mst5Village.StateCode in(" + ddlStatecode + ") ";
+
+                }
+            }
             else
             {
-                conditions += " and tblDTD.Gender = '" + (ddlGender.SelectedItem.Text == "Male" ? "1" : "2") + "' ";
+                if (ddlYear.SelectedIndex > 0)
+                {
+                    conditions += "    and mst5Village.Fyear = '" + ddlYear.SelectedItem.Text + "' ";
+
+                }
+                if (ddlStatecode.Length > 0)
+                {
+                    conditions += " and mst5Village.StateCode in(" + ddlStatecode + ") ";
+
+                }
             }
-        }
 
-
-        string Age = "";
-        foreach (ListItem item in chkAge.Items)
-        {
-            if (item.Selected)
+            if (ddlDistrict.Length > 0)
             {
-                Age += "" + item.Value + "" + ",";
+                conditions += " and mst5Village.DistrictCode in(" + ddlDistrict + ") ";
+
             }
-        }
-        string AgeEnGrouopp = "";
 
-        if (Age.Length > 0)
-        {
-            Age = Age.Substring(0, Age.LastIndexOf(","));
+            if (ddlBlock.Length > 0)
+            {
 
-            conditions += " and [Current Age] in(" + Age + ")";
-        }
+                conditions += " and mst5Village.BlockCode in(" + ddlBlock + ") ";
+
+            }
+            if (ddlPhan.Length > 0)
+            {
+                conditions += " and mst5Village.PanchayatCode in(" + ddlPhan + ") ";
+            }
+            if (ddlVillage.Length > 0)
+            {
+                conditions += " and mst5Village.VillageCode in(" + ddlVillage + ") ";
+            }
+            if (ddlGender.SelectedIndex > 0)
+            {
+                if (Convert.ToInt32(ddlYear.SelectedValue) >= 2020)
+                    conditions += " and Gender ='" + ddlGender.SelectedItem.Text + "' ";
+                else
+                {
+                    conditions += " and tblDTD.Gender = '" + (ddlGender.SelectedItem.Text == "Male" ? "1" : "2") + "' ";
+                }
+            }
 
 
-        SqlParameter[] cmdParameters = new SqlParameter[]
-        {
+            string Age = "";
+            foreach (ListItem item in chkAge.Items)
+            {
+                if (item.Selected)
+                {
+                    Age += "" + item.Value + "" + ",";
+                }
+            }
+            string AgeEnGrouopp = "";
+
+            if (Age.Length > 0)
+            {
+                Age = Age.Substring(0, Age.LastIndexOf(","));
+
+                conditions += " and [Current Age] in(" + Age + ")";
+            }
+
+
+            SqlParameter[] cmdParameters = new SqlParameter[]
+            {
             new SqlParameter("@Condition",conditions),
             new SqlParameter("@Fyear",ddlYear.SelectedValue)
-        };
+            };
 
-        DataTable dt = null;
-        dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptEnrollTargetD2dDetials]", cmdParameters);
+            Stopwatch swDbOnly = Stopwatch.StartNew();
 
-        if (Convert.ToInt32(ddlYear.SelectedValue) >= 2020)
-            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Mauhalla", "House", "Child Name", "Father Name", "Mother Name", "DOB"/*, "Current Age", "Age"*/);
-        else if (Convert.ToInt32(ddlYear.SelectedValue) < 2020)
-            dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Mauhalla", "House", "Child Name", "Father Name", "DOB"/*, "Current Age", "Age"*/);
+            DataTable dt = null;
+            dt = SqlHelper.GetDataTable(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "[rptEnrollTargetD2dDetials]", cmdParameters);
 
-        ViewState["D2dUser"] = dt;
+            swDbOnly.Stop();
+            long dbTimeMs = swDbOnly.ElapsedMilliseconds;
 
-        GV_DynamicGrid.Visible = true;
-        if (dt.Rows.Count > 0)
-        {
-            ReportDownload("Enrollment Target Raw Data", "Contact Summary Report");
-            ExportToCSVFile(dt, "EnrollmentTargetRawData");
+            Stopwatch swDecryptionOnly = Stopwatch.StartNew();
+
+            if (Convert.ToInt32(ddlYear.SelectedValue) >= 2020)
+                dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Mauhalla", "House", "Child Name", "Father Name", "Mother Name", "DOB"/*, "Current Age", "Age"*/);
+            else if (Convert.ToInt32(ddlYear.SelectedValue) < 2020)
+                dataTableMaskingHelper.DecryptAndMaskDataTable(dt, "Mauhalla", "House", "Child Name", "Father Name", "DOB"/*, "Current Age", "Age"*/);
+
+            swDecryptionOnly.Stop();
+            long decryptionTimeMs = swDecryptionOnly.ElapsedMilliseconds;
+
+
+            ViewState["D2dUser"] = dt;
+
+            GV_DynamicGrid.Visible = true;
+            if (dt.Rows.Count > 0)
+            {
+                ReportDownload("Enrollment Target Raw Data", "Contact Summary Report");
+                ExportToCSVFileNew(dt, "EnrollmentTargetRawData", dbTimeMs, decryptionTimeMs);
+            }
+            else
+            {
+                GV_DynamicGrid.DataSource = null;
+                GV_DynamicGrid.DataBind();
+            }
         }
-        else
+        catch(Exception ex)
         {
-            GV_DynamicGrid.DataSource = null;
-            GV_DynamicGrid.DataBind();
+            throw ex;
+        }
+    }
+
+    private void ExportToCSVFileNew(DataTable dtTable, string filePath, long dbTimeMs = 0, long decryptionTimeMs = 0)
+    {
+        if (dtTable != null)
+        {
+            Stopwatch swExportProcess = Stopwatch.StartNew();
+
+            StringBuilder sbldr = new StringBuilder();
+            if (dtTable.Columns.Count != 0)
+            {
+                foreach (DataColumn col in dtTable.Columns)
+                {
+                    sbldr.Append(col.ColumnName + ',');
+                }
+                sbldr.Append("\r\n");
+                foreach (DataRow row in dtTable.Rows)
+                {
+                    foreach (DataColumn column in dtTable.Columns)
+                    {
+
+                        sbldr.Append(Convert.ToString(row[column]).Replace(",", "  ").Replace("\r", "").Replace("\n", "") + ',');
+                    }
+                    sbldr.Append("\r\n");
+
+                }
+            }
+            string sFileDir = Server.MapPath(Comman.GetImagePath("DataBackupPath"));
+            string Fullfilename = "" + filePath + "_" + DateTime.Now.ToString("dd_MM_yyyy_hh_mm_ss") + ".csv";
+            string path = sFileDir + Fullfilename;
+            File.WriteAllText(path, sbldr.ToString());
+
+            FileStream fs = null;//, fs2=null;
+            try
+            {
+                string path1 = Fullfilename;
+                string foldername = Server.MapPath(Comman.GetImagePath("DataBackupPath") + path1 + "");
+                string datafolder = path1.Substring(0, path1.Length - 4);
+                //  string[] file = Directory.GetFiles(foldername);
+
+                string fullPath = Request.MapPath(Comman.GetImagePath("DataBackupPath") + datafolder + "" + ".zip");
+                using (ZipFile zip = new ZipFile())
+                {
+                    zip.AddFile(foldername, "");
+                    //    zip.AddFiles(file, foldername);
+                    zip.Save(Server.MapPath(Comman.GetImagePath("DataBackupPath") + datafolder + "" + ".zip"));
+                }
+
+                swExportProcess.Stop();
+                long csvGenTimeMs = swExportProcess.ElapsedMilliseconds;
+
+                long downloadWithoutDecryptionMs = dbTimeMs + csvGenTimeMs;
+                long downloadWithDecryptionMs = dbTimeMs + decryptionTimeMs + csvGenTimeMs;
+
+
+                LogUatPerformance(dtTable.Rows.Count, dbTimeMs, decryptionTimeMs, csvGenTimeMs, downloadWithoutDecryptionMs, downloadWithDecryptionMs);
+
+
+                HttpResponse Response = HttpContext.Current.Response; 
+                Response.Clear(); 
+                Response.ClearHeaders(); 
+                Response.Charset = "UTF-8";
+
+                fs = File.Open(fullPath, FileMode.Open);
+                byte[] bytBytes = new byte[(fs.Length)];
+                fs.Read(bytBytes, 0, (int)fs.Length);
+                fs.Close();
+                Response.AddHeader("Content-disposition", "attachment; filename=" + datafolder + "" + ".zip");
+                Response.ContentType = "application/octet-stream";
+                Response.BinaryWrite(bytBytes);
+
+                if (File.Exists(path))
+                {
+                    System.IO.File.Delete(path);
+                }
+                if (File.Exists(fullPath))
+                {
+                    System.IO.File.Delete(fullPath);
+                }
+
+                Response.Flush();
+                Response.End();
+            }
+
+            catch (System.Exception ex)
+            {
+                Response.Clear();
+            }
+            finally
+            {
+                fs.Dispose();
+                Response.Clear();
+
+            }
+        }
+    }
+
+    private void LogUatPerformance(int totalRows, long dbTimeMs, long decryptionTimeMs, long csvGenTimeMs, long downloadWithoutDecryptionMs, long downloadWithDecryptionMs)
+    {
+        try
+        {
+            string logDirPath = HttpContext.Current.Server.MapPath("~/App_Data/Logs");
+            if (!Directory.Exists(logDirPath))
+            {
+                Directory.CreateDirectory(logDirPath);
+            }
+
+            string logFilePath = Path.Combine(logDirPath, "UAT_PerfLog_" + DateTime.Now.ToString("yyyyMMdd") + ".txt");
+
+            string logEntry = string.Format(
+                "[{0}] | Total Rows: {1} | DB Time: {2} ms | Decryption Time: {3} ms | CSV/Zip Gen Time: {4} ms | REPORT DOWNLOAD WITHOUT DECRYPTION: {5} ms | REPORT DOWNLOAD WITH DECRYPTION: {6} ms{7}",
+                DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"),
+                totalRows,
+                dbTimeMs,
+                decryptionTimeMs,
+                csvGenTimeMs,
+                downloadWithoutDecryptionMs,
+                downloadWithDecryptionMs,
+                Environment.NewLine
+            );
+
+            File.AppendAllText(logFilePath, logEntry);
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine("Log write error: " + ex.Message);
         }
     }
 }
