@@ -18,30 +18,25 @@ using System.Web.Script.Services;
 using System.Web.Services;
 using System.Xml;
 
-
 /// <summary>
-/// Summary description for ExportdataWebservice
+/// Summary description for ExportImportWebservice
 /// </summary>
 [WebService(Namespace = "http://tempuri.org/")]
 [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
 // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line. 
 // [System.Web.Script.Services.ScriptService]
-public class ExportdataWebservice : System.Web.Services.WebService
+public class ExportImportWebservice : System.Web.Services.WebService
 {
     Comman objComman = new Comman();
     clsMain objMain = new clsMain();
     Password objPass = new Password();
     clsMain DBTask = new clsMain();
-    
-
-    public ExportdataWebservice()
+    public ExportImportWebservice()
     {
 
         //Uncomment the following line if using designed components 
         //InitializeComponent(); 
     }
-
-
 
     [WebMethod]
     public string GetReportStatus(string UserName)
@@ -526,6 +521,18 @@ public class ExportdataWebservice : System.Web.Services.WebService
             case 5:
                 tablename = "tblTotal";
                 break;
+            case 6:
+                tablename = "mstMasterGKPLevel";
+                break;
+            case 7:
+                tablename = "tblChildRegistrationGKPBO";
+                break;
+            case 8:
+                tablename = "tblChildAttendanceGKPBO";
+                break;
+            case 9:
+                tablename = "tblClassAttendanceGKPBO";
+                break;
             default:
                 tablename = "NoName";
                 break;
@@ -892,6 +899,9 @@ public class ExportdataWebservice : System.Web.Services.WebService
             case 84:
                 tablename = "mstTravelMatrixOtherLocation";
                 break;
+            case 85:
+                tablename = "mstMasterGKPLevel";
+                break;
             default:
                 tablename = "NoName";
                 break;
@@ -1098,7 +1108,9 @@ public class ExportdataWebservice : System.Web.Services.WebService
                     dtNew.TableName = tableName;
 
                     if (string.Equals(tableName, "tblOOSC", StringComparison.OrdinalIgnoreCase) ||
-                        string.Equals(tableName, "tblDTD", StringComparison.OrdinalIgnoreCase) || string.Equals(tableName, "tblActivityUpdate_School", StringComparison.OrdinalIgnoreCase) || string.Equals(tableName, "tblChildRegistrationBalsabha", StringComparison.OrdinalIgnoreCase))
+                        string.Equals(tableName, "tblDTD", StringComparison.OrdinalIgnoreCase) || 
+                        string.Equals(tableName, "tblActivityUpdate_School", StringComparison.OrdinalIgnoreCase) || 
+                        string.Equals(tableName, "tblChildRegistrationBalsabha", StringComparison.OrdinalIgnoreCase))
                     {
                         List<DataColumn> colsToDecrypt = new List<DataColumn>();
                         foreach (DataColumn col in dtNew.Columns)
@@ -3146,6 +3158,18 @@ public class ExportdataWebservice : System.Web.Services.WebService
                 tablename = "tblChildGyanodayaAttendanceGKP";
                 break;
 
+            case 71:
+                tablename = "mstMasterGKPLevel";
+                break;
+            case 72:
+                tablename = "tblVidhyaSabhaGKP";
+                break;
+            case 73:
+                tablename = "tblUtsavGKP";
+                break;
+            case 74:
+                tablename = "tblChildPreparationGKP";
+                break;
             default:
                 tablename = "NoName";
                 break;
@@ -3223,6 +3247,21 @@ public class ExportdataWebservice : System.Web.Services.WebService
                 break;
             case 18:
                 tablename = "tblTotal";
+                break;
+            case 19:
+                tablename = "mstGKPMasterReport";
+                break;
+            case 20:
+                tablename = "masterGKP";
+                break;
+            case 21:
+                tablename = "masterGkpDetails";
+                break;
+            case 22:
+                tablename = "MstGKPSessionSequence";
+                break;
+            case 23:
+                tablename = "tblHoliday";
                 break;
             default:
                 tablename = "NoName";
@@ -10608,6 +10647,18 @@ public class ExportdataWebservice : System.Web.Services.WebService
             case 8:
                 tablename = "tblChildGyanodayaAttendanceGKP";
                 break;
+            case 9:
+                tablename = "mstMasterGKPLevel";
+                break;
+            case 10:
+                tablename = "tblVidhyaSabhaGKP";
+                break;
+            case 11:
+                tablename = "tblUtsavGKP";
+                break;
+            case 12:
+                tablename = "tblChildPreparationGKP";
+                break;
             default:
                 tablename = "NoName";
                 break;
@@ -13752,7 +13803,7 @@ public class ExportdataWebservice : System.Web.Services.WebService
             }
 
 
-            SqlParameter[] para = new SqlParameter[] 
+            SqlParameter[] para = new SqlParameter[]
             {
                 new SqlParameter("@UserName",UserName),
             };
@@ -13778,7 +13829,8 @@ public class ExportdataWebservice : System.Web.Services.WebService
                     string tableName = ReportPlanActivity(index);
                     dtNew.TableName = tableName;
 
-                    if (string.Equals(tableName, "tblOOSC", StringComparison.OrdinalIgnoreCase) || string.Equals(tableName, "tblDTD", StringComparison.OrdinalIgnoreCase))
+                    if (string.Equals(tableName, "tblOOSC", StringComparison.OrdinalIgnoreCase) || 
+                        string.Equals(tableName, "tblDTD", StringComparison.OrdinalIgnoreCase))
                     {
                         List<DataColumn> colsToDecrypt = new List<DataColumn>();
                         foreach (DataColumn col in dtNew.Columns)
@@ -14154,7 +14206,7 @@ public class ExportdataWebservice : System.Web.Services.WebService
     public string Get_tblEnrolment_Temp2024(string UserName)
     {
         DataSet dttabletdata = new DataSet();
-        SqlParameter[] para = new SqlParameter[] 
+        SqlParameter[] para = new SqlParameter[]
         {
             new SqlParameter("@UserName",UserName),
         };
@@ -14177,7 +14229,8 @@ public class ExportdataWebservice : System.Web.Services.WebService
             string tableName = GetTableNameTablateEN(index);
             dtNew.TableName = tableName;
 
-            if (string.Equals(tableName, "tblOOSC", StringComparison.OrdinalIgnoreCase) || string.Equals(tableName, "tblDTD", StringComparison.OrdinalIgnoreCase)) 
+            if (string.Equals(tableName, "tblOOSC", StringComparison.OrdinalIgnoreCase) || 
+                string.Equals(tableName, "tblDTD", StringComparison.OrdinalIgnoreCase))
             {
                 List<DataColumn> colsToDecrypt = new List<DataColumn>();
                 foreach (DataColumn col in dtNew.Columns)
@@ -14258,7 +14311,9 @@ public class ExportdataWebservice : System.Web.Services.WebService
                     string tableName = GetTableNametblContactTarget(index).Trim();
                     dtNew.TableName = tableName;
 
-                    if (string.Equals(tableName.Trim(), "tblDTD", StringComparison.OrdinalIgnoreCase) || string.Equals(tableName.Trim(), "tblEnrolment", StringComparison.OrdinalIgnoreCase) || string.Equals(tableName.Trim(), "tblOOSC", StringComparison.OrdinalIgnoreCase))
+                    if (string.Equals(tableName.Trim(), "tblDTD", StringComparison.OrdinalIgnoreCase) || 
+                        string.Equals(tableName.Trim(), "tblEnrolment", StringComparison.OrdinalIgnoreCase) || 
+                        string.Equals(tableName.Trim(), "tblOOSC", StringComparison.OrdinalIgnoreCase))
                     {
                         List<DataColumn> colsToDecrypt = new List<DataColumn>();
                         foreach (DataColumn col in dtNew.Columns)
@@ -14366,7 +14421,9 @@ public class ExportdataWebservice : System.Web.Services.WebService
                     string tableName = GetTableNameTablateNewVillagewise2019(index).Trim();
                     dtNew.TableName = tableName;
 
-                    if (string.Equals(tableName.Trim(), "tblDTD", StringComparison.OrdinalIgnoreCase) || string.Equals(tableName.Trim(), "tblEnrolment", StringComparison.OrdinalIgnoreCase) || string.Equals(tableName.Trim(), "tblOOSC", StringComparison.OrdinalIgnoreCase))
+                    if (string.Equals(tableName.Trim(), "tblDTD", StringComparison.OrdinalIgnoreCase) || 
+                        string.Equals(tableName.Trim(), "tblEnrolment", StringComparison.OrdinalIgnoreCase) || 
+                        string.Equals(tableName.Trim(), "tblOOSC", StringComparison.OrdinalIgnoreCase))
                     {
                         List<DataColumn> colsToDecrypt = new List<DataColumn>();
                         foreach (DataColumn col in dtNew.Columns)
@@ -14502,41 +14559,41 @@ public class ExportdataWebservice : System.Web.Services.WebService
         return sReturn;
     }
 
-    private HashSet<string> GetColumnsToDecrypt()
-    {
-        HashSet<string> columns = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-        try
-        {
-            string query = "SELECT DISTINCT LTRIM(RTRIM(LOWER(FieldName))) as FieldName FROM MstRoleMaskingConfig WHERE FieldName IS NOT NULL";
+	private HashSet<string> GetColumnsToDecrypt()
+	{
+		HashSet<string> columns = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+		try
+		{
+			string query = "SELECT DISTINCT LTRIM(RTRIM(LOWER(FieldName))) as FieldName FROM MstRoleMaskingConfig WHERE FieldName IS NOT NULL";
 
-            DataTable dtConfig = SqlHelper.GetDataSet(SqlHelper.mainConnectionString, CommandType.Text, query).Tables[0];
+			DataTable dtConfig = SqlHelper.GetDataSet(SqlHelper.mainConnectionString, CommandType.Text, query).Tables[0];
 
-            foreach (DataRow row in dtConfig.Rows)
-            {
-                columns.Add(row["FieldName"].ToString());
-            }
-        }
-        catch
-        {
+			foreach (DataRow row in dtConfig.Rows)
+			{
+				columns.Add(row["FieldName"].ToString());
+			}
+		}
+		catch
+		{
 
-        }
-        return columns;
-    }
+		}
+		return columns;
+	}
 
-    private string DecryptData(string cipherText)
-    {
-        try
-        {
-            return CryptoService.Decrypt(cipherText);
-        }
-        catch
-        {
-            return cipherText;
-        }
-    }
-    #endregion
+	private string DecryptData(string cipherText)
+	{
+		try
+		{
+			return CryptoService.Decrypt(cipherText);
+		}
+		catch
+		{
+			return cipherText;
+		}
+	}
+	#endregion
 
-    [WebMethod]
+	[WebMethod]
     public string UploadImageBalsaba(string filebytes, string sFilename)
     {
         // the byte array argument contains the content of the file
@@ -17550,11 +17607,11 @@ public class ExportdataWebservice : System.Web.Services.WebService
                 // ================================================================
                 string[] fieldsToEncrypt = new string[] { "GrandParentName", "MotherName", "GuardianMobileNo", "GuardianName", "FatherName" };
 
-                // ================================================================
-                // CALL THE COMMON ENCRYPTOR
-                // ================================================================
-                JsonCryptoHelper jsonCryptoHelper = new JsonCryptoHelper();
-                sData = jsonCryptoHelper.EncryptJsonFields(sData, fieldsToEncrypt);
+				// ================================================================
+				// CALL THE COMMON ENCRYPTOR
+				// ================================================================
+				JsonCryptoHelper jsonCryptoHelper = new JsonCryptoHelper();
+				sData = jsonCryptoHelper.EncryptJsonFields(sData, fieldsToEncrypt);
 
 
                 sData = "{ \"rootNode\": {" + sData.Trim().TrimStart('{').TrimEnd('}') + "} }";
@@ -18562,5 +18619,287 @@ public class ExportdataWebservice : System.Web.Services.WebService
         }
 
     }
+
+    [WebMethod]
+    [ScriptMethod(UseHttpGet = true)]
+    public string InsertUpdateVidhyaSabhaGKP(string sData, string UserName, string Pass, string IMEINo)
+    {
+        string sReturn = string.Empty;
+        try
+        {
+            DataSet dtExportData = new DataSet();
+            int UserID = 0;
+
+            string checkpass = objPass.CreatePasswordHashSecurityAudit(Pass);
+
+
+            if (UserName.Trim() != "" && Pass.Trim() != "")
+            {
+                DataTable dtUser = objComman.GetUserAuthenticate(UserName, Pass);
+
+
+                if (dtUser.Rows.Count > 0)
+                {
+                    UserID = Convert.ToInt32(dtUser.Rows[0]["UserID"].ToString());
+                }
+
+
+            }
+
+            if (UserID != 0)
+            {
+                DataSet dsMyData = new DataSet();
+                XmlDocument xdMyData = new XmlDocument();
+                sData = "{ \"rootNode\": {" + sData.Trim().TrimStart('{').TrimEnd('}') + "} }";
+                xdMyData = (XmlDocument)JsonConvert.DeserializeXmlNode(sData);
+                dsMyData.ReadXml(new XmlNodeReader(xdMyData));
+                if (dsMyData.Tables.Count >= 1)
+                {
+                    DataTable dtVidhyaSabhaGKP = objComman.CreateDataTable("tblVidhyaSabhaGKP");
+                    dtVidhyaSabhaGKP = SetColumnsOrdinal(dsMyData.Tables["tblVidhyaSabhaGKP"], dtVidhyaSabhaGKP);
+
+                    DataTable dtUtsavGKP = objComman.CreateDataTable("tblUtsavGKP");
+
+                    dtUtsavGKP = SetColumnsOrdinal(dsMyData.Tables["tblUtsavGKP"], dtUtsavGKP);
+
+                    DataTable dtChildPreparationGKP = objComman.CreateDataTable("tblChildPreparationGKP");
+
+                    dtChildPreparationGKP = SetColumnsOrdinal(dsMyData.Tables["tblChildPreparationGKP"], dtChildPreparationGKP);
+
+
+                    DataSet dsResult = new DataSet();
+                    dsResult = objComman.Tablet_Post_Session_Insert_Update_InsertUpdateVidhyaSabhaGKP(dtVidhyaSabhaGKP, dtUtsavGKP, dtChildPreparationGKP);
+                    sReturn = JsonConvert.SerializeObject(dsResult);
+                }
+
+                else
+                {
+                    sReturn = "{\"Table\":[{\"RetValue\":-10}]}";
+                }
+            }
+            else
+            {
+                sReturn = "{\"Table\":[{\"RetValue\":-5}]}";
+            }
+        }
+        catch (Exception ex)
+        {
+            sReturn = "{\"Table\":[{\"RetValue\":-99}]}";
+        }
+        return sReturn;
+    }
+
+
+    [WebMethod]
+    [ScriptMethod(UseHttpGet = true)]
+    public string InsertUpdateVChildAttendanceGKPBO(string sData, string UserName, string Pass, string IMEINo)
+    {
+        string sReturn = string.Empty;
+        try
+        {
+            DataSet dtExportData = new DataSet();
+            int UserID = 0;
+
+            string checkpass = objPass.CreatePasswordHashNew(Pass);
+
+            DataTable dtUser = DBTask.Get_Check_PasswordNewBO(UserName, checkpass, IMEINo);
+
+
+
+
+            if (dtUser.Rows.Count > 0)
+            {
+                UserID = Convert.ToInt32(dtUser.Rows[0]["UserID"].ToString());
+            }
+
+
+
+
+            if (UserID != 0)
+            {
+                DataSet dsMyData = new DataSet();
+                XmlDocument xdMyData = new XmlDocument();
+                sData = "{ \"rootNode\": {" + sData.Trim().TrimStart('{').TrimEnd('}') + "} }";
+                xdMyData = (XmlDocument)JsonConvert.DeserializeXmlNode(sData);
+                dsMyData.ReadXml(new XmlNodeReader(xdMyData));
+                if (dsMyData.Tables.Count >= 1)
+                {
+                    DataTable tblChildRegistrationGKPBO = objComman.CreateDataTable("tblChildRegistrationGKPBO");
+                    tblChildRegistrationGKPBO = SetColumnsOrdinal(dsMyData.Tables["tblChildRegistrationGKPBO"], tblChildRegistrationGKPBO);
+
+                    DataTable tblChildAttendanceGKPBO = objComman.CreateDataTable("tblChildAttendanceGKPBO");
+
+                    tblChildAttendanceGKPBO = SetColumnsOrdinal(dsMyData.Tables["tblChildAttendanceGKPBO"], tblChildAttendanceGKPBO);
+
+                    DataTable tblClassAttendanceGKPBO = objComman.CreateDataTable("tblClassAttendanceGKPBO");
+
+                    tblClassAttendanceGKPBO = SetColumnsOrdinal(dsMyData.Tables["tblClassAttendanceGKPBO"], tblClassAttendanceGKPBO);
+
+
+                    DataSet dsResult = new DataSet();
+                    dsResult = objComman.Tablet_Post_Session_Insert_Update_tbldAttendanceGKPBO(tblChildRegistrationGKPBO, tblChildAttendanceGKPBO, tblClassAttendanceGKPBO);
+                    sReturn = JsonConvert.SerializeObject(dsResult);
+                }
+
+                else
+                {
+                    sReturn = "{\"Table\":[{\"RetValue\":-10}]}";
+                }
+            }
+            else
+            {
+                sReturn = "{\"Table\":[{\"RetValue\":-5}]}";
+            }
+        }
+        catch (Exception ex)
+        {
+            sReturn = "{\"Table\":[{\"RetValue\":-99}]}";
+        }
+        return sReturn;
+    }
+
+    [WebMethod]
+    public string Get_ChildRegistrationGKPBO(string UserName, string Password, string IMEINo)
+    {
+        string sReturn = string.Empty;
+        try
+        {
+
+            string checkpass = objPass.CreatePasswordHashNew(Password);
+
+            DataTable dtUser = DBTask.Get_Check_PasswordNewBO(UserName, checkpass, IMEINo);
+
+
+
+            if (dtUser.Rows.Count > 0)
+            {
+                //Int32  UserID = Convert.ToInt32(dtUser.Rows[0]["UserID"].ToString());
+            }
+            else
+            {
+                return "0";
+            }
+
+
+            SqlParameter[] para = new SqlParameter[] {
+
+            new SqlParameter("@UserName",UserName),
+
+            };
+
+            try
+            {
+                DataSet dttabletdata = new DataSet();
+
+                dttabletdata = SqlHelper.GetDataSet(SqlHelper.mainConnectionString, CommandType.StoredProcedure, "Get_ChildGKPBO", para);
+
+
+                DataSet sqldata = new DataSet("MyData");
+                int index = 0;
+
+                foreach (DataTable dt in dttabletdata.Tables)
+                {
+                    DataTable dtNew = new DataTable();
+                    dtNew = dt.Copy();
+                    dtNew.TableName = GetTableNameGKpBO(index);
+                    sqldata.Tables.Add(dtNew);
+                    index++;
+                }
+                sReturn = JsonConvert.SerializeObject(sqldata);
+            }
+            catch (Exception ex)
+            {
+                sReturn = "9999";
+            }
+        }
+
+        catch (Exception ex)
+        {
+            sReturn = "0";
+        }
+        return sReturn;
+    }
+
+    private string GetTableNameGKpBO(int index)
+    {
+        string tablename = string.Empty;
+
+        switch (index)
+        {
+            case 0:
+                tablename = "tblChildRegistrationGKPBO";
+                break;
+
+            case 1:
+                tablename = "tblChildAttendanceGKPBO";
+                break;
+            case 2:
+                tablename = "tblClassAttendanceGKPBO";
+                break;
+            case 3:
+                tablename = "tblRandomSessionPhoto";
+                break;
+
+            default:
+                tablename = "NoName";
+                break;
+
+
+        }
+
+        return tablename;
+    }
+
+    [WebMethod]
+    [ScriptMethod(UseHttpGet = true)]
+    public string InsertUpdateEnrollment_temp2026(string sData, string UserName, string Pass)
+    {
+        string sReturn = string.Empty;
+        try
+        {
+            DataSet dtExportData = new DataSet();
+            int UserID = 0;
+            if (UserName.Trim() != "" && Pass.Trim() != "")
+            {
+                DataTable dtUser = objComman.GetUserAuthenticate(UserName, Pass);
+                if (dtUser.Rows.Count > 0)
+                {
+                    UserID = Convert.ToInt32(dtUser.Rows[0]["UserID"].ToString());
+                }
+            }
+            if (UserID != 0)
+            {
+                DataSet dsMyData = new DataSet();
+                XmlDocument xdMyData = new XmlDocument();
+                sData = "{ \"rootNode\": {" + sData.Trim().TrimStart('{').TrimEnd('}') + "} }";
+                xdMyData = (XmlDocument)JsonConvert.DeserializeXmlNode(sData);
+                dsMyData.ReadXml(new XmlNodeReader(xdMyData));
+                if (dsMyData.Tables.Count >= 1)
+                {
+                    DataTable DttblEnrolment_Temp = objComman.CreateDataTable("tblEnrolment_Temp2026New");
+                    DttblEnrolment_Temp = SetColumnsOrdinal(dsMyData.Tables["tblEnrolment_Temp"], DttblEnrolment_Temp);
+                    DataSet dsResult = new DataSet();
+                    dsResult = objComman.Tablet_Post_Session_Insert_Update_tblEnrolment_Temp2026(DttblEnrolment_Temp);
+                    sReturn = JsonConvert.SerializeObject(dsResult);
+                }
+
+                else
+                {
+                    sReturn = "{\"Table\":[{\"RetValue\":-10}]}";
+                }
+            }
+            else
+            {
+                sReturn = "{\"Table\":[{\"RetValue\":-5}]}";
+            }
+        }
+        catch (Exception)
+        {
+            sReturn = "{\"Table\":[{\"RetValue\":-99}]}";
+        }
+        return sReturn;
+    }
+
+
 
 }

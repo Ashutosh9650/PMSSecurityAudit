@@ -10011,6 +10011,135 @@ public class Comman
         }
     }
 
+
+    public DataSet Tablet_Post_Session_Insert_Update_tblEnrolment_Temp2026(DataTable DttblEnrolment_Temp)
+    {
+        SqlConnection sqlConnection = new SqlConnection(SqlHelper.mainConnectionString);
+        try
+        {
+            if (sqlConnection.State != ConnectionState.Open)
+            {
+                sqlConnection.Open();
+            }
+
+            DataSet dbSqlDataSet = new DataSet();
+            SqlCommand sqlcmd = new SqlCommand();
+            sqlcmd.Connection = sqlConnection;
+            sqlcmd.CommandType = CommandType.StoredProcedure;
+            sqlcmd.CommandText = "Tablet_Post_Session_Insert_Update_tblEnrolment_Temp2026";
+            sqlcmd.Parameters.AddWithValue("@tblEnrolment_Temp", DttblEnrolment_Temp);
+            //sqlcmd.Parameters.AddWithValue("@UserID", iUserID);
+            //sqlcmd.Parameters.AddWithValue("@JSON", sJason);
+            SqlDataAdapter da = new SqlDataAdapter(sqlcmd);
+            da.Fill(dbSqlDataSet);
+            return dbSqlDataSet;
+        }
+        catch (SqlException e)
+        {
+            if (!(sqlConnection.State == ConnectionState.Closed))
+            {
+                sqlConnection.Close();
+                sqlConnection.Dispose();
+            }
+
+            throw e;
+        }
+        finally
+        {
+            if (!(sqlConnection.State == ConnectionState.Closed))
+            {
+                sqlConnection.Close();
+                sqlConnection.Dispose();
+            }
+
+        }
+    }
+
+    public DataSet Tablet_Post_Session_Insert_Update_InsertUpdateVidhyaSabhaGKP(DataTable tblVidhyaSabhaGKP, DataTable tblUtsavGKP, DataTable tblChildPreparationGKP)
+    {
+        SqlConnection sqlConnection = new SqlConnection(SqlHelper.mainConnectionString);
+        try
+        {
+            if (sqlConnection.State != ConnectionState.Open)
+            {
+                sqlConnection.Open();
+            }
+
+            DataSet dbSqlDataSet = new DataSet();
+            SqlCommand sqlcmd = new SqlCommand();
+            sqlcmd.Connection = sqlConnection;
+            sqlcmd.CommandType = CommandType.StoredProcedure;
+            sqlcmd.CommandText = "Tablet_Post_Session_Insert_Update_tblVidhyaSabhaGKP";
+            sqlcmd.Parameters.AddWithValue("@tblVidhyaSabhaGKP", tblVidhyaSabhaGKP);
+            sqlcmd.Parameters.AddWithValue("@tblUtsavGKP", tblUtsavGKP);
+            sqlcmd.Parameters.AddWithValue("@tblChildPreparationGKP", tblChildPreparationGKP);
+            SqlDataAdapter da = new SqlDataAdapter(sqlcmd);
+            da.Fill(dbSqlDataSet);
+            return dbSqlDataSet;
+        }
+        catch (SqlException e)
+        {
+            if (!(sqlConnection.State == ConnectionState.Closed))
+            {
+                sqlConnection.Close();
+                sqlConnection.Dispose();
+            }
+
+            throw e;
+        }
+        finally
+        {
+            if (!(sqlConnection.State == ConnectionState.Closed))
+            {
+                sqlConnection.Close();
+                sqlConnection.Dispose();
+            }
+
+        }
+    }
+
+    public DataSet Tablet_Post_Session_Insert_Update_tbldAttendanceGKPBO(DataTable tblVidhyaSabhaGKP, DataTable tblUtsavGKP, DataTable tblChildPreparationGKP)
+    {
+        SqlConnection sqlConnection = new SqlConnection(SqlHelper.mainConnectionString);
+        try
+        {
+            if (sqlConnection.State != ConnectionState.Open)
+            {
+                sqlConnection.Open();
+            }
+
+            DataSet dbSqlDataSet = new DataSet();
+            SqlCommand sqlcmd = new SqlCommand();
+            sqlcmd.Connection = sqlConnection;
+            sqlcmd.CommandType = CommandType.StoredProcedure;
+            sqlcmd.CommandText = "Tablet_Post_Session_Insert_Update_tbldAttendanceGKPBO";
+            sqlcmd.Parameters.AddWithValue("@tblChildRegistrationGKPBO", tblVidhyaSabhaGKP);
+            sqlcmd.Parameters.AddWithValue("@tblChildAttendanceGKPBO", tblUtsavGKP);
+            sqlcmd.Parameters.AddWithValue("@tblClassAttendanceGKPBO", tblChildPreparationGKP);
+            SqlDataAdapter da = new SqlDataAdapter(sqlcmd);
+            da.Fill(dbSqlDataSet);
+            return dbSqlDataSet;
+        }
+        catch (SqlException e)
+        {
+            if (!(sqlConnection.State == ConnectionState.Closed))
+            {
+                sqlConnection.Close();
+                sqlConnection.Dispose();
+            }
+
+            throw e;
+        }
+        finally
+        {
+            if (!(sqlConnection.State == ConnectionState.Closed))
+            {
+                sqlConnection.Close();
+                sqlConnection.Dispose();
+            }
+
+        }
+    }
 }
 
 public class GoogleCaptchaResponse
