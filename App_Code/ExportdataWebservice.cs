@@ -1098,7 +1098,7 @@ public class ExportdataWebservice : System.Web.Services.WebService
                     dtNew.TableName = tableName;
 
                     if (string.Equals(tableName, "tblOOSC", StringComparison.OrdinalIgnoreCase) ||
-                        string.Equals(tableName, "tblDTD", StringComparison.OrdinalIgnoreCase))
+                        string.Equals(tableName, "tblDTD", StringComparison.OrdinalIgnoreCase) || string.Equals(tableName, "tblActivityUpdate_School", StringComparison.OrdinalIgnoreCase) || string.Equals(tableName, "tblChildRegistrationBalsabha", StringComparison.OrdinalIgnoreCase))
                     {
                         List<DataColumn> colsToDecrypt = new List<DataColumn>();
                         foreach (DataColumn col in dtNew.Columns)
@@ -5214,6 +5214,11 @@ public class ExportdataWebservice : System.Web.Services.WebService
 
                 for (int i = 0; i < dtCols.Columns.Count; i++)
                 {
+                    if (!dtData.Columns.Contains(dtCols.Columns[i].ToString()))
+                    {
+                        dtData.Columns.Add(dtCols.Columns[i].ToString());
+                    }
+
                     dtData.Columns[dtCols.Columns[i].ToString()].SetOrdinal(i);
                 }
             }
@@ -9958,6 +9963,16 @@ public class ExportdataWebservice : System.Web.Services.WebService
             {
                 DataSet dsMyData = new DataSet();
                 XmlDocument xdMyData = new XmlDocument();
+
+                string[] fieldsToEncrypt = new string[] { "MobileNo", "ChildName", "Latitude", "Longitude", "DOB", "FatherName" };
+
+                // ================================================================
+                // CALL THE COMMON ENCRYPTOR
+                // ================================================================
+                JsonCryptoHelper jsonCryptoHelper = new JsonCryptoHelper();
+                sData = jsonCryptoHelper.EncryptJsonFields(sData, fieldsToEncrypt);
+
+
                 sData = "{ \"rootNode\": {" + sData.Trim().TrimStart('{').TrimEnd('}') + "} }";
                 xdMyData = (XmlDocument)JsonConvert.DeserializeXmlNode(sData);
                 dsMyData.ReadXml(new XmlNodeReader(xdMyData));
@@ -9969,7 +9984,6 @@ public class ExportdataWebservice : System.Web.Services.WebService
                     dsResult = objComman.Tablet_Post_Session_InserttbltblChildRegistrationBalsabha(DttblEnrolment_Temp);
                     sReturn = JsonConvert.SerializeObject(dsResult);
                 }
-
                 else
                 {
                     sReturn = "{\"Table\":[{\"RetValue\":-10}]}";
@@ -10020,7 +10034,6 @@ public class ExportdataWebservice : System.Web.Services.WebService
                     dsResult = objComman.Tablet_Post_Session_InserttbltblChildAttendanceLifeskill(DttblEnrolment_Temp);
                     sReturn = JsonConvert.SerializeObject(dsResult);
                 }
-
                 else
                 {
                     sReturn = "{\"Table\":[{\"RetValue\":-10}]}";
@@ -17671,15 +17684,14 @@ public class ExportdataWebservice : System.Web.Services.WebService
         }
         return sReturn;
     }
+
     [WebMethod]
     [ScriptMethod(UseHttpGet = true)]
     public string TabletPostSessionActivityUpdatSchool2025(string sData, string UserName, string Pass)
     {
-
         string sReturn = string.Empty;
         try
         {
-
             DataSet dtExportData = new DataSet();
             int UserID = 0;
             if (UserName.Trim() != "" && Pass.Trim() != "")
@@ -17690,17 +17702,24 @@ public class ExportdataWebservice : System.Web.Services.WebService
                 {
                     UserID = Convert.ToInt32(dtUser.Rows[0]["UserID"].ToString());
                 }
-
-
             }
 
             if (UserID != 0)
             {
                 DataSet dsMyData = new DataSet();
                 XmlDocument xdMyData = new XmlDocument();
+
+                string[] fieldsToEncrypt = new string[] { "SMCPresident", "Latitude", "Longitude", "SACLatitude", "SACLongitude" };
+
+
+                JsonCryptoHelper jsonCryptoHelper = new JsonCryptoHelper();
+                sData = jsonCryptoHelper.EncryptJsonFields(sData, fieldsToEncrypt);
+
+
                 sData = "{ \"rootNode\": {" + sData.Trim().TrimStart('{').TrimEnd('}') + "} }";
                 xdMyData = (XmlDocument)JsonConvert.DeserializeXmlNode(sData);
                 dsMyData.ReadXml(new XmlNodeReader(xdMyData));
+
                 if (dsMyData.Tables.Count >= 1)
                 {
                     DataTable DttblActivityUpdate_School = objComman.CreateDataTable("tblActivityUpdate_SchoolNew2025");
@@ -17709,7 +17728,6 @@ public class ExportdataWebservice : System.Web.Services.WebService
                     dsResult = objComman.Tablet_Post_Session_ActivityUpdate_School2025(DttblActivityUpdate_School, UserID, sData);
                     sReturn = JsonConvert.SerializeObject(dsResult);
                 }
-
                 else
                 {
                     sReturn = "{\"Table\":[{\"RetValue\":-10}]}";
@@ -17725,8 +17743,8 @@ public class ExportdataWebservice : System.Web.Services.WebService
             sReturn = "{\"Table\":[{\"RetValue\":-99}]}";
         }
         return sReturn;
-
     }
+
 
     [WebMethod]
     [ScriptMethod(UseHttpGet = true)]

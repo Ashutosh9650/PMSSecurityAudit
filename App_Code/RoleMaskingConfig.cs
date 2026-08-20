@@ -93,7 +93,6 @@ public class RoleMaskingConfig
         return configs;
     }
 
-
     public Dictionary<string, FieldMaskConfig> GetConfigFromSession()
     {
         try
@@ -114,7 +113,6 @@ public class RoleMaskingConfig
 
         return new Dictionary<string, FieldMaskConfig>();
     }
-
     
     public Tuple<bool, string> GetMaskingDetails(string fieldName, Dictionary<string, FieldMaskConfig> config)
     {
@@ -167,8 +165,7 @@ public class RoleMaskingConfig
         int idx = input.IndexOf('_');
         return (idx >= 0 && idx < input.Length - 1) ? input.Substring(idx + 1) : input;
     }
-
-  
+ 
     public void ClearSessionConfig()
     {
         try
