@@ -1110,7 +1110,11 @@ public class ExportImportWebservice : System.Web.Services.WebService
                     if (string.Equals(tableName, "tblOOSC", StringComparison.OrdinalIgnoreCase) ||
                         string.Equals(tableName, "tblDTD", StringComparison.OrdinalIgnoreCase) || 
                         string.Equals(tableName, "tblActivityUpdate_School", StringComparison.OrdinalIgnoreCase) || 
-                        string.Equals(tableName, "tblChildRegistrationBalsabha", StringComparison.OrdinalIgnoreCase))
+                        string.Equals(tableName, "tblChildRegistrationBalsabha", StringComparison.OrdinalIgnoreCase) ||
+                        string.Equals(tableName, "tblSMCAttendanceNew", StringComparison.OrdinalIgnoreCase) ||
+                        string.Equals(tableName, "tblSMCAttendanceChild", StringComparison.OrdinalIgnoreCase) ||
+                        string.Equals(tableName, "tblChildAttendanceLifeskill", StringComparison.OrdinalIgnoreCase)
+                        )
                     {
                         List<DataColumn> colsToDecrypt = new List<DataColumn>();
                         foreach (DataColumn col in dtNew.Columns)
@@ -14673,6 +14677,12 @@ public class ExportImportWebservice : System.Web.Services.WebService
             {
                 DataSet dsMyData = new DataSet();
                 XmlDocument xdMyData = new XmlDocument();
+
+                string[] fieldsToEncrypt = new string[] { "FCName", "Latitude", "Longitude" };
+
+                JsonCryptoHelper jsonCryptoHelper = new JsonCryptoHelper();
+                sData = jsonCryptoHelper.EncryptJsonFields(sData, fieldsToEncrypt);
+
                 sData = "{ \"rootNode\": {" + sData.Trim().TrimStart('{').TrimEnd('}') + "} }";
                 xdMyData = (XmlDocument)JsonConvert.DeserializeXmlNode(sData);
                 dsMyData.ReadXml(new XmlNodeReader(xdMyData));
@@ -14684,7 +14694,6 @@ public class ExportImportWebservice : System.Web.Services.WebService
                     dsResult = objComman.Tablet_Post_Session_InserttbltblChildAttendanceLifeskill2024(DttblEnrolment_Temp);
                     sReturn = JsonConvert.SerializeObject(dsResult);
                 }
-
                 else
                 {
                     sReturn = "{\"Table\":[{\"RetValue\":-10}]}";
@@ -17714,6 +17723,12 @@ public class ExportImportWebservice : System.Web.Services.WebService
             {
                 DataSet dsMyData = new DataSet();
                 XmlDocument xdMyData = new XmlDocument();
+
+                string[] fieldsToEncrypt = new string[] { "Mobile", "Name" };
+
+                JsonCryptoHelper jsonCryptoHelper = new JsonCryptoHelper();
+                sData = jsonCryptoHelper.EncryptJsonFields(sData, fieldsToEncrypt);
+
                 sData = "{ \"rootNode\": {" + sData.Trim().TrimStart('{').TrimEnd('}') + "} }";
                 xdMyData = (XmlDocument)JsonConvert.DeserializeXmlNode(sData);
                 dsMyData.ReadXml(new XmlNodeReader(xdMyData));
@@ -17725,7 +17740,6 @@ public class ExportImportWebservice : System.Web.Services.WebService
                     dsResult = objComman.Tablet_Post_Session_Insert_Update_SMCAttendance2025(DttblEnrolment_Temp);
                     sReturn = JsonConvert.SerializeObject(dsResult);
                 }
-
                 else
                 {
                     sReturn = "{\"Table\":[{\"RetValue\":-10}]}";
@@ -17825,6 +17839,12 @@ public class ExportImportWebservice : System.Web.Services.WebService
             {
                 DataSet dsMyData = new DataSet();
                 XmlDocument xdMyData = new XmlDocument();
+
+                string[] fieldsToEncrypt = new string[] { "Mobile", "Name" };
+
+                JsonCryptoHelper jsonCryptoHelper = new JsonCryptoHelper();
+                sData = jsonCryptoHelper.EncryptJsonFields(sData, fieldsToEncrypt);
+
                 sData = "{ \"rootNode\": {" + sData.Trim().TrimStart('{').TrimEnd('}') + "} }";
                 xdMyData = (XmlDocument)JsonConvert.DeserializeXmlNode(sData);
                 dsMyData.ReadXml(new XmlNodeReader(xdMyData));
@@ -17836,7 +17856,6 @@ public class ExportImportWebservice : System.Web.Services.WebService
                     dsResult = objComman.Tablet_Post_Session_Insert_Update_SMCAttendance2025Child(DttblEnrolment_Temp);
                     sReturn = JsonConvert.SerializeObject(dsResult);
                 }
-
                 else
                 {
                     sReturn = "{\"Table\":[{\"RetValue\":-10}]}";

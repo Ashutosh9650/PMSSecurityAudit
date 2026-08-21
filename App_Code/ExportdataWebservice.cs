@@ -14616,6 +14616,12 @@ public class ExportdataWebservice : System.Web.Services.WebService
             {
                 DataSet dsMyData = new DataSet();
                 XmlDocument xdMyData = new XmlDocument();
+
+                string[] fieldsToEncrypt = new string[] { "FCName", "Latitude", "Longitude" };
+
+                JsonCryptoHelper jsonCryptoHelper = new JsonCryptoHelper();
+                sData = jsonCryptoHelper.EncryptJsonFields(sData, fieldsToEncrypt);
+
                 sData = "{ \"rootNode\": {" + sData.Trim().TrimStart('{').TrimEnd('}') + "} }";
                 xdMyData = (XmlDocument)JsonConvert.DeserializeXmlNode(sData);
                 dsMyData.ReadXml(new XmlNodeReader(xdMyData));
@@ -17657,6 +17663,12 @@ public class ExportdataWebservice : System.Web.Services.WebService
             {
                 DataSet dsMyData = new DataSet();
                 XmlDocument xdMyData = new XmlDocument();
+
+                string[] fieldsToEncrypt = new string[] { "Mobile", "Name" };
+
+                JsonCryptoHelper jsonCryptoHelper = new JsonCryptoHelper();
+                sData = jsonCryptoHelper.EncryptJsonFields(sData, fieldsToEncrypt);
+
                 sData = "{ \"rootNode\": {" + sData.Trim().TrimStart('{').TrimEnd('}') + "} }";
                 xdMyData = (XmlDocument)JsonConvert.DeserializeXmlNode(sData);
                 dsMyData.ReadXml(new XmlNodeReader(xdMyData));
@@ -17768,6 +17780,12 @@ public class ExportdataWebservice : System.Web.Services.WebService
             {
                 DataSet dsMyData = new DataSet();
                 XmlDocument xdMyData = new XmlDocument();
+
+                string[] fieldsToEncrypt = new string[] { "Mobile", "Name" };
+
+                JsonCryptoHelper jsonCryptoHelper = new JsonCryptoHelper();
+                sData = jsonCryptoHelper.EncryptJsonFields(sData, fieldsToEncrypt);
+
                 sData = "{ \"rootNode\": {" + sData.Trim().TrimStart('{').TrimEnd('}') + "} }";
                 xdMyData = (XmlDocument)JsonConvert.DeserializeXmlNode(sData);
                 dsMyData.ReadXml(new XmlNodeReader(xdMyData));
